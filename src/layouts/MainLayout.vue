@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header>
-       <q-toolbar
+      <q-toolbar
         :class="
           $q.dark.isActive
             ? 'bg-dark-page pl-0 text-theme'
@@ -90,6 +90,7 @@
           <q-tooltip>{{ $t(Utils.getKey("Logout")) }}</q-tooltip>
         </q-btn>
       </q-toolbar>
+      <tags />
     </q-header>
 
     <q-drawer
@@ -193,7 +194,9 @@
       <q-dialog v-model="showConfirm" position="top" persistent>
         <RestPassword @onClose="showConfirm = false" />
       </q-dialog>
-      <router-view></router-view>
+      <Transition name="slide-fade">
+        <router-view></router-view>
+      </Transition>
     </q-page-container>
   </q-layout>
 </template>
@@ -214,6 +217,7 @@ import Utils from "src/helpers/Utils";
 import { i18n } from "src/boot/i18n";
 import useStats from "../composables/useStats";
 import SideMenu from "./side-menu/index";
+import tags from "./tags/Index.vue";
 
 const { checkOTPbalance } = useStats();
 const $q = useQuasar();
@@ -286,3 +290,19 @@ onMounted(async () => {
 });
 document.title = i18n.global.t(Utils.getKey("One Shop"));
 </script>
+
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
+}
+</style>

@@ -109,7 +109,7 @@
       </div>
       <p class="text-bold mb-0 mt-3">{{ $t(Utils.getKey("Product Price")) }}</p>
       <q-separator />
-      <div style="padding: 12px; background: #f5efeb" class="row q-mt-xs">
+      <div style="padding: 12px;" :class="$q.dark.isActive ? 'bg-dark': 'bg-white' " class="row q-mt-xs">
         <div class="col-12 col-md-6 q-pr-md">
           <label>{{ $t(Utils.getKey("Price")) }}</label>
           <q-input
@@ -160,7 +160,7 @@
         {{ $t(Utils.getKey("Product Tag Promotion")) }}
       </p>
       <q-separator />
-      <div style="padding: 12px; background: #f5efeb" class="row q-mt-xs">
+       <div style="padding: 12px;" :class="$q.dark.isActive ? 'bg-dark': 'bg-white' " class="row q-mt-xs">
         <div class="col-12 col-md-6 q-pr-md">
           <label>{{ $t(Utils.getKey("product tags")) }}</label>
           <q-select

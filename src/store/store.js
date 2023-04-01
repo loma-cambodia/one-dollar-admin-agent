@@ -20,5 +20,15 @@ export const store = reactive({
       name: 'Detial',
       icon: 'home'
     }
+  ],
+  tages: [
+    {
+      name: 'Report',
+      to: 'Report'
+    },
+    {
+      name: 'Report',
+      to: 'Report'
+    }
   ]
 })
