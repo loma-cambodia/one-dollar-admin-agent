@@ -1,7 +1,7 @@
 <template>
   <q-page :class="!store.leftDrawerOpen ? 'ml-5' : '' ">
   <keep-alive>
-    <q-card class="pa-3 mt-4"  flat outlined>
+    <q-card class="pa-3"  flat outlined>
       <q-tabs
         v-model="tab"
         dense

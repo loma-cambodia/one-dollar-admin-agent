@@ -3,11 +3,12 @@
     <slot></slot>
 
     <Menu
-      active-name="1-2"
       :theme="$q.dark.isActive ? 'dark' : 'light'"
       width="auto"
-      style="height: 100vh"
-      :open-names="['1']"
+      class="sidebar"
+      style="height: 100vh; overflow-y: auto"
+      :open-names="openMenu"
+      :active-name="activeName"
       accordion
     >
       <MenuItem name="/">
@@ -25,21 +26,21 @@
           class="capitalize"
         >
           <q-icon :name="modul.icon" size="xs" />
-          {{ $t(Utils.getKey(modul.label))  }}
+          {{ $t(Utils.getKey(modul.label)) }}
         </MenuItem>
-        <Submenu :name="j" v-if="modul.children.length > 0">
+        <Submenu :name="modul.label" v-if="modul.children.length > 0">
           <template #title>
             <q-icon :name="modul.icon" size="xs" />
-            {{  $t(Utils.getKey(modul.label)) }}
+            {{ $t(Utils.getKey(modul.label)) }}
           </template>
           <MenuItem
-            :name="j + '-' + index"
+            :name="modul.label + '-' + index"
             :to="child.to.name"
             v-for="(child, index) in modul.children"
             :key="child.label"
           >
             <q-icon :name="child.icon" size="xs" />
-            {{  $t(Utils.getKey(child.label)) }}
+            {{ $t(Utils.getKey(child.label)) }}
           </MenuItem>
         </Submenu>
       </div>
@@ -48,9 +49,50 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter} from "vue-router";
 import navItems from "components/Menu/nav-items";
 import Utils from "src/helpers/Utils";
+import { computed, onMounted, watch, ref} from "vue";
+
+const openMenu = ref(['Shipment'])
+const activeName = ref("")
+const route = useRoute();
+const router = useRouter();
 const props = defineProps({ items: Object });
-console.log("props:", props.items);
+
+const routePath = computed(() => route.path);
+watch(
+  () => routePath.value,
+  () => {
+    for(const key in props.items) {
+      // console.log(props.items[key],route.name);
+      if(props.items[key].children.length > 0){
+        let activeName = props.items[key]?.children?.filter(it => it?.to.name == route.name)
+        if(activeName.length > 0){
+          console.log(activeName[0].label, "acitve module");
+          // openMenu.value = []
+          openMenu.value = [activeName[0].label]
+          activeName.value= activeName[0].label+'-'+0
+          console.log(openMenu.value, 'openMenu.value');
+        }
+      }
+    }
+    console.log("tag routePath", routePath.value);
+  }
+);
+onMounted(()=> {
+  console.log("tag routePath", routePath.value);
+})
 </script>
-<style scope></style>
+<style scope>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.sidebar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>

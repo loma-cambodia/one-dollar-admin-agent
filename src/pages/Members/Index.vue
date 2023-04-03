@@ -1,11 +1,10 @@
 <template>
   <q-page>
 
-    <q-card style="margin-top:20px; margin-left:0px; box-shadow: none; min-height:85vh;">
+    <q-card style="margin-left:0px; box-shadow: none; min-height:85vh;">
       <q-card-section v-if="!showMlmTreeView">
         <q-table
           flat
-          class="q-pt-md"
           color="primary"
           :loading="loading"
           :rows="items"

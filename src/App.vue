@@ -3,6 +3,14 @@
     <router-view />
   </el-config-provider>
 </template>
+
+<script>
+export default {
+  preFetch () {
+    console.log('running preFetch')
+  }
+}
+</script>
 <script setup>
 import { provide, computed, ref } from "vue";
 import { useMeta, useQuasar } from "quasar";

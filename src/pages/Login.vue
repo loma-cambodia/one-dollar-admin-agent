@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <q-page-container class="bg-part-login">
-      <div class="fixed-width">
+      <div class="fixed-width"    :class="$q.dark.isActive? 'bg-grey-9 pl-0 text-theme' : 'bg-accent pl-0 text-theme' ">
         <div class="two-columns">
           <q-card class="p-3" outlined="0" flat style="    width: 100%;">
             <div>

@@ -22,13 +22,6 @@ export const store = reactive({
     }
   ],
   tages: [
-    {
-      name: 'Report',
-      to: 'Report'
-    },
-    {
-      name: 'Report',
-      to: 'Report'
-    }
+
   ]
 })
