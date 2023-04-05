@@ -389,16 +389,16 @@ export default {
     label: "Agent Center",
     icon: "mdi-handshake-outline",
     permissions: [
-      "Deal: View Deal",
-      "Deal: Create Deal",
-      "Deal: Edit/Update Deal",
+      "Agent: View",
+      "Agent: Create",
+      "Agent: Edit/Update",
     ],
     children: [
       {
         label: "Agent Control",
         icon: "mdi-handshake",
-        to: { name: "deals" },
-        permissions: ["Deal: View Deal", "Deal: Edit/Update Deal"],
+        to: { name: "agents" },
+        permissions: ["Agent: View", "Agent: Edit/Update"],
       },
       {
         label: "All Report",
@@ -490,13 +490,13 @@ export default {
       {
         label: "commissions",
         icon: "mdi-seal",
-        to: { name: "deals" },
+        to: { name: "commissions" },
         permissions: ["Deal: View Deal", "Deal: Edit/Update Deal"],
       },
       {
         label: "System",
         icon: "mdi-crosshairs",
-        to: { name: "orders" },
+        to: { name: "commissions" },
         permissions: ["Order: View Order", "Order: Views Order"],
       },
     ],

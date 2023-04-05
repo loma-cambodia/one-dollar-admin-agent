@@ -236,6 +236,14 @@ const routes = [
         component: () => import("pages/Agent/Index.vue"),
         meta: { title: "agents", subtitle: "agents" },
       },
+      // ============================================================
+      // Winner List Report
+      {
+      name: "commissions",
+      path: "/commissions",
+      component: () => import("pages/Commissions/Index.vue"),
+      meta: { title: "commissions", subtitle: "commissions" },
+    },
 
     ],
   },
