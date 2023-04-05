@@ -297,12 +297,13 @@ document.title = i18n.global.t(Utils.getKey("One Shop"));
 }
 
 .slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.9s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(50px);
+  transform: translateX(-50px);
+   transition: all 0.5s ease-out;
   opacity: 0;
 }
 </style>

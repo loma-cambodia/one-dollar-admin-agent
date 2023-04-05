@@ -43,7 +43,9 @@
         :rules="[
         val => !!val || $t(Utils.getKey('Field is required')),
         val => val.length > 5 || $t(Utils.getKey('Must in between 6 to 15 characters and numbers')),
-        val =>  Utils.containsNumbersAndCaracterAt(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers'))
+        val =>  !Utils.containsOnlyNumbers(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers')),
+        val =>  !Utils.containsOnlyCharacter(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers')),
+        val =>  Utils.containsNumbersAndCaracter(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers'))
         ]"
       >
         <template v-slot:append>
@@ -67,7 +69,9 @@
         :rules="[
           val => !!val || $t(Utils.getKey('Field is required')),
           val => val.length > 5 || $t(Utils.getKey('Must in between 6 to 15 characters and numbers')),
-          val =>  Utils.containsNumbersAndCaracterAt(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers'))
+          val =>  !Utils.containsOnlyNumbers(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers')),
+          val =>  !Utils.containsOnlyCharacter(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers')),
+          val =>  Utils.containsNumbersAndCaracter(val) || $t(Utils.getKey('Must in between 6 to 15 characters and numbers'))
           ]">
            <template v-slot:append>
           <q-icon
@@ -122,7 +126,9 @@ const user = ref({
 });
 
 const onSubmit = async () => {
+  console.log('auth', auth.state.user)
     try {
+    console.log('user=', user)
     if(user.value.password == '' || user.value.current_password == '' || user.value.confirm == ''){
       $q.notify({
         position: "top",
@@ -132,8 +138,11 @@ const onSubmit = async () => {
       });
       return
     }
-
-    if(user.value.password.length < 6 || !Utils.containsNumbersAndCaracterAt(user.value.password) ||  Utils.containsOnlyNumbers(user.value.password) || Utils.containsOnlyCharacter(user.value.password) ){
+    console.log('contain number',Utils.containsNumbersAndCaracter(user.value.password))
+    // if(Utils.containsNumbersAndCaracter(user.value.password)){
+    //   return
+    // }
+    if(user.value.password.length < 6 || !Utils.containsNumbersAndCaracter(user.value.password) ||  Utils.containsOnlyNumbers(user.value.password) || Utils.containsOnlyCharacter(user.value.password) ){
       $q.notify({
         position: "top",
         type: "negative",

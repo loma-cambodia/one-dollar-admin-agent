@@ -19,7 +19,7 @@
       </q-btn>
     </q-bar>
     <q-card-section class="q-pt-lg">
-      <div style="padding: 12px; background: #f5efeb" class="row q-mt-xs">
+      <div  class="row q-mt-xs">
         <!-- <div class="col-12 col-md-4 q-pr-md">
           <label>{{ $t(Utils.getKey("Shipping ID")) }}</label>
           <q-input

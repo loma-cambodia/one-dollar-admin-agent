@@ -1,7 +1,7 @@
 const routes = [
   {
     name: "Page: Login",
-    path: "/auth/login",
+    path: "/agent/login",
     component: () => import("src/pages/Login.vue"),
   },
 
@@ -13,7 +13,7 @@ const routes = [
       {
         name: "home",
         path: "/",
-        component: () => import("src/pages/Dashboard.vue"),
+        component: () => import("src/pages/AgentDashbaord.vue"),
         meta: { title: "Home", subtitle: "Dashboard" },
       },
 
@@ -227,6 +227,14 @@ const routes = [
         path: "/broadcast",
         component: () => import("pages/Broadcast/Index.vue"),
         meta: { title: "broadcast", subtitle: "broadcast" },
+      },
+
+      // Winner List Report
+      {
+        name: "agents",
+        path: "/agents",
+        component: () => import("pages/Agent/Index.vue"),
+        meta: { title: "agents", subtitle: "agents" },
       },
 
     ],

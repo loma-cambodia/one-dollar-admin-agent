@@ -13,14 +13,14 @@ const state = reactive({
 function setAuth(data) {
   state.loggedIn = true;
   state.user = data.user;
-  state.user.applications = data.applications;
-  state.user.roles = data.roles;
-  state.user.permissions = data.permissions.map((p) => p.name);
+  // state.user.applications = data.applications;
+  state.user.roles = data?.roles || [];
+  state.user.permissions = data.permissions?.map((p) => p.name) || [];
 }
 
 async function checkAuth() {
   try {
-    const response = await api.get("/auth/user");
+    const response = await api.get("/agent");
     setAuth(response.data);
   } catch (err) {
     await logout();
@@ -31,10 +31,10 @@ async function logout() {
   try {
     state.loggedIn = false;
     state.user = null;
-    await api.post("/auth/logout");
+    await api.post("/agent/logout");
   } catch (err) {
     // Force redirect
-    window.location = "/#/auth/login";
+    window.location = "/#/agent/login";
   }
 }
 

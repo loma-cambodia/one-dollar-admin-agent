@@ -231,6 +231,7 @@
   "view_whitelist_ip": "មើល IP បញ្ជីស",
   "Q": "",
   "admin_login": "ការចូលរបស់អ្នកគ្រប់គ្រង",
+  "admin_logins": "ការចូលរបស់អ្នកគ្រប់គ្រង",
   "username": "ឈ្មោះ​អ្នកប្រើប្រាស់",
   "enter_user_name": "បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់",
   "enter_password": "បញ្ចូលពាក្យសម្ងាត់",
@@ -285,6 +286,7 @@
   "deals":"កិច្ចព្រមព្រៀង",
   "orders":"ការបញ្ជាទិញ",
   "prize_claim":"ទទួលយករង្វាន់",
+  "prize":"ទទួលយករង្វាន់",
   "shipping":"ការដឹកជញ្ជូន",
   "carriers":"ក្រុមហ៊ុនដឹកជញ្ជូន",
   "member_list":"បញ្ជីសមាជិក",
@@ -1117,8 +1119,7 @@
   "view_admin_login": "មើលការចូលអ្នកគ្រប់គ្រង",
   "view_member_login": "មើលការចូលសមាជិក",
   "member_login": "ចូលជាសមាជិក",
-
-
+  "member_logins": "ចូលជាសមាជិក",
   "cannot_read_properties_of_undefined__reading__data__": "មិនអាចអានលក្ខណៈសម្បត្តិនៃទិន្នន័យអានដែលមិនបានកំណត់",
   "The time period must be an integer.": "រយៈពេលត្រូវតែជាចំនួនគត់",
   "Division by zero": "ការបែងចែកដោយសូន្យ",
@@ -1178,5 +1179,26 @@
   "invalid_url": "URL មិនត្រឹមត",
   "price_is_not_updated_when_deal_active": "តម្លៃមិនត្រូវបានអាប់ដេតទេ នៅពេលកិច្ចព្រមព្រៀងកំពុងដំណើរការ",
   "product_already_active_in_deal_cannot_delete": "ផលិតផលដែលដំណើរការរួចហើយនៅក្នុងកិច្ចព្រមព្រៀងមិនអាចលុបបានទេ។",
-  "do_you_want_to_push_notification": "តើអ្នកចង់ជំរុញការជូនដំណឹងទៅអតិថិជនមែនទេ?"
+  "do_you_want_to_push_notification": "តើអ្នកចង់ជំរុញការជូនដំណឹងទៅអតិថិជនមែនទេ?",
+
+  "agent": "Agent",
+  "member": "Member",
+  "member_control": "Member control",
+  "member_iquiry_report": "Member iquiry report",
+  "agent_center": "Agent center",
+  "agent_control": "Agent control",
+  "all_report": "All report",
+  "member_center": "Member center",
+  "deposit_history": "Deposit history",
+  "withdrawal_history": "Withdrawal history",
+  "manage_report": "Manage report",
+  "member_history": "Member history",
+  "party_bets": "Party bets",
+  "member_report": "Member report",
+  "member_rebate_statement": "Member rebate statement",
+  "login_history": "Login history",
+  "agent_report": "Agent report",
+  "order_details": "Order details",
+  "commissions": "Commissions",
+  "system": "System"
 }

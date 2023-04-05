@@ -24,7 +24,7 @@ api.interceptors.response.use(
     // Do something with response error
 
     if (error.response.status === 401 ) {
-      window.location = "/#/auth/login";
+      window.location = "/#/agent/login";
     }
     return Promise.reject(error);
   }

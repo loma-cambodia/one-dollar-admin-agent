@@ -14,7 +14,7 @@ const i18n = createI18n ({
   messages,
   async missing(locale, key) {
     let camelCased = key.replace(/_([a-z])/g, function (m,g) { return " "+g[0]; });
-    let value = camelCased.charAt(0) + camelCased.slice(1);
+    let value = camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
     let storedMissingTranslation = localStorage.getItem("missingTranslation_"+locale)
     const FormData = require("form-data");
     let formData = new FormData();
@@ -32,7 +32,7 @@ const i18n = createI18n ({
       let obj = {};
       obj[key] = value;
       localStorage.setItem("missingTranslation_"+locale,JSON.stringify(storedMissingTranslation))
-      await api.post("/log-admin-dashboard-missing-key?locale="+locale+"&&data="+JSON.stringify(obj))
+      // await api.post("/log-admin-dashboard-missing-key?locale="+locale+"&&data="+JSON.stringify(obj))
     }
 },
 });

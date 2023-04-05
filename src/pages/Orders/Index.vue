@@ -1,6 +1,6 @@
 <template>
   <q-page :class="!store.leftDrawerOpen ? 'ml-5' : ''">
-      <q-card class="pa-3 mt-4 border" style=" box-shadow: none;">
+      <q-card class="pa-3 mt-4" style=" box-shadow: none;">
           <All />
         <!-- <div style="">
           <q-tabs

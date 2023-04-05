@@ -38,7 +38,7 @@
             />
             <q-space />
             <add-button
-              v-if="Utils.hasPermissions(['User: Create User'])"
+              v-if="Utils.hasPermissions(['Agent: Create'])"
               :disable="loading"
               @click="showAdd = true"
               tooltipText="Add"
@@ -96,8 +96,7 @@
             <q-td class="text-center">
               <q-btn
                 v-if="
-                  Utils.hasPermissions(['User: Edit/Update User']) &&
-                  props.row.id !== 1
+                  Utils.hasPermissions(['Agent: Edit/Update'])
                 "
                 class="q-ml-sm"
                 size="xs"
@@ -111,7 +110,7 @@
               </q-btn>
 
               <q-btn
-                v-if="Utils.hasPermissions(['User: Edit/Update User'])"
+                v-if="Utils.hasPermissions(['Agent: Edit/Update'])"
                 class="q-ml-sm"
                 size="xs"
                 rounded
@@ -127,7 +126,7 @@
 
               <q-btn
                 v-if="
-                  Utils.hasPermissions(['User: Edit/Update User']) &&
+                  Utils.hasPermissions(['Agent: Edit/Update']) &&
                   props.row.google2fa_secret != null
                 "
                 class="q-ml-sm"
@@ -147,7 +146,7 @@
                 v-if="
                   !props.row.roles?.map((role) => role.name)
                     .includes('super admin') &&
-                  Utils.hasPermissions(['User: Delete User']) &&
+                  Utils.hasPermissions(['Agent: Delete']) &&
                   props.row.email != 'admin@mail.com'
                 "
                 class="q-ml-sm"
@@ -188,9 +187,9 @@
 
     <q-dialog v-model="showConfirm" persistent>
       <Confirm
-        :message="`Are you sure you want to delete this User`"
+        :message="`Are you sure you want to delete it`"
         @cancel="showConfirm = false"
-        @confirm="onDelete('User')"
+        @confirm="onDelete()"
         :deleting="deleting"
       />
     </q-dialog>
@@ -220,16 +219,16 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import useTable from "../../composables/useTable";
-import useUser from "../../composables/useUser";
+import useAgent from "../../composables/useAgent";
 import Utils from "../../helpers/Utils";
 import { useQuasar } from "quasar";
 import { i18n } from "src/boot/i18n";
 import Breadcrumbs from "../../components/Menu/BreadCrumbs.vue";
 import AddButton from "../../components/Buttons/AddButton.vue";
 import DeleteButton from "../../components/Buttons/DeleteButton.vue";
-import AddUser from "../../components/User/Add.vue";
-import EditUser from "../../components/User/Edit.vue";
-import Reset from "../../components/User/Reset.vue";
+import AddUser from "../../components/Agent/Add.vue";
+import EditUser from "../../components/Agent/Edit.vue";
+import Reset from "../../components/Agent/Reset.vue";
 import Confirm from "../../components/Shared/Confirm.vue";
 
 const {
@@ -242,7 +241,7 @@ const {
   isDeteteAble,
   update,
   saving,
-} = useUser();
+} = useAgent();
 const {
   showAdd,
   showEdit,
@@ -280,13 +279,13 @@ const onEditClick = (row) => {
 };
 
 const onDeleteClick = async (row) => {
-  let res = await isDeteteAble(row.id);
-  if (res.data) {
-    if (res.data.length > 0) {
-      showNotEditable.value = true;
-      return;
-    }
-  }
+  // let res = await isDeteteAble(row.id);
+  // if (res.data) {
+  //   if (res.data.length > 0) {
+  //     showNotEditable.value = true;
+  //     return;
+  //   }
+  // }
   showConfirm.value = true;
   selected.value = [];
   selected.value.push(row);
@@ -325,10 +324,10 @@ const updateUser = async () => {
     // selectedUser.value.merchants.map((m) => {
     //   mer.push(m.id);
     // });
-    // selectedUser.value.application_id = ''
-    // if(selectedUser.value?.applications > 0) {
-    //    selectedUser.value.application_id = selectedUser.value?.applications?.[0].id;
-    // }
+    selectedUser.value.application_id = ''
+    if(selectedUser.value?.applications > 0) {
+       selectedUser.value.application_id = selectedUser.value?.applications?.[0].id;
+    }
 
     selectedUser.value.role_id = selectedUser.value?.roles[0]?.id;
     await update(selectedUser.value.id, { ...selectedUser.value });

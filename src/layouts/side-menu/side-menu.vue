@@ -4,11 +4,13 @@
 
     <Menu
       :theme="$q.dark.isActive ? 'dark' : 'light'"
+      ref="menuRef"
       width="auto"
       class="sidebar"
       style="height: 100vh; overflow-y: auto"
       :open-names="openMenu"
-      :active-name="activeName"
+      :updateOpened="updateOpened"
+      :active-name="activeNameValue"
       accordion
     >
       <MenuItem name="/">
@@ -55,12 +57,18 @@ import Utils from "src/helpers/Utils";
 import { computed, onMounted, watch, ref} from "vue";
 
 const openMenu = ref(['Shipment'])
-const activeName = ref("")
+const activeNameValue = ref("")
+const showSideBar = ref(true)
+const menuRef = ref(null)
 const route = useRoute();
 const router = useRouter();
 const props = defineProps({ items: Object });
 
 const routePath = computed(() => route.path);
+
+const updateOpened = (e) => {
+  console.log("updateOpened", e);
+}
 watch(
   () => routePath.value,
   () => {
@@ -69,11 +77,13 @@ watch(
       if(props.items[key].children.length > 0){
         let activeName = props.items[key]?.children?.filter(it => it?.to.name == route.name)
         if(activeName.length > 0){
-          console.log(activeName[0].label, "acitve module");
-          // openMenu.value = []
-          openMenu.value = [activeName[0].label]
-          activeName.value= activeName[0].label+'-'+0
-          console.log(openMenu.value, 'openMenu.value');
+          openMenu.value = [props.items[key].label]
+          let findIndex = props.items[key]?.children.findIndex(it => it.label == activeName[0].label)
+          activeNameValue.value= props.items[key].label+'-'+findIndex
+          console.log(findIndex, 'findIndex');
+          setTimeout(() => {
+            menuRef.value.updateOpened()
+          }, 400);
         }
       }
     }
@@ -85,6 +95,11 @@ onMounted(()=> {
 })
 </script>
 <style scope>
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active, .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover {
+    border-right: none;
+    color: #f46932;
+    background: none!important;
+}
 /* Hide scrollbar for Chrome, Safari and Opera */
 .sidebar::-webkit-scrollbar {
   display: none;

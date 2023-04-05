@@ -231,6 +231,7 @@
   "view_whitelist_ip": "View Whitelist IP",
   "Q": "",
   "admin_login": "Admin Login",
+  "admin_logins": "Admin Login",
   "username": "Username",
   "enter_user_name": "Enter user name",
   "enter_password": "Enter password",
@@ -287,6 +288,7 @@
   "deals":"Deals",
   "orders":"Orders",
   "prize_claim":"Prize Claim",
+  "prize":"Prize Claim",
   "shipping":"Shipment",
   "carriers":"Carriers",
   "member_list":"Member List",
@@ -1012,6 +1014,7 @@
     "your_current_ip_address_is_restricted_to_access_the_system__please_contact_the_administrator": "Your current IP xxx.xxx.xxx.xxx is restricted to access the system",
     "login_admin": "Login Admin",
     "member_login": "Member Login",
+    "member_logins": "Member Login",
     "admin_login_logs": "Admin Login Logs",
     "all_roles": "All Roles",
     "device": "Device",
@@ -1189,7 +1192,28 @@
     "invalid_url": "Invalid URL",
     "price_is_not_updated_when_deal_active": "Price is not updated when deal in active",
     "product_already_active_in_deal_cannot_delete": "Product already active in deal cannot delete",
-    "do_you_want_to_push_notification": "Do you want to push notification?"
+    "do_you_want_to_push_notification": "Do you want to push notification?",
 
+
+    "agent": "Agent",
+    "member": "Member",
+    "member_control": "Member control",
+    "member_iquiry_report": "Member iquiry report",
+    "agent_center": "Agent center",
+    "agent_control": "Agent control",
+    "all_report": "All report",
+    "member_center": "Member center",
+    "deposit_history": "Deposit history",
+    "withdrawal_history": "Withdrawal history",
+    "manage_report": "Manage report",
+    "member_history": "Member history",
+    "party_bets": "Party bets",
+    "member_report": "Member report",
+    "member_rebate_statement": "Member rebate statement",
+    "login_history": "Login history",
+    "agent_report": "Agent report",
+    "order_details": "Order details",
+    "commissions": "Commissions",
+    "system": "System"
   }
 

@@ -9,6 +9,7 @@
                 <div class="logo-box-heading">
                   <div class="logo-mid">
                     <q-img src="~assets/logo.png"></q-img>
+                    <p>{{$t('agent')}}</p>
                   </div>
                 </div>
               </div>
@@ -107,6 +108,14 @@ import useLanguage from "../composables/useLanguage";
 import useUser from "src/composables/useUser";
 import Google2FA from "src/components/Login/Google2FA.vue";
 
+import axios from "axios";
+
+const axoisInstance = axios.create({
+  baseURL: process.env.API_URL_LOGIN,
+  headers: { "X-Requested-With": "XMLHttpRequest",   'Content-Type': 'application/json' },
+  withCredentials: true,
+});
+
 const { t, locale } = useI18n({ useScope: "global" });
 const { all } = useLanguage();
 const { verifyUser2FA, verifyCode, enableGa } = useUser();
@@ -196,8 +205,12 @@ async function onSubmit() {
       }
       await api.get("/sanctum/csrf-cookie");
 
-      const response = await api.post("/auth/login", {
-        email: name.value,
+      // const response = await axoisInstance.post("/auth/login", {
+      //   username: name.value,
+      //   password: password.value,
+      // });
+        const response = await api.post("/login", {
+        username: name.value,
         password: password.value,
       });
 

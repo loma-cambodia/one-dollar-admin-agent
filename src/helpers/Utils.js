@@ -320,6 +320,10 @@ export default class Utils {
     let pattern = /^[a-zA-Z0-9]*$/;
     return Boolean(pattern.test(str));
   };
+  static containsNumbersAndCaracterAt = (str) => {
+    let pattern = /^[a-zA-Z0-9@]*$/;
+    return Boolean(pattern.test(str));
+  };
 
   static containsOnlyNumbers = (str) => {
     return /^\d+$/.test(str);
