@@ -51,15 +51,15 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter} from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import navItems from "components/Menu/nav-items";
 import Utils from "src/helpers/Utils";
-import { computed, onMounted, watch, ref} from "vue";
+import { computed, onMounted, watch, ref } from "vue";
 
-const openMenu = ref(['Shipment'])
-const activeNameValue = ref("")
-const showSideBar = ref(true)
-const menuRef = ref(null)
+const openMenu = ref([""]);
+const activeNameValue = ref("");
+const showSideBar = ref(true);
+const menuRef = ref(null);
 const route = useRoute();
 const router = useRouter();
 const props = defineProps({ items: Object });
@@ -68,37 +68,44 @@ const routePath = computed(() => route.path);
 
 const updateOpened = (e) => {
   console.log("updateOpened", e);
-}
+};
+
 watch(
   () => routePath.value,
   () => {
-    for(const key in props.items) {
-      // console.log(props.items[key],route.name);
-      if(props.items[key].children.length > 0){
-        let activeName = props.items[key]?.children?.filter(it => it?.to.name == route.name)
-        if(activeName.length > 0){
-          openMenu.value = [props.items[key].label]
-          let findIndex = props.items[key]?.children.findIndex(it => it.label == activeName[0].label)
-          activeNameValue.value= props.items[key].label+'-'+findIndex
-          console.log(findIndex, 'findIndex');
-          setTimeout(() => {
-            menuRef.value.updateOpened()
-          }, 400);
-        }
-      }
-    }
-    console.log("tag routePath", routePath.value);
+    onActiveMenu();
   }
 );
-onMounted(()=> {
-  console.log("tag routePath", routePath.value);
-})
+const onActiveMenu = () => {
+  for (const key in props.items) {
+    if (props.items[key].children.length > 0) {
+      let activeName = props.items[key]?.children?.filter(
+        (it) => it?.to.name == route.name
+      );
+      if (activeName.length > 0) {
+        openMenu.value = [props.items[key].label];
+        let findIndex = props.items[key]?.children.findIndex(
+          (it) => it.label == activeName[0].label
+        );
+        activeNameValue.value = props.items[key].label + "-" + findIndex;
+        setTimeout(() => {
+          menuRef.value.updateOpened();
+        }, 400);
+      }
+    }
+  }
+};
+
+onMounted(() => {
+  onActiveMenu();
+});
 </script>
 <style scope>
-.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active, .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover {
-    border-right: none;
-    color: #f46932;
-    background: none!important;
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active,
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover {
+  border-right: none;
+  color: #f46932;
+  background: none !important;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .sidebar::-webkit-scrollbar {
@@ -109,5 +116,9 @@ onMounted(()=> {
 .sidebar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+.ivu-menu-item>i {
+    margin-right: 6px;
+    margin-top: -5px;
 }
 </style>

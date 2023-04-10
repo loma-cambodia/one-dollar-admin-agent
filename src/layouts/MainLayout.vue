@@ -27,7 +27,7 @@
           }}
         </q-toolbar-title>
         <div class="mr-3 orange"></div>
-        <div
+        <!-- <div
           style="
             border: 1px solid #eb7e4c;
             margin-right: 12px;
@@ -47,7 +47,7 @@
               {{ otpBalance.data || "0.00" }}
             </p>
           </div>
-        </div>
+        </div> -->
         <q-select
           v-model="locale"
           :options="localeOptions"
@@ -268,7 +268,7 @@ async function getLanguages() {
 const logout = async () => {
   try {
     await auth.logout();
-    router.push("/auth/login");
+    router.push("/agent/login");
   } catch (error) {}
 };
 const isSame = ref("");
@@ -286,24 +286,24 @@ onMounted(async () => {
   if (!auth.state.user) {
     router.push({ name: "Page: Login" });
   }
-  otpBalance.value = await (await checkOTPbalance()).data;
+  // otpBalance.value = await (await checkOTPbalance()).data;
 });
 document.title = i18n.global.t(Utils.getKey("One Shop"));
 </script>
 
 <style scoped>
 .slide-fade-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 1s ease-out;
 }
 
 .slide-fade-leave-active {
-  transition: all 0.9s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 1s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
   transform: translateX(-50px);
-   transition: all 0.5s ease-out;
+   transition: all 1s ease-out;
   opacity: 0;
 }
 </style>

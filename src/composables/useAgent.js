@@ -21,6 +21,14 @@ export default function useAgent() {
       sortable: false,
     },
     {
+      name: "agent_ID",
+      label: "Agent ID",
+      required: true,
+      field: (row) => row.agent_ID,
+      align: "center",
+      sortable: true,
+    },
+    {
       name: "name",
       label: "NAME",
       required: true,
@@ -36,11 +44,19 @@ export default function useAgent() {
       align: "center",
       sortable: true,
     },
+    // {
+    //   name: "roles.name",
+    //   label: "Roles",
+    //   required: true,
+    //   field: (row) => row?.roles?.map((role) => role.name).join(", "),
+    //   align: "center",
+    //   sortable: false,
+    // },
     {
-      name: "roles.name",
-      label: "Roles",
+      name: "level",
+      label: "level",
       required: true,
-      field: (row) => row?.roles?.map((role) => role.name).join(", "),
+      field: (row) => row?.LEVEL,
       align: "center",
       sortable: false,
     },
@@ -120,7 +136,7 @@ export default function useAgent() {
   const updatePassword = async (id, data) => {
     try {
       state.saving = true;
-      return await api.post(`/agents-password/${id}`, data);
+      return await api.post(`/agents/reset-password/${id}`, data);
     } catch (err) {
       //throw Error(Utils.getErrorMessage(err));
       throw Utils.getErrorMessage(err);

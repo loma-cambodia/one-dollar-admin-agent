@@ -21,7 +21,7 @@
 
     <q-card-section class="q-pt-lg">
       <q-form ref="refForm" autocomplete="off">
-        <form autocomplete="off">
+        <!-- <form autocomplete="off">
           <q-select
             class="q-pb-md"
             v-model="user.parent_id"
@@ -35,7 +35,7 @@
             outlined
             maxlength="20"
           />
-        </form>
+        </form> -->
         <form autocomplete="off">
           <q-input
             v-model="user.name"
@@ -125,13 +125,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, inject } from "vue";
 import { useQuasar } from "quasar";
 import useAgent from "src/composables/useAgent";
 import useACL from "src/composables/useACL";
 
 import { useI18n } from "vue-i18n";
 import Utils from "src/helpers/Utils";
+
+const auth = inject("auth")
 const { t } = useI18n();
 const emit = defineEmits(["onClose", "onAdded"]);
 const refForm = ref(null);
@@ -144,7 +146,7 @@ const user = ref({
   username: "",
   password: "",
   role_id: "",
-  parent_id: "",
+  parent_id: auth.state.user.id,
 });
 const agentItems = ref([]);
 
@@ -170,7 +172,7 @@ watch(
 async function fetchRoles() {
   try {
     const response = await getAllRoles();
-    roleOptions.value = response.data;
+    roleOptions.value = response.data.filter((item) => item.name == 'Agent' || item.name == 'agent');
     if (response.data.length) {
       user.value.role_id = response.data[0].id;
     }

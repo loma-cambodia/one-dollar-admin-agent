@@ -41,8 +41,8 @@
           :autofocus="true"
           type="email"
           readonly
-          v-model="user.email"
-          :label="$t(Utils.getKey('Email id'))"
+          v-model="user.username"
+          :label="$t(Utils.getKey('username'))"
           dense
           outlined
           :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
@@ -55,6 +55,7 @@
           :autofocus="true"
           v-model="user.role_id"
           :options="roleOptions"
+          readonly
           :label="$t(Utils.getKey('Role'))"
           emit-value
           map-options
@@ -66,6 +67,7 @@
           lazy-rules
           :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
         />
+        <q-select dense outlined :options="['All', 'Normal', 'Locked']" :option-label="lb => $t(Utils.getKey(lb))" />
       </q-form>
     </q-card-section>
 
@@ -93,7 +95,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useQuasar } from "quasar";
-import useUser from "src/composables/useUser";
+import useAgent from "src/composables/useAgent";
 import useACL from "src/composables/useACL";
 import Utils from "../../helpers/Utils";
 
@@ -102,7 +104,7 @@ const { t } = useI18n();
 const props = defineProps({ data: Object });
 const emit = defineEmits(["onClose", "onUpdated"]);
 const $q = useQuasar();
-const { saving, update } = useUser();
+const { saving, update } = useAgent();
 const { getAllRoles } = useACL();
 const roleOptions = ref([]);
 const user = ref({
@@ -136,15 +138,15 @@ async function onSubmit() {
     if (!validation) {
       return;
     }
-    if (!Utils.onlyEmail(user.value.email)) {
-      $q.notify({
-        position: "top-right",
-        type: "negative",
-        icon: "fas fa-exclamation-triangle",
-        message: t(Utils.getKey("invalid email address")),
-      });
-      return;
-    }
+    // if (!Utils.onlyEmail(user.value.email)) {
+    //   $q.notify({
+    //     position: "top-right",
+    //     type: "negative",
+    //     icon: "fas fa-exclamation-triangle",
+    //     message: t(Utils.getKey("invalid email address")),
+    //   });
+    //   return;
+    // }
     await update(user.value.id, { ...user.value });
 
     emit("onUpdated");

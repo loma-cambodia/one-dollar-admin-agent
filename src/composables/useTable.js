@@ -42,10 +42,10 @@ export default function useTable(paginate, trash, bulkTrash) {
     }
   }
 
-  function onRefresh() {
+  function onRefresh(filter) {
     onRequest({
       pagination: pagination.value,
-      filter: undefined,
+      filter: filter ? filter : undefined,
     });
     state.selected = [];
     state.showAdd = false;

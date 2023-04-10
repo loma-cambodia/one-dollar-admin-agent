@@ -88,14 +88,14 @@
 <script setup>
 import { ref } from "vue";
 import { useQuasar } from "quasar";
-import useUser from "src/composables/useUser";
+import useAgent from "src/composables/useAgent";
 import Utils from "../../helpers/Utils";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const props = defineProps({ data: Object });
 const emit = defineEmits(["onClose", "onUpdated"]);
 const $q = useQuasar();
-const { saving, updatePassword } = useUser();
+const { saving, updatePassword } = useAgent();
 const user = ref({ ...props.data, role_id: props.data?.roles[0]?.id, password: '' , current_password: ''});
 const confirm = ref(false)
 const isCopy = ref(false)
@@ -108,16 +108,6 @@ const textCopy = () => {
 async function onSubmit() {
   try {
     user.value.password = Utils.randomString(8)
-    console.log('user=', user)
-    // if(user.value.password.length < 6){
-    //   $q.notify({
-    //     position: "top-right",
-    //     type: "negative",
-    //     icon: "fas fa-exclamation-triangle",
-    //     message:t(Utils.getKey('minimum must biger than 6 length')),
-    //   });
-    //   return
-    // }
     let result = await updatePassword(user.value.id, { ...user.value });
     if(result.data.status){
       $q.notify({

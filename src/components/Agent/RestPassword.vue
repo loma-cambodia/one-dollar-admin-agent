@@ -106,7 +106,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useQuasar } from "quasar";
-import useUser from "src/composables/useUser";
+import useAgent from "src/composables/useAgent";
 import Utils from "../../helpers/Utils";
 import auth from "src/store/auth";
 import { useI18n } from "vue-i18n";
@@ -114,7 +114,7 @@ import { useI18n } from "vue-i18n";
 const emit = defineEmits(["onClose", "onUpdated"]);
 const { t } = useI18n();
 const $q = useQuasar();
-const { saving, updatePassword } = useUser();
+const { saving, updatePassword } = useAgent();
 const showPassword = ref({
   password: false,
   confirm: false

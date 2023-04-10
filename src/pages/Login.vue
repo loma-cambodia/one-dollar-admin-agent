@@ -1,28 +1,53 @@
 <template>
   <q-layout>
     <q-page-container class="bg-part-login">
-      <div class="fixed-width"    :class="$q.dark.isActive? 'bg-grey-9 pl-0 text-theme' : 'bg-accent pl-0 text-theme' ">
+      <div
+        class="fixed-width"
+        :class="
+          $q.dark.isActive
+            ? 'bg-grey-9 pl-0 text-theme'
+            : 'style_bg pl-0 text-theme'
+        "
+      >
         <div class="two-columns">
-          <q-card class="p-3" outlined="0" flat style="    width: 100%;">
-            <div>
-              <div class="v-align-div">
-                <div class="logo-box-heading">
-                  <div class="logo-mid">
-                    <q-img src="~assets/logo.png"></q-img>
-                    <p>{{$t('agent')}}</p>
-                  </div>
-                </div>
-              </div>
-
+          <div class="d-flex q-mb-md">
+            <div class="max-width: 150px;">
+              <img style="height: 70px" src="~assets/logo.png" />
             </div>
-
+            <div class="flex-1 q-ml-lg">
+              <p class="oneshop">{{ $t("oneshop") }}</p>
+              <p class="agent">{{ $t("agent_system") }}</p>
+            </div>
+          </div>
+          <div
+            :class="
+              $q.dark.isActive
+                ? 'bg-grey-8 pl-0 text-theme'
+                : 'style_bg pl-0 text-theme'
+            "
+            class="p-3"
+            outlined="0"
+            flat
+            style="width: 100%"
+          >
             <q-card-section>
               <label>{{ $t(Utils.getKey("Language")) }}</label>
-              <q-select v-model="locale" :options="localeOptions" :label="$t(Utils.getKey('Language'))" dense emit-value
-                map-options option-label="name" option-value="locale_web" outlined lazy-rules
-                @update:model-value="resetFilters()" :rules="[
+              <q-select
+                v-model="locale"
+                :options="localeOptions"
+                :label="$t(Utils.getKey('Language'))"
+                dense
+                emit-value
+                map-options
+                option-label="name"
+                option-value="locale_web"
+                outlined
+                lazy-rules
+                @update:model-value="resetFilters()"
+                :rules="[
                   (val) => val.length || $t(Utils.getKey('Select Language')),
-                ]">
+                ]"
+              >
                 <template v-slot:prepend>
                   <q-icon name="fas fa-language" size="sm" class="q-pr-sm" />
                 </template>
@@ -30,12 +55,20 @@
             </q-card-section>
             <q-card-section class="q-pt-none">
               <label>{{ $t(Utils.getKey("Username")) }}</label>
-              <q-input autofocus :disable="loading" outlined dense :placeholder="$t(Utils.getKey('Enter User name'))"
-                v-model="name" maxlength="30" ref="nameInputRef" :rules="[
+              <q-input
+                autofocus
+                :disable="loading"
+                outlined
+                dense
+                :placeholder="$t(Utils.getKey('Enter User name'))"
+                v-model="name"
+                maxlength="30"
+                ref="nameInputRef"
+                :rules="[
                   (val) =>
-                    (val && val.length) ||
-                    $t(Utils.getKey('Enter User name')),
-                ]">
+                    (val && val.length) || $t(Utils.getKey('Enter User name')),
+                ]"
+              >
                 <template v-slot:prepend>
                   <q-icon name="fas fa-user" size="sm" class="q-pr-sm" />
                 </template>
@@ -43,41 +76,73 @@
             </q-card-section>
             <q-card-section class="q-pt-none">
               <label>{{ $t(Utils.getKey("Password")) }}</label>
-              <q-input :disable="loading" outlined dense :type="showPassword ? 'text' : 'password'" maxlength="15"
-                :placeholder="$t(Utils.getKey('Enter Password'))" v-model="password" ref="passwordInputRef" :rules="[
+              <q-input
+                :disable="loading"
+                outlined
+                dense
+                :type="showPassword ? 'text' : 'password'"
+                maxlength="15"
+                :placeholder="$t(Utils.getKey('Enter Password'))"
+                v-model="password"
+                ref="passwordInputRef"
+                :rules="[
                   (val) =>
                     (val && val.length) || $t(Utils.getKey('Enter password')),
-                ]">
+                ]"
+              >
                 <template v-slot:prepend>
                   <q-icon name="fas fa-lock" size="sm" class="q-pr-sm" />
                 </template>
                 <template v-slot:append>
-                  <q-icon :name="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'" size="xs"
-                    @click="showPassword = !showPassword" />
+                  <q-icon
+                    :name="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                    size="xs"
+                    @click="showPassword = !showPassword"
+                  />
                 </template>
               </q-input>
             </q-card-section>
             <div class="row">
               <q-card-section class="col-md-4 col-xs-12">
-                <q-input ref="codeInputRef" dense outlined v-model="code" :maxlength="6"
-                  :oninput="(evt) => Utils.onlyPostiveInteger(evt, true)" :label="$t(Utils.getKey('Six Digits Code'))"
+                <q-input
+                  ref="codeInputRef"
+                  dense
+                  outlined
+                  v-model="code"
+                  :maxlength="6"
+                  :oninput="(evt) => Utils.onlyPostiveInteger(evt, true)"
+                  :label="$t(Utils.getKey('Six Digits Code'))"
                   :rules="[
                     (val) =>
                       parseInt(val) || $t(Utils.getKey('Please Enter Code')),
-                  ]"></q-input>
+                  ]"
+                ></q-input>
               </q-card-section>
 
               <q-card-section class="col-md-8 col-xs-12">
-                <q-btn type="button" dense :label="$t(Utils.getKey('Google Authenticator'))"
-                  class="g-auth-btn full-width" @click="onVerify2FA" :disable="loading" />
+                <q-btn
+                  type="button"
+                  dense
+                  :label="$t(Utils.getKey('Google Authenticator'))"
+                  class="g-auth-btn full-width"
+                  @click="onVerify2FA"
+                  :disable="loading"
+                />
               </q-card-section>
             </div>
 
             <q-card-section>
-              <q-btn type="submit" :disable="loading" :loading="loading" class="full-width"
-                :label="$t(Utils.getKey('Login'))" color="primary" @click="onSubmit" />
+              <q-btn
+                type="submit"
+                :disable="loading"
+                :loading="loading"
+                class="full-width"
+                :label="$t(Utils.getKey('Login'))"
+                color="primary"
+                @click="onSubmit"
+              />
             </q-card-section>
-          </q-card>
+          </div>
         </div>
         <!-- <div class="half right bg-color-blue-dark">
             <div class="v-align-div">
@@ -112,7 +177,10 @@ import axios from "axios";
 
 const axoisInstance = axios.create({
   baseURL: process.env.API_URL_LOGIN,
-  headers: { "X-Requested-With": "XMLHttpRequest",   'Content-Type': 'application/json' },
+  headers: {
+    "X-Requested-With": "XMLHttpRequest",
+    "Content-Type": "application/json",
+  },
   withCredentials: true,
 });
 
@@ -146,7 +214,7 @@ async function getLanguages() {
   try {
     const response = await all();
     localeOptions.value = response.data;
-  } catch (error) { }
+  } catch (error) {}
 }
 
 async function onVerify2FA() {
@@ -209,7 +277,7 @@ async function onSubmit() {
       //   username: name.value,
       //   password: password.value,
       // });
-        const response = await api.post("/login", {
+      const response = await api.post("/login", {
         username: name.value,
         password: password.value,
       });
@@ -219,7 +287,7 @@ async function onSubmit() {
       loading.value = false;
     } catch (err) {
       console.log(err.code);
-      if(err.message &&  err.code != 'ERR_BAD_REQUEST') {
+      if (err.message && err.code != "ERR_BAD_REQUEST") {
         $q.notify({
           type: "negative",
           icon: "fas fa-exclamation-triangle",
@@ -230,7 +298,7 @@ async function onSubmit() {
       }
       loading.value = false;
       let errorMessage = Utils.getErrorMessage(err);
-      console.log('erro message', errorMessage.message)
+      console.log("erro message", errorMessage.message);
       $q.notify({
         type: "negative",
         icon: "fas fa-exclamation-triangle",
@@ -246,6 +314,31 @@ const resetFilters = () => {
 };
 </script>
 
-<style>
-
+<style scoped>
+.style_bg {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    3deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 79, 121, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+.agent {
+  font-size: 26px;
+  line-height: 35px;
+  color: black;
+  border-left: 4px solid black;
+  padding-left: 16px;
+  text-transform: capitalize;
+}
+.oneshop {
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 35px;
+  color: black;
+  border-left: 4px solid black;
+  padding-left: 16px;
+  text-transform: uppercase;
+}
 </style>

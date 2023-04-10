@@ -234,16 +234,34 @@ const routes = [
         name: "agents",
         path: "/agents",
         component: () => import("pages/Agent/Index.vue"),
-        meta: { title: "agents", subtitle: "agents" },
+        meta: { title: "agents", subtitle: "agents", module: "Agent Managerment" },
       },
       // ============================================================
       // Winner List Report
       {
-      name: "commissions",
-      path: "/commissions",
-      component: () => import("pages/Commissions/Index.vue"),
-      meta: { title: "commissions", subtitle: "commissions" },
-    },
+        name: "commissions",
+        path: "/commissions",
+        component: () => import("pages/Commissions/Index.vue"),
+        meta: { title: "commissions", subtitle: "commissions" },
+      },
+      {
+        name: "daily-report",
+        path: "/daily-report",
+        component: () => import("pages/Reports/DailyReport.vue"),
+        meta: { title: "Daily Report", subtitle: "Daily Report" },
+      },
+      {
+        name: "agent-consolidated",
+        path: "/agent-consolidated",
+        component: () => import("pages/Reports/AgentConsolidated.vue"),
+        meta: { title: "Agent Consolidated Report", subtitle: "Agent Consolidated Report" },
+      },
+      {
+        name: "member-report",
+        path: "/member-report",
+        component: () => import("pages/Reports/MemberGrandReport.vue"),
+        meta: { title: "Member Grand Report", subtitle: "Member Grand Report" },
+      },
 
     ],
   },

@@ -196,14 +196,14 @@
     </q-card>
 
     <q-dialog v-model="showAdd" position="top" persistent>
-      <add-user @onClose="showAdd = false" @onAdded="onRefresh(filter)" />
+      <add-user @onClose="showAdd = false" @onAdded="onRefresh" />
     </q-dialog>
 
     <q-dialog v-model="showEdit" position="top" persistent>
       <edit-user
         :data="selectedUser"
         @onClose="showEdit = false"
-        @onUpdated="onRefresh(filter)"
+        @onUpdated="onRefresh"
       />
     </q-dialog>
 
@@ -261,7 +261,6 @@ import AddUser from "../../components/Agent/Add.vue";
 import EditUser from "../../components/Agent/Edit.vue";
 import Reset from "../../components/Agent/Reset.vue";
 import Confirm from "../../components/Shared/Confirm.vue";
-import auth from "src/store/auth";
 
 const {
   loading,
@@ -289,23 +288,19 @@ const $q = useQuasar();
 const selectedUser = ref(null);
 const filters = reactive({
   name: "",
-  parent_id: auth.state.user.id,
 });
 
 const showGoogleKeyConfirm = ref(false);
 const resetPassword = ref(false);
 const showDisbleGauth = ref(false);
 
-let filter = {
-  parent_id: auth.state.user.id,
-};
 onMounted(() => {
   onRequest({
     pagination: {
       ...pagination.value,
       sortBy: "name",
     },
-    filter: filter,
+    filter: undefined,
   });
 });
 
@@ -356,9 +351,7 @@ const onToggleClick = (val) => {
 
 const resetFilters = () => {
   for (const [key, value] of Object.entries(filters)) {
-    if (key != "id") {
-      filters[key] = "";
-    }
+    filters[key] = "";
   }
 
   range.value = null;
@@ -401,8 +394,4 @@ const updateUser = async () => {
     });
   }
 };
-
-onMounted(() => {
-  console.log(auth.state.user.id);
-});
 </script>
