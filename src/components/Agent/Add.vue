@@ -41,10 +41,7 @@
             v-model="user.name"
             autocomplete="off"
             :label="$t(Utils.getKey('Name'))"
-            :rules="[
-              (val) => !!val || $t(Utils.getKey('Field is required')),
-
-            ]"
+            :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
             dense
             outlined
             maxlength="20"
@@ -56,7 +53,9 @@
             :label="$t(Utils.getKey('username'))"
             dense
             outlined
-            :oninput="(evt) => Utils.containsOnlyCharacterAllLanguageEvent2(evt)"
+            :oninput="
+              (evt) => Utils.containsOnlyCharacterAllLanguageEvent2(evt)
+            "
             autocomplete="off"
             maxlength="20"
             :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
@@ -78,6 +77,20 @@
           />
         </form>
         <form autocomplete="off">
+          <q-input
+            type="number"
+            v-model="user.child_commision"
+            :label="$t(Utils.getKey('profit'))"
+            dense
+            outlined
+            maxlength="20"
+            lazy-rules
+            :rules="[
+              (val) => !!val || $t(Utils.getKey('Field is required'))
+            ]"
+          />
+        </form>
+        <!-- <form autocomplete="off">
           <q-select
             v-model="user.role_id"
             :options="roleOptions"
@@ -95,7 +108,7 @@
               (val) => val || $t(Utils.getKey('Please select Role')),
             ]"
           />
-        </form>
+        </form> -->
       </q-form>
     </q-card-section>
 
@@ -130,7 +143,7 @@ import useACL from "src/composables/useACL";
 import { useI18n } from "vue-i18n";
 import Utils from "src/helpers/Utils";
 
-const auth = inject("auth")
+const auth = inject("auth");
 const { t } = useI18n();
 const emit = defineEmits(["onClose", "onAdded"]);
 const refForm = ref(null);
@@ -144,16 +157,17 @@ const user = ref({
   password: "",
   role_id: "",
   parent_id: auth.state.user.id,
+  child_commision: ''
 });
 const agentItems = ref([]);
 
 const getAgent = async () => {
   let agetns = await all();
   agentItems.value = agetns.data || [];
-  console.log(agentItems.value, 'agentItems');
-}
+  console.log(agentItems.value, "agentItems");
+};
 
-Promise.allSettled([fetchRoles(),getAgent()]);
+Promise.allSettled([fetchRoles(), getAgent()]);
 
 watch(
   () => user.value.role_id,
@@ -164,12 +178,12 @@ watch(
   }
 );
 
-
-
 async function fetchRoles() {
   try {
     const response = await getAllRoles();
-    roleOptions.value = response.data.filter((item) => item.name == 'Agent' || item.name == 'agent');
+    roleOptions.value = response.data.filter(
+      (item) => item.name == "Agent" || item.name == "agent"
+    );
     if (response.data.length) {
       user.value.role_id = response.data[0].id;
     }

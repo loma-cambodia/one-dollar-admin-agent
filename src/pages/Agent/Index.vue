@@ -72,7 +72,10 @@
               :end-placeholder="$t(Utils.getKey('End date'))"
               value-format="YYYY-MM-DD"
             />
-            <q-checkbox v-model="filters.include_downline" :label="$t('include_downline')"/>
+            <q-checkbox
+              v-model="filters.include_downline"
+              :label="$t('include_downline')"
+            />
 
             <q-btn
               class="q-mr-sm q-mt-sm"
@@ -146,7 +149,11 @@
                 <q-toggle
                   ref="toggleRef"
                   style="height: 32px"
-                  :modelValue="props.row.status == 'normal' || props.row.status == null ? 'normal' : 'locked'"
+                  :modelValue="
+                    props.row.status == 'normal' || props.row.status == null
+                      ? 'normal'
+                      : 'locked'
+                  "
                   checked-icon="check"
                   color="green"
                   :label="
@@ -316,28 +323,27 @@ const selectedUser = ref(null);
 const filters = reactive({
   name: "",
   parent_id: auth.state.user.id,
-  status: 'all',
-  include_downline: false
+  status: "all",
+  include_downline: false,
 });
 const levelOptions = ref([
   {
     id: 1,
     name: "level 1",
   },
-    {
+  {
     id: 2,
     name: "level 2",
-  }
-  ,
-    {
+  },
+  {
     id: 3,
     name: "level 3",
   },
-    {
+  {
     id: 4,
     name: "level 4",
-  }
-])
+  },
+]);
 const showGoogleKeyConfirm = ref(false);
 const resetPassword = ref(false);
 const showDisbleGauth = ref(false);
@@ -395,20 +401,25 @@ const onResetClickGoogle = async (row) => {
   selectedUser.value = row;
 };
 
-const onToggleClick = (val) => {
-  showDisbleGauth.value = true;
+const onToggleClick = async (val) => {
+  // showDisbleGauth.value = true;
   selectedUser.value = val;
-  console.log("selct=", selectedUser);
+  selectedUser.value.status =
+    selectedUser.value.status == "normal" || selectedUser.value.status == null
+      ? "locked"
+      : "normal";
+  await update(selectedUser.value.id, { ...selectedUser.value });
 };
 
 const resetFilters = () => {
   for (const [key, value] of Object.entries(filters)) {
-    if (key != "parent_id") {
+    if (key != "parent_id" && key !="include_downline") {
       filters[key] = "";
     }
+    if (key == "status") {
+      filters[key] = "all";
+    }
   }
-
-  range.value = null;
 };
 
 const updateUser = async () => {
@@ -418,17 +429,6 @@ const updateUser = async () => {
     } else {
       selectedUser.value.enable_ga = selectedUser.value.enable_ga == 0 ? 1 : 0;
     }
-    // let mer = [];
-    // selectedUser.value.merchants.map((m) => {
-    //   mer.push(m.id);
-    // });
-    selectedUser.value.application_id = "";
-    if (selectedUser.value?.applications > 0) {
-      selectedUser.value.application_id =
-        selectedUser.value?.applications?.[0].id;
-    }
-
-    selectedUser.value.role_id = selectedUser.value?.roles[0]?.id;
     await update(selectedUser.value.id, { ...selectedUser.value });
     onRefresh();
     $q.notify({

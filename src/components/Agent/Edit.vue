@@ -50,8 +50,20 @@
           @keydown.space="(event) => event.preventDefault()"
           lazy-rules
         />
+          <q-input
+            type="profit"
+            v-model="user.child_commision"
+            :label="$t(Utils.getKey('profit'))"
+            dense
+            outlined
+            maxlength="20"
+            lazy-rules
+            :rules="[
+              (val) => !!val || $t(Utils.getKey('Field is required'))
+            ]"
+          />
 
-        <q-select
+        <!-- <q-select
           :autofocus="true"
           v-model="user.role_id"
           :options="roleOptions"
@@ -67,7 +79,7 @@
           lazy-rules
           :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
         />
-        <q-select dense outlined :options="['All', 'Normal', 'Locked']" :option-label="lb => $t(Utils.getKey(lb))" />
+        <q-select dense outlined :options="['All', 'Normal', 'Locked']" :option-label="lb => $t(Utils.getKey(lb))" /> -->
       </q-form>
     </q-card-section>
 
@@ -110,6 +122,7 @@ const roleOptions = ref([]);
 const user = ref({
   ...props.data,
   // role_id: props.data?.roles[0]?.id,
+
 });
 const refForm = ref(null);
 

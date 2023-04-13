@@ -96,7 +96,7 @@ const props = defineProps({ data: Object });
 const emit = defineEmits(["onClose", "onUpdated"]);
 const $q = useQuasar();
 const { saving, updatePassword } = useAgent();
-const user = ref({ ...props.data, role_id: props.data?.roles[0]?.id, password: '' , current_password: ''});
+const user = ref({ ...props.data, password: '' , current_password: ''});
 const confirm = ref(false)
 const isCopy = ref(false)
 
