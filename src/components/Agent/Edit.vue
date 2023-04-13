@@ -109,7 +109,7 @@ const { getAllRoles } = useACL();
 const roleOptions = ref([]);
 const user = ref({
   ...props.data,
-  role_id: props.data?.roles[0]?.id,
+  // role_id: props.data?.roles[0]?.id,
 });
 const refForm = ref(null);
 

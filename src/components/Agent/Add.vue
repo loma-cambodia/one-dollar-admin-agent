@@ -41,12 +41,9 @@
             v-model="user.name"
             autocomplete="off"
             :label="$t(Utils.getKey('Name'))"
-            :oninput="(evt) => Utils.containsOnlyCharacterAllLanguageEvent(evt)"
             :rules="[
               (val) => !!val || $t(Utils.getKey('Field is required')),
-              (val) =>
-                Utils.containsOnlyCharacterAllLanguage(val) ||
-                $t(Utils.getKey('Only character, numbers and space')),
+
             ]"
             dense
             outlined

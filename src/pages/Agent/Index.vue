@@ -28,20 +28,22 @@
           <template v-slot:top>
             <q-select
               v-model="filters.level"
-              :options="['level 1', 'level 2', 'level 3', 'level 4']"
+              :options="levelOptions"
               outlined
               style="width: 200px"
               dense
+              :disable="!filters.include_downline"
               emit-value
-              class="q-mr-sm q-mt-sm"
               map-options
+              class="q-mr-sm q-mt-sm"
+              option-value="id"
               :label="$t('agent_level')"
-              :option-label="(name) => $t(Utils.getKey(name))"
+              :option-label="(item) => $t(Utils.getKey(item.name))"
               clearable
             />
             <q-select
               v-model="filters.status"
-              :options="['All', 'Normal', 'Locked']"
+              :options="['all', 'normal', 'locked']"
               outlined
               style="width: 200px"
               dense
@@ -70,7 +72,7 @@
               :end-placeholder="$t(Utils.getKey('End date'))"
               value-format="YYYY-MM-DD"
             />
-            <q-checkbox :label="$t('include_downline')" val="0" />
+            <q-checkbox v-model="filters.include_downline" :label="$t('include_downline')"/>
 
             <q-btn
               class="q-mr-sm q-mt-sm"
@@ -114,7 +116,7 @@
             </q-td>
           </template>
 
-          <template v-slot:body-cell-enable_ga="props">
+          <!-- <template v-slot:body-cell-enable_ga="props">
             <q-td class="text-center">
               <div>
                 <q-toggle
@@ -131,6 +133,30 @@
                   unchecked-icon="clear"
                   :true-value="1"
                   :false-value="0"
+                  size="40px"
+                  @update:model-value="onToggleClick(props.row)"
+                />
+              </div>
+            </q-td>
+          </template> -->
+
+          <template v-slot:body-cell-status="props">
+            <q-td class="text-center">
+              <div>
+                <q-toggle
+                  ref="toggleRef"
+                  style="height: 32px"
+                  :modelValue="props.row.status == 'normal' || props.row.status == null ? 'normal' : 'locked'"
+                  checked-icon="check"
+                  color="green"
+                  :label="
+                    props.row.status == 'locked'
+                      ? $t(Utils.getKey('locked'))
+                      : $t(Utils.getKey('on'))
+                  "
+                  unchecked-icon="clear"
+                  :true-value="'normal'"
+                  :false-value="'locked'"
                   size="40px"
                   @update:model-value="onToggleClick(props.row)"
                 />
@@ -290,8 +316,28 @@ const selectedUser = ref(null);
 const filters = reactive({
   name: "",
   parent_id: auth.state.user.id,
+  status: 'all',
+  include_downline: false
 });
-
+const levelOptions = ref([
+  {
+    id: 1,
+    name: "level 1",
+  },
+    {
+    id: 2,
+    name: "level 2",
+  }
+  ,
+    {
+    id: 3,
+    name: "level 3",
+  },
+    {
+    id: 4,
+    name: "level 4",
+  }
+])
 const showGoogleKeyConfirm = ref(false);
 const resetPassword = ref(false);
 const showDisbleGauth = ref(false);
@@ -304,6 +350,7 @@ onMounted(() => {
     pagination: {
       ...pagination.value,
       sortBy: "name",
+      include_downline: false,
     },
     filter: filter,
   });
@@ -356,7 +403,7 @@ const onToggleClick = (val) => {
 
 const resetFilters = () => {
   for (const [key, value] of Object.entries(filters)) {
-    if (key != "id") {
+    if (key != "parent_id") {
       filters[key] = "";
     }
   }
