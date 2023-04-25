@@ -20,29 +20,13 @@
     </q-bar>
     <q-card-section class="q-pt-lg">
       <q-form ref="refForm">
-        <q-input
-          :autofocus="true"
-          v-model="user.name"
-          :label="$t(Utils.getKey('Name'))"
-          dense
-          outlined
-          maxlength="20"
-          lazy-rules
-          :oninput="(evt) => Utils.containsOnlyCharacterAllLanguageEvent(evt)"
-          :rules="[
-            (val) => !!val || $t(Utils.getKey('Field is required')),
-            (val) =>
-              Utils.containsOnlyCharacterAllLanguage(val) ||
-              $t(Utils.getKey('Only character, numbers and space')),
-          ]"
-        />
 
         <q-input
           :autofocus="true"
           type="email"
           readonly
-          v-model="user.username"
-          :label="$t(Utils.getKey('username'))"
+          v-model="user.agentId"
+          :label="$t(Utils.getKey('agent_id'))"
           dense
           outlined
           :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
@@ -62,24 +46,6 @@
               (val) => !!val || $t(Utils.getKey('Field is required'))
             ]"
           />
-
-        <!-- <q-select
-          :autofocus="true"
-          v-model="user.role_id"
-          :options="roleOptions"
-          readonly
-          :label="$t(Utils.getKey('Role'))"
-          emit-value
-          map-options
-          option-label="name"
-          option-value="id"
-          dense
-          outlined
-          maxlength="20"
-          lazy-rules
-          :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
-        />
-        <q-select dense outlined :options="['All', 'Normal', 'Locked']" :option-label="lb => $t(Utils.getKey(lb))" /> -->
       </q-form>
     </q-card-section>
 

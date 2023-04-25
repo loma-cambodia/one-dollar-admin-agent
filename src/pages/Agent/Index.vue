@@ -18,7 +18,6 @@
           row-key="id"
           :columns="columns"
           v-model:pagination="pagination"
-          :filter="filters"
           @request="onRequest"
           :rows-per-page-options="[10, 15, 20, 50, 100, 150, 200, 500]"
           binary-state-sort
@@ -54,15 +53,6 @@
               :option-label="(name) => $t(Utils.getKey(name))"
               clearable
             />
-            <q-input
-              dense
-              class="q-mr-sm q-mt-sm"
-              outlined
-              debounce="300"
-              v-model="filters.agent_ID"
-              :placeholder="$t(Utils.getKey('agent_id'))"
-              style="width: 300px"
-            />
             <el-date-picker
               class="q-mr-sm q-mt-sm"
               v-model="filters.dates"
@@ -76,6 +66,13 @@
               v-model="filters.include_downline"
               :label="$t('include_downline')"
             />
+
+            <q-btn
+              class="q-mr-sm q-px-sm q-ml-sm capitalize"
+              color="primary"
+              @click="onSearch"
+              >{{ $t("search") }}</q-btn
+            >
 
             <q-btn
               class="q-mr-sm q-mt-sm"
@@ -173,11 +170,13 @@
 
           <template v-slot:body-cell-actions="props">
             <q-td class="text-center">
+              {{ props.row.level == 1 || !props.row.level ? " " : "..." }}
               <q-btn
                 class="q-ml-sm"
                 size="xs"
                 rounded
                 padding="5px"
+                v-if="props.row.level == 1 || !props.row.level"
                 color="primary"
                 icon="fas fa-pen"
                 @click="onEditClick(props.row)"
@@ -189,6 +188,7 @@
                 class="q-ml-sm"
                 size="xs"
                 rounded
+                v-if="props.row.level == 1 || !props.row.level"
                 padding="5px"
                 color="primary"
                 icon="mdi-filter-remove-outline"
@@ -201,6 +201,7 @@
                 class="q-ml-sm"
                 size="xs"
                 rounded
+                v-if="props.row.level == 1 || !props.row.level"
                 padding="5px"
                 color="primary"
                 icon="mdi-google-plus"
@@ -210,10 +211,10 @@
                   $t(Utils.getKey("reset google authenticator"))
                 }}</q-tooltip>
               </q-btn>
-
               <q-btn
                 class="q-ml-sm"
                 size="xs"
+                v-if="props.row.level == 1 || !props.row.level"
                 rounded
                 padding="5px"
                 color="negative"
@@ -320,7 +321,7 @@ const {
 
 const $q = useQuasar();
 const selectedUser = ref(null);
-const filters = reactive({
+const filters = ref({
   name: "",
   parent_id: auth.state.user.id,
   status: "all",
@@ -344,6 +345,16 @@ const levelOptions = ref([
     name: "level 4",
   },
 ]);
+const onSearch = () => {
+  onRequest({
+    pagination: {
+      ...pagination.value,
+      sortBy: "name",
+      include_downline: false,
+    },
+    filter: filters.value,
+  });
+};
 const showGoogleKeyConfirm = ref(false);
 const resetPassword = ref(false);
 const showDisbleGauth = ref(false);
@@ -358,7 +369,7 @@ onMounted(() => {
       sortBy: "name",
       include_downline: false,
     },
-    filter: filter,
+    filter: filters.value,
   });
 });
 
@@ -412,14 +423,14 @@ const onToggleClick = async (val) => {
 };
 
 const resetFilters = () => {
-  for (const [key, value] of Object.entries(filters)) {
-    if (key != "parent_id" && key !="include_downline") {
-      filters[key] = "";
-    }
-    if (key == "status") {
-      filters[key] = "all";
-    }
+  let f = {
+    name: "",
+  parent_id: auth.state.user.id,
+  status: "all",
+  include_downline: false,
   }
+  filters.value = f
+  onSearch();
 };
 
 const updateUser = async () => {

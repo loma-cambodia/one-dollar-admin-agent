@@ -21,36 +21,10 @@
 
     <q-card-section class="q-pt-lg">
       <q-form ref="refForm" autocomplete="off">
-        <!-- <form autocomplete="off">
-          <q-select
-            class="q-pb-md"
-            v-model="user.parent_id"
-            :options="agentItems"
-            :label="$t(Utils.getKey('agent'))"
-            emit-value
-            map-options
-            option-label="username"
-            option-value="id"
-            dense
-            outlined
-            maxlength="20"
-          />
-        </form> -->
         <form autocomplete="off">
           <q-input
-            v-model="user.name"
-            autocomplete="off"
-            :label="$t(Utils.getKey('Name'))"
-            :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
-            dense
-            outlined
-            maxlength="20"
-          />
-        </form>
-        <form autocomplete="off">
-          <q-input
-            v-model="user.username"
-            :label="$t(Utils.getKey('username'))"
+            v-model="user.agent_id"
+            :label="$t(Utils.getKey('agent_id'))"
             dense
             outlined
             :oninput="
@@ -79,7 +53,7 @@
         <form autocomplete="off">
           <q-input
             type="number"
-            v-model="user.child_commision"
+            v-model="user.own_commision"
             :label="$t(Utils.getKey('profit'))"
             dense
             outlined
@@ -90,25 +64,6 @@
             ]"
           />
         </form>
-        <!-- <form autocomplete="off">
-          <q-select
-            v-model="user.role_id"
-            :options="roleOptions"
-            :label="$t(Utils.getKey('Role'))"
-            emit-value
-            map-options
-            option-label="name"
-            option-value="id"
-            dense
-            outlined
-            maxlength="20"
-            lazy-rules
-            :rules="[
-              (val) => !!val || $t(Utils.getKey('Field is required')),
-              (val) => val || $t(Utils.getKey('Please select Role')),
-            ]"
-          />
-        </form> -->
       </q-form>
     </q-card-section>
 
@@ -135,11 +90,9 @@
 </template>
 
 <script setup>
-import { ref, watch, inject } from "vue";
+import { ref, inject } from "vue";
 import { useQuasar } from "quasar";
 import useAgent from "src/composables/useAgent";
-import useACL from "src/composables/useACL";
-
 import { useI18n } from "vue-i18n";
 import Utils from "src/helpers/Utils";
 
@@ -149,15 +102,11 @@ const emit = defineEmits(["onClose", "onAdded"]);
 const refForm = ref(null);
 const $q = useQuasar();
 const { saving, add, all } = useAgent();
-const { getAllRoles } = useACL();
-const roleOptions = ref([]);
 const user = ref({
-  name: "",
-  username: "",
+  agent_id: "",
   password: "",
-  role_id: "",
   parent_id: auth.state.user.id,
-  child_commision: ''
+  own_commision: ''
 });
 const agentItems = ref([]);
 
@@ -167,32 +116,9 @@ const getAgent = async () => {
   console.log(agentItems.value, "agentItems");
 };
 
-Promise.allSettled([fetchRoles(), getAgent()]);
-
-watch(
-  () => user.value.role_id,
-  (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      let role = roleOptions.value.find((item) => item.id == newValue);
-    }
-  }
-);
-
-async function fetchRoles() {
-  try {
-    const response = await getAllRoles();
-    roleOptions.value = response.data.filter(
-      (item) => item.name == "Agent" || item.name == "agent"
-    );
-    if (response.data.length) {
-      user.value.role_id = response.data[0].id;
-    }
-  } catch (e) {}
-}
+Promise.allSettled([getAgent()]);
 
 async function onSubmit() {
-  let role = roleOptions.value.find((item) => item.id == user.value.role_id);
-
   try {
     let validation = await refForm.value.validate();
     if (!validation) {
