@@ -73,8 +73,14 @@
               @click="onSearch"
               >{{ $t("search") }}</q-btn
             >
-
             <q-btn
+              class="q-mr-sm q-px-sm q-ml-sm capitalize"
+              color="warning"
+              @click="resetFilters"
+              >{{ $t("reset") }}</q-btn
+            >
+
+            <!---<q-btn
               class="q-mr-sm q-mt-sm"
               dense
               color="primary"
@@ -82,7 +88,7 @@
               rounded
               style="margin-left: 10px"
               @click="resetFilters"
-            />
+            /> -->
             <q-space />
 
             <q-btn
@@ -349,7 +355,7 @@ const onSearch = () => {
   onRequest({
     pagination: {
       ...pagination.value,
-      sortBy: "name",
+      sortBy: "agent_id",
       include_downline: false,
     },
     filter: filters.value,
@@ -366,7 +372,7 @@ onMounted(() => {
   onRequest({
     pagination: {
       ...pagination.value,
-      sortBy: "name",
+      sortBy: "agent_id",
       include_downline: false,
     },
     filter: filters.value,

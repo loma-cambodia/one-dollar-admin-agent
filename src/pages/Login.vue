@@ -54,7 +54,7 @@
               </q-select>
             </q-card-section>
             <q-card-section class="q-pt-none">
-              <label>{{ $t(Utils.getKey("Username")) }}</label>
+              <label>{{ $t(Utils.getKey("Agent Id")) }}</label>
               <q-input
                 autofocus
                 :disable="loading"
@@ -274,11 +274,11 @@ async function onSubmit() {
       await api.get("/sanctum/csrf-cookie");
 
       // const response = await axoisInstance.post("/auth/login", {
-      //   username: name.value,
+      //   agent_id: name.value,
       //   password: password.value,
       // });
       const response = await api.post("/login", {
-        username: name.value,
+        agent_id: name.value,
         password: password.value,
       });
 

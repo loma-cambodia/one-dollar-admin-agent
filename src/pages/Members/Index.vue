@@ -36,6 +36,12 @@
               @click="resetFilters"
             />
             <q-space />
+            <!-- <q-btn
+              :disable="loading"
+              @click="showAdd = true"
+              color="primary"
+              :label="$t('new_member')"
+            /> -->
           </template>
 
           <!-- header column -->
@@ -166,6 +172,10 @@
       />
     </q-dialog>
 
+    <q-dialog v-model="showAdd" position="top" persistent>
+      <add-user @onClose="showAdd = false" @onAdded="onRefresh(filter)" />
+    </q-dialog>
+
     <q-dialog v-model="showEdit" position="top" persistent>
       <edit-member
       :data="selectedMembers"
@@ -202,6 +212,8 @@ import showMlmTree from "../../components/Members/ShowMlmTree.vue";
 import Confirm from "../../components/Shared/Confirm.vue";
 import Reset from "../../components/Members/Reset.vue";
 import Loading from "src/components/Shared/Loading.vue";
+
+import AddUser from "../../components/Members/Add.vue";
 
 const { loading, columns, items, trash, paginate } = useMember();
 const {

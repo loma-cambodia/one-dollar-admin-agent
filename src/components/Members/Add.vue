@@ -14,7 +14,7 @@
     <q-card-section class="q-pt-lg">
       <div class="row">
         <div class="col-12 col-md-6 q-pr-md">
-          <q-input :autofocus="true" v-model="member.idd" :label="$t(Utils.getKey('Idd'))" dense outlined maxlength="20" />
+          <q-input :autofocus="true" v-model="member.member_ID" :label="$t(Utils.getKey('MEMBER ID'))" dense outlined maxlength="20" />
           </div>
           <div class="col-12 col-md-6 q-pr-md">
       <q-input :autofocus="true" v-model="member.phone_number" :label="$t(Utils.getKey('Phone Number'))" dense outlined maxlength="20" />
@@ -24,36 +24,8 @@
 
     <q-card-section class="q-pt-lg">
       <div class="row">
-        <div class="col-12 col-md-6 q-pr-md">
-          <q-input :autofocus="true" v-model="member.first_name" :label="$t(Utils.getKey('First Name'))" dense outlined maxlength="20" />
-          </div>
           <div class="col-12 col-md-6 q-pr-md">
-      <q-input :autofocus="true" v-model="member.last_name" :label="$t(Utils.getKey('Last Name'))" dense outlined maxlength="20" />
-        </div>
-      </div>
-    </q-card-section>
-
-    <q-card-section class="q-pt-lg">
-      <div class="row">
-        <div class="col-12 col-md-6 q-pr-md">
-          <q-input :autofocus="true" v-model="member.display_name" :label="$t(Utils.getKey('Display Name'))" dense outlined maxlength="20" />
-          </div>
-          <div class="col-12 col-md-6 q-pr-md">
-      <q-input
-
-      :autofocus="true" type="email" aria-autocomplete="none" autocomplete="off" v-model="member.email"
-          :label="$t(Utils.getKey('Email Id'))" dense outlined  required maxlength="40"
-          @keydown.space="(event) => event.preventDefault()"
-          :rules="[ (val, rules) => rules.email(val) || $t(Utils.getKey('invalid email address'))  ]"
-         />
-        </div>
-      </div>
-    </q-card-section>
-
-    <q-card-section class="q-pt-lg">
-      <div class="row">
-          <div class="col-12 col-md-6 q-pr-md">
-            <q-input :autofocus="true" v-model="member.parent_referral_code" :label="$t(Utils.getKey('Parent Referral Code'))" dense outlined maxlength="20" />
+            <q-input :autofocus="true" v-model="member.password" :label="$t(Utils.getKey('Confirm Password'))" dense outlined maxlength="20" />
         </div>
         <div class="col-12 col-md-6 q-pr-md">
             <q-input :autofocus="true" v-model="member.password" :label="$t(Utils.getKey('Password'))" dense outlined maxlength="20" />
@@ -85,6 +57,7 @@ const $q = useQuasar();
 const { saving, add } = useMember();
 const member = ref({
   first_name: "",
+  member_ID: "",
   last_name: "",
   display_name: "",
   phone_number: "",
@@ -92,14 +65,15 @@ const member = ref({
   referral_code:"",
   parent_referral_code:"",
   idd:"",
-  password: Utils.randomString(12)
+  // password: Utils.randomString(12),
+  password: ""
 });
 
 watch(
-  () => member.value.first_name,
+  {/* () => member.value.first_name,
   () => {
     console.log(member.value.first_name)
-  }
+  } */}
 );
 
 async function onSubmit() {

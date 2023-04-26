@@ -27,14 +27,14 @@
 
     <template v-else-if="roleUsers.length !== 0">
       <q-card-section>
-        <div class="text-bold text-uppercase q-pb-sm">
+        {/* <div class="text-bold text-uppercase q-pb-sm">
           {{ $t(Utils.getKey(props.user.name + "s Role Users")) }}
-        </div>
+        </div> */}
         <q-list bordered separator>
           <q-item v-for="(user, i) in roleUsers" :key="i">
             <q-item-section>
-              <q-item-label>{{ i + 1 }}. {{ user.name }}</q-item-label>
-              <q-item-label caption>{{ user.email }}</q-item-label>
+              // <q-item-label>{{ i + 1 }}. {{ user.name }}</q-item-label>
+              // <q-item-label caption>{{ user.email }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -120,7 +120,7 @@ async function getRoleUsers() {
   }
 }
 
-async function initRoles() {
+{/* async function initRoles() {
   try {
     const response = await getAllRoles();
     roles.value = response.data
@@ -136,7 +136,7 @@ async function initRoles() {
   } catch (err) {
     console.log(err);
   }
-}
+} */}
 
 async function onSubmit() {
   if (roleUsers.value.length && !newRole.value) {

@@ -287,7 +287,8 @@ const {
 const $q = useQuasar();
 const selectedUser = ref(null);
 const filters = reactive({
-  name: "",
+  // name: "",
+  agent_id: "",
 });
 
 const showGoogleKeyConfirm = ref(false);
@@ -298,7 +299,7 @@ onMounted(() => {
   onRequest({
     pagination: {
       ...pagination.value,
-      sortBy: "name",
+      sortBy: "agent_id",
     },
     filter: undefined,
   });
