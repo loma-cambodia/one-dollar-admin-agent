@@ -25,7 +25,7 @@
           :autofocus="true"
           type="email"
           readonly
-          v-model="user.agentId"
+          v-model="user.agent_id"
           :label="$t(Utils.getKey('agent_id'))"
           dense
           outlined
@@ -36,7 +36,7 @@
         />
           <q-input
             type="profit"
-            v-model="user.child_commision"
+            v-model="user.own_commision"
             :label="$t(Utils.getKey('profit'))"
             dense
             outlined
