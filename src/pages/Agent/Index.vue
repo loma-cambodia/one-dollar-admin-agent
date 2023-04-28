@@ -35,9 +35,9 @@
               emit-value
               map-options
               class="q-mr-sm q-mt-sm"
-              option-value="id"
+              option-value="level"
               :label="$t('agent_level')"
-              :option-label="(item) => $t(Utils.getKey(item.name))"
+              :option-label="(item) => $t(Utils.getKey('level')) + ' ' + item.level "
               clearable
             />
             <q-select
@@ -50,6 +50,16 @@
               class="q-mr-sm q-mt-sm"
               map-options
               :label="$t('agent_status')"
+              :option-label="(name) => $t(Utils.getKey(name))"
+              clearable
+            />
+            <q-input
+              v-model="filters.agent_id"
+              outlined
+              style="width: 200px"
+              dense
+              class="q-mr-sm q-mt-sm"
+              :label="$t('agent_id')"
               :option-label="(name) => $t(Utils.getKey(name))"
               clearable
             />
@@ -176,13 +186,13 @@
 
           <template v-slot:body-cell-actions="props">
             <q-td class="text-center">
-              {{ props.row.level == 1 || !props.row.level ? " " : "..." }}
+              {{ props.row.level == 2 || props.row.level >= 2 ? " " : "..." }}
               <q-btn
                 class="q-ml-sm"
                 size="xs"
                 rounded
                 padding="5px"
-                v-if="props.row.level == 1 || !props.row.level"
+                v-if="props.row.level == 2"
                 color="primary"
                 icon="fas fa-pen"
                 @click="onEditClick(props.row)"
@@ -194,7 +204,7 @@
                 class="q-ml-sm"
                 size="xs"
                 rounded
-                v-if="props.row.level == 1 || !props.row.level"
+                v-if="props.row.level >= 2"
                 padding="5px"
                 color="primary"
                 icon="mdi-filter-remove-outline"
@@ -207,7 +217,7 @@
                 class="q-ml-sm"
                 size="xs"
                 rounded
-                v-if="props.row.level == 1 || !props.row.level"
+                v-if="props.row.level == 2"
                 padding="5px"
                 color="primary"
                 icon="mdi-google-plus"
@@ -220,7 +230,7 @@
               <q-btn
                 class="q-ml-sm"
                 size="xs"
-                v-if="props.row.level == 1 || !props.row.level"
+                v-if="props.row.level >= 2"
                 rounded
                 padding="5px"
                 color="negative"
@@ -313,6 +323,7 @@ const {
   isDeteteAble,
   update,
   saving,
+  getAllLevel
 } = useAgent();
 const {
   showAdd,
@@ -333,24 +344,16 @@ const filters = ref({
   status: "all",
   include_downline: false,
 });
-const levelOptions = ref([
-  {
-    id: 1,
-    name: "level 1",
-  },
-  {
-    id: 2,
-    name: "level 2",
-  },
-  {
-    id: 3,
-    name: "level 3",
-  },
-  {
-    id: 4,
-    name: "level 4",
-  },
-]);
+const levelOptions = ref([]);
+
+const allLevelAgen = async () => {
+  let res = await getAllLevel();
+  console.log('res' , res)
+  levelOptions.value = res.data
+};
+
+allLevelAgen()
+
 const onSearch = () => {
   onRequest({
     pagination: {

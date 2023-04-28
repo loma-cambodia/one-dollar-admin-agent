@@ -32,7 +32,7 @@ export default function useAgent() {
       name: "level",
       label: "level",
       required: true,
-      field: (row) => row.level ? 'L' + row?.level : 'L' + 1,
+      field: (row) => 'L' + row?.level ,
       align: "center",
       sortable: false,
     },
@@ -40,7 +40,7 @@ export default function useAgent() {
       name: "Upline",
       label: "Upline",
       required: true,
-      field: (row) => row?.parent?.agent_id,
+      field: (row) => row?.upline,
       align: "center",
       sortable: false,
     },
@@ -48,7 +48,39 @@ export default function useAgent() {
       name: "Profit Sharing",
       label: "Profit Sharing",
       required: true,
-      field: (row) => row.level == 1 || !row.level ? row.own_commision : "...",
+      field: (row) => row.level == 2 || row.level == 1 ? row.own_commision + ' %' : "...",
+      align: "center",
+      sortable: false,
+    },
+    {
+      name: "Direct Member",
+      label: "Direct Member",
+      required: true,
+      field: (row) => 100,
+      align: "center",
+      sortable: false,
+    },
+    {
+      name: "Team Member",
+      label: "Team Member",
+      required: true,
+      field: (row) => 100,
+      align: "center",
+      sortable: false,
+    },
+    {
+      name: "Direct Agent",
+      label: "Direct Agent",
+      required: true,
+      field: (row) => row.direct_agent,
+      align: "center",
+      sortable: false,
+    },
+    {
+      name: "Team Agent",
+      label: "Team Agent",
+      required: true,
+      field: (row) => row.team_agent,
       align: "center",
       sortable: false,
     },
@@ -224,6 +256,16 @@ export default function useAgent() {
     }
   };
 
+  const getAllLevel = async () => {
+    try {
+      const response = await api.get("/agents/level-all");
+      return response;
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    }
+  };
+
   return {
     ...toRefs(state),
     columns,
@@ -238,6 +280,7 @@ export default function useAgent() {
     all,
     verifyUser2FA,
     verifyCode,
-    enableGa
+    enableGa,
+    getAllLevel
   };
 }
