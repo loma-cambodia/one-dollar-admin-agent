@@ -18,24 +18,58 @@
           :rows-per-page-label="$t(Utils.getKey('Records per page'))"
         >
           <template v-slot:top>
+          <q-select
+              v-model="filters.level"
+              :options="levelOptions"
+              outlined
+              style="width: 200px"
+              dense
+              :disable="!filters.include_downline"
+              emit-value
+              map-options
+              class="q-mr-sm q-mt-sm"
+              option-value="level"
+              :label="$t('member_level')"
+              :option-label="(item) => $t(Utils.getKey('level')) + ' ' + item.level "
+              clearable
+            />
+            <q-input
+            dense
+            outlined
+            debounce="300"
+            v-model="filters.member_ID"
+            :placeholder="$t(Utils.getKey('Search member id'))"
+            style="width: 300px"
+          />
             <q-input
               dense
               outlined
               debounce="300"
-              v-model="filters.member_ID"
-              :placeholder="$t(Utils.getKey('Search member id'))"
+              v-model="filters.created_at"
+              :placeholder="$t(Utils.getKey('Search register time'))"
+              style="width: 300px"
+            />
+            <q-input
+              dense
+              outlined
+              debounce="300"
+              v-model="filters.updated_at"
+              :placeholder="$t(Utils.getKey('Search last login time'))"
               style="width: 300px"
             />
             <q-btn
-              class="q-mr-sm q-mt-xs"
-              dense
+              class="q-mr-sm q-px-sm q-ml-sm capitalize"
               color="primary"
-              icon="mdi-filter-remove-outline"
-              rounded
-              style="margin-left: 10px"
+              @click="onSearch"
+              >{{ $t("search") }}</q-btn
+            >
+
+            <q-btn
+              class="q-mr-sm q-px-sm q-ml-sm capitalize"
+              color="warning"
               @click="resetFilters"
-            />
-            <q-space />
+              >{{ $t("reset") }}</q-btn
+            >
             <!-- <q-btn
               :disable="loading"
               @click="showAdd = true"
@@ -108,11 +142,24 @@
             </q-td>
           </template>
 
+          <template v-slot:body-cell-status="props">
+            <q-td class="text-left">
+              {{ props.row.status }}
+            </q-td>
+          </template>
+
             <template v-slot:body-cell-amount="props">
             <q-td class="text-left">
               {{ props.row.amount?props.row.amount.toFixed(2):'0.00' }}
             </q-td>
           </template>
+
+          <template v-slot:body-cell-betamount="props">
+            <q-td class="text-left">
+              {{ props.row.betamount }}
+            </q-td>
+          </template>
+
 
           <template v-slot:body-cell-actions="props">
             <q-td class="text-center">
