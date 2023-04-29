@@ -32,7 +32,7 @@ export default function useAgent() {
       name: "level",
       label: "level",
       required: true,
-      field: (row) => 'L' + row?.level ,
+      field: (row) => 'L' + row?.levelLable ,
       align: "center",
       sortable: false,
     },
