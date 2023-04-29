@@ -37,7 +37,7 @@
               class="q-mr-sm q-mt-sm"
               option-value="level"
               :label="$t('agent_level')"
-              :option-label="(item) => $t(Utils.getKey('level')) + ' ' + item.level "
+              :option-label="(item) => $t(Utils.getKey('level')) + ' ' + item.levelLable "
               clearable
             />
             <q-select
@@ -159,7 +159,9 @@
           <template v-slot:body-cell-status="props">
             <q-td class="text-center">
               <div>
+              {{ props.row.level == 2 || props.row.level >= 2 ? " " : "..." }}
                 <q-toggle
+                  v-if="props.row.level == 2 || props.row.level >= 2"
                   ref="toggleRef"
                   style="height: 32px"
                   :modelValue="
