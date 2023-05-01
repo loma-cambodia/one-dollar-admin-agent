@@ -50,10 +50,10 @@ module.exports = configure(function (ctx) {
       env: {
         API_URL: ctx.dev
           ? "http://localhost:8000/api/agent"
-          : "https://the1shops.com:8090/api/agent",
+          : "http://agent-api.kk-lotto.com:8080/api/agent",
         API_URL_LOGIN: ctx.dev
           ? "http://localhost:8000/api"
-          : "https://the1shops.com:8090/api",
+          : "http://agent-api.kk-lotto.com:8080/api",
       },
       // transpile: false, https://the1shops.com:8090/api/admin
       // publicPath: '/', http://one-dollar-mlm-api.kk-lotto.com:8080/api/admin
