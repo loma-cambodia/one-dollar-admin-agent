@@ -1218,5 +1218,12 @@
     "oneshop": "Oneshop",
     "normal": "Normal",
     "locked": "Locked",
-    "include_downline": "Include downline"
+    "include_downline": "Include downline",
+    "level": "Level",
+    "upline": "Upline",
+    "profit_sharing": "Profit sharing",
+    "direct_member": "Direct member",
+    "team_member": "Team member",
+    "direct_agent": "Direct agent",
+    "team_agent": "Team agent"
 }

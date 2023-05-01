@@ -265,6 +265,24 @@ export default function useAgent() {
       throw Utils.getErrorMessage(err);
     }
   };
+  // const resetProfit = async () => {
+  //   try {
+  //     const response = await api.post("", );
+  //     return response;
+  //   } catch (err) {
+  //     //throw Error(Utils.getErrorMessage(err));
+  //     throw Utils.getErrorMessage(err);
+  //   }
+  // };
+  const resetProfit = async (id) => {
+    try {
+      const response = await api.post(`/agents-reset-profit/${id}`);
+      return response;
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    }
+  };
 
   return {
     ...toRefs(state),
@@ -281,6 +299,7 @@ export default function useAgent() {
     verifyUser2FA,
     verifyCode,
     enableGa,
-    getAllLevel
+    getAllLevel,
+    resetProfit
   };
 }

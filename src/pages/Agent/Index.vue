@@ -37,7 +37,9 @@
               class="q-mr-sm q-mt-sm"
               option-value="level"
               :label="$t('agent_level')"
-              :option-label="(item) => $t(Utils.getKey('level')) + ' ' + item.levelLable "
+              :option-label="
+                (item) => $t(Utils.getKey('level')) + ' ' + item.levelLable
+              "
               clearable
             />
             <q-select
@@ -159,7 +161,7 @@
           <template v-slot:body-cell-status="props">
             <q-td class="text-center">
               <div>
-              {{ props.row.level == 2 || props.row.level >= 2 ? " " : "..." }}
+                {{ props.row.level == 2 || props.row.level >= 2 ? " " : "..." }}
                 <q-toggle
                   v-if="props.row.level == 2 || props.row.level >= 2"
                   ref="toggleRef"
@@ -201,7 +203,18 @@
               >
                 <q-tooltip>{{ $t(Utils.getKey("Edit")) }}</q-tooltip>
               </q-btn>
-
+              <q-btn
+                class="q-ml-sm"
+                size="xs"
+                v-if="props.row.level == 2"
+                rounded
+                padding="5px"
+                color="negative"
+                icon="mdi-filter-remove-outline"
+                @click="onResetProfitClick(props.row)"
+              >
+                <q-tooltip>{{ $t(Utils.getKey("Reset Profit")) }}</q-tooltip>
+              </q-btn>
               <q-btn
                 class="q-ml-sm"
                 size="xs"
@@ -275,6 +288,16 @@
         :deleting="deleting"
       />
     </q-dialog>
+
+    <q-dialog v-model="showConfirmResteProfit" persistent>
+      <Confirm
+        :message="`Are you sure you want to reset profit`"
+        @cancel="showConfirmResteProfit = false"
+        @confirm="onProfitReset()"
+        :buttonLabel="$t('go')"
+        :deleting="deleting"
+      />
+    </q-dialog>
     <q-dialog v-model="showGoogleKeyConfirm" persistent>
       <Confirm
         :message="`Reset google authenticator`"
@@ -325,12 +348,14 @@ const {
   isDeteteAble,
   update,
   saving,
-  getAllLevel
+  getAllLevel,
+  resetProfit,
 } = useAgent();
 const {
   showAdd,
   showEdit,
   showConfirm,
+  showConfirmResteProfit,
   selected,
   pagination,
   onRequest,
@@ -350,11 +375,32 @@ const levelOptions = ref([]);
 
 const allLevelAgen = async () => {
   let res = await getAllLevel();
-  console.log('res' , res)
-  levelOptions.value = res.data
+  console.log("res", res);
+  levelOptions.value = res.data;
 };
 
-allLevelAgen()
+allLevelAgen();
+
+const profitSelect = ref({});
+const onProfitReset = async () => {
+  try {
+    let res = await resetProfit(profitSelect.value.id);
+    showConfirmResteProfit.value = false;
+    $q.notify({
+      position: "top-right",
+      type: "positive",
+      icon: "positive",
+      message: i18n.global.t(Utils.getKey(res.data.messages[0])),
+    });
+  } catch (err) {
+    $q.notify({
+      position: "top-right",
+      type: "negative",
+      icon: "fas fa-exclamation-triangle",
+      message: err.toString(),
+    });
+  }
+};
 
 const onSearch = () => {
   onRequest({
@@ -402,6 +448,17 @@ const onEditClick = (row) => {
   selectedUser.value = row;
 };
 
+const onResetProfitClick = async (row) => {
+  // let res = await isDeteteAble(row.id);
+  // if (res.data) {
+  //   if (res.data.length > 0) {
+  //     showNotEditable.value = true;
+  //     return;
+  //   }
+  // }
+  showConfirmResteProfit.value = true;
+  profitSelect.value = row;
+};
 const onDeleteClick = async (row) => {
   // let res = await isDeteteAble(row.id);
   // if (res.data) {
@@ -436,11 +493,11 @@ const onToggleClick = async (val) => {
 const resetFilters = () => {
   let f = {
     name: "",
-  parent_id: auth.state.user.id,
-  status: "all",
-  include_downline: false,
-  }
-  filters.value = f
+    parent_id: auth.state.user.id,
+    status: "all",
+    include_downline: false,
+  };
+  filters.value = f;
   onSearch();
 };
 

@@ -12,6 +12,7 @@ export default function useTable(paginate, trash, bulkTrash) {
     showEdit: false,
     showDelete: false,
     showConfirm: false,
+    showConfirmResteProfit:false,
     filters: {},
     selected: [],
   });
