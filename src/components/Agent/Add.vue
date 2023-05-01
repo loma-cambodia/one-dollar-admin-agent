@@ -54,7 +54,7 @@
           <q-input
             type="number"
             v-model="user.own_commision"
-            :label="$t(Utils.getKey('profit'))"
+            :label="$t(Utils.getKey('profit'))+ ' ' +'0-10 %'"
             dense
             outlined
             maxlength="20"
