@@ -1235,12 +1235,10 @@
     "normal": "Normal",
     "locked": "Locked",
     "include_downline": "Include downline",
-    "level": "Level",
-    "upline": "Upline",
-    "profit_sharing": "Profit sharing",
-    "direct_member": "Direct member",
-    "team_member": "Team member",
-    "direct_agent": "Direct agent",
-    "team_agent": "Team agent"
+    "registration_time": "Registration Time",
+    "last_login_time": "Last Login Time",
+    "win_loss": "W/L",
+    "member_status": "Member Status",
+    "member_ID": "Member ID"
   }
 

@@ -54,21 +54,29 @@ export default function useMember() {
       sortable: true,
     },
 
+
     {
-      name: "created_at",
-      label: "Registration Time",
+      name: "winloss",
+      label: "WinnerLoss",
       required: true,
       field: (row) => row,
       align: "left",
       sortable: true,
     },
-
+    {
+      name: "created_at",
+      label: "Registration Time",
+      required: true,
+      field: (row) => date.formatDate(row.created_at, "YYYY-MM-DD HH:mm:ss"),
+      align: "center",
+      sortable: true,
+    },
     {
       name: "updated_at",
       label: "Last Login Time",
       required: true,
-      field: (row) => row,
-      align: "left",
+      field: (row) => date.formatDate(row.updated_at, "YYYY-MM-DD HH:mm:ss"),
+      align: "center",
       sortable: true,
     },
     // {
@@ -218,6 +226,16 @@ export default function useMember() {
     }
   };
 
+  const getAllLevel = async () => {
+    try {
+      const response = await api.get("/members/all");
+      return response;
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    }
+  };
+
   const updatePassword = async (id, data) => {
     try {
       state.saving = true;
@@ -282,6 +300,7 @@ export default function useMember() {
     updatePassword,
     paginateBot,
     allBot,
+    getAllLevel,
     addBotCount
   };
 }
