@@ -30,6 +30,7 @@
             :oninput="
               (evt) => Utils.containsOnlyCharacterAllLanguageEvent2(evt)
             "
+            @keydown.space.prevent
             autocomplete="off"
             maxlength="20"
             :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
@@ -57,7 +58,10 @@
             :label="$t(Utils.getKey('profit'))+ ' ' +'0-10 %'"
             dense
             outlined
-            maxlength="20"
+            required
+            maxlength="3"
+            minValue="1"
+            maxValue="5"
             lazy-rules
             :rules="[
               (val) => !!val || $t(Utils.getKey('Field is required'))

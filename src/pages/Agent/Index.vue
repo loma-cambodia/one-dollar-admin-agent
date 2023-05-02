@@ -182,9 +182,11 @@
                   :true-value="'normal'"
                   :false-value="'locked'"
                   size="40px"
+
                   @update:model-value="onToggleClick(props.row)"
                 />
               </div>
+              <!-- @update:model-value="onToggleClick(props.row)" -->
             </q-td>
           </template>
 
@@ -250,10 +252,22 @@
                 padding="5px"
                 color="negative"
                 icon="fas fa-trash"
-                @click="onDeleteClick(props.row)"
+                @click="props.row.team_agent == 0 ? onDeleteClickNotDelete(props.row) : onDeleteClick(props.row)"
               >
                 <q-tooltip>{{ $t(Utils.getKey("Delete")) }}</q-tooltip>
               </q-btn>
+              <!-- <q-btn
+                class="q-ml-sm"
+                size="xs"
+                v-if="props.row.level >= 2"
+                rounded
+                padding="5px"
+                color="negative"
+                icon="fas fa-trash"
+                @click="onDeleteClickNotDelete(props.row)"
+              >
+                <q-tooltip>{{ $t(Utils.getKey("Delete")) }}</q-tooltip>
+              </q-btn> -->
             </q-td>
           </template>
         </q-table>
@@ -470,6 +484,14 @@ const onDeleteClick = async (row) => {
   showConfirm.value = true;
   selected.value = [];
   selected.value.push(row);
+};
+const onDeleteClickNotDelete = () => {
+  $q.notify({
+    position: "top-right",
+    type: "negative",
+    icon: "fas fa-exclamation-triangle",
+    message: i18n.global.t(Utils.getKey("not able to delete")),
+  });
 };
 const onResetClick = async (row) => {
   resetPassword.value = true;
