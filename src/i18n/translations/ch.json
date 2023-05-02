@@ -1227,7 +1227,7 @@
     "direct_agent": "直属代理",
     "Your acount is Locked": "账号已封锁",
     "team_agent": "团队代理",
-    "Profit Sharing Must Be less Or Equal To Your Profit": "Profit Sharing Must Be less Or Equal To Your Profit",
+    "profit_sharing_must_be_less_or_equal_to_your_profit": "Profit Sharing Must Be less Or Equal To Your Profit",
     "First Reset Profit Sharing": "First Reset Profit Sharing",
     "Profit Reseted successfully": "Profit Reseted successfully"
 
