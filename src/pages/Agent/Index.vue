@@ -276,7 +276,7 @@
         </q-table>
         <div>
           <p>
-            Total Agent: {{ total }}    Total Member: 100
+            Total Agent: {{ total }}    Total Member: {{ totalMember }}
           </p>
         </div>
       </q-card-section>
@@ -372,6 +372,7 @@ import auth from "src/store/auth";
 const {
   loading,
   total,
+  totalMember,
   deleting,
   columns,
   items,

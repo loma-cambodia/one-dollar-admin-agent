@@ -40,13 +40,13 @@
             :label="$t(Utils.getKey('profit'))"
             dense
             outlined
-            minLength="2" maxlength="3"
             lazy-rules
             :rules="[
               (val) => !!val || $t(Utils.getKey('Field is required'))
             ]"
           />
       </q-form>
+      <!-- minLength="2" maxlength="3" -->
       <div>
         <p>
             {{ $t(Utils.getKey('profit_sharing_notes')) }}

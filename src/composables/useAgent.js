@@ -9,7 +9,8 @@ export default function useAgent() {
     saving: false,
     deleting: false,
     items: [],
-    total: 0
+    total: 0,
+    totalMember:0
   });
 
   const columns = [
@@ -57,7 +58,7 @@ export default function useAgent() {
       name: "Direct Member",
       label: "Direct Member",
       required: true,
-      field: (row) => 100,
+      field: (row) => row.directMember,
       align: "center",
       sortable: false,
     },
@@ -65,7 +66,7 @@ export default function useAgent() {
       name: "Team Member",
       label: "Team Member",
       required: true,
-      field: (row) => 100,
+      field: (row) => row.teamMember,
       align: "center",
       sortable: false,
     },
@@ -206,9 +207,10 @@ export default function useAgent() {
         : props.pagination;
     try {
       const response = await api.get("/agents/paginate", { params });
-      state.items = response.data.data;
+      state.items = response.data.data.data;
       state.loading = false;
-      state.total = response.data.total;
+      state.total = response.data.data.total;
+      state.totalMember = response.data.total_member;
       // console.log(response);
       return response;
     } catch (err) {
