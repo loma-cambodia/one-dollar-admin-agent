@@ -291,7 +291,7 @@ import Reset from "../../components/Members/Reset.vue";
 import Loading from "src/components/Shared/Loading.vue";
 
 import AddUser from "../../components/Members/Add.vue";
-import auth from "src/store/auth";
+import Auth from "src/store/auth";
 
 const { loading, getAllLevel, columns, items, trash, paginate, totalWalletAmounts, totalBetAmounts, totalWinAmounts } = useMember();
 const {
@@ -320,6 +320,7 @@ const resetPassword = ref(false);
 const filters = ref({
   member_ID: "",
   dates: [],
+  agent_referral_code: Auth.state.user.referral_code
 });
 const levelOptions = ref(['all','active', 'inactive']);
 
@@ -328,6 +329,7 @@ const onSearch = () => {
     pagination: {
       ...pagination.value,
       sortBy: "member_ID",
+      agent_referral_code: Auth.state.user.referral_code
     },
     filter: filters.value,
   });
@@ -337,6 +339,7 @@ onMounted(() => {
     pagination: {
       ...pagination.value,
       sortBy: "member_ID",
+      agent_referral_code: Auth.state.user.referral_code
     },
     filter: undefined,
   });
