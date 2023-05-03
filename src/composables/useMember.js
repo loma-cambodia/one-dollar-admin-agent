@@ -9,17 +9,22 @@ export default function useMember() {
     saving: false,
     deleting: false,
     items: [],
+    totalAmounts:{},
+    totalWalletAmounts:{},
+    totalBetAmounts:{},
+    totalWinAmounts:{},
+
   });
 
   const columns = [
-    {
-      name: "sl",
-      label: "#",
-      required: true,
-      field: (row) => row,
-      align: "left",
-      sortable: false,
-    },
+    // {
+    //   name: "sl",
+    //   label: "#",
+    //   required: true,
+    //   field: (row) => row,
+    //   align: "left",
+    //   sortable: false,
+    // },
     {
       name: "member_ID",
       label: "MEMBER ID",
@@ -143,6 +148,32 @@ export default function useMember() {
       field: (row) => row,
       align: "left",
     },
+
+    {
+      bottomColumns: function () {
+        var retVal = []
+        for (let i = 0; i < this.columns.length; i++) {
+          var isVisible = false
+          for (let j = 0; j < this.visibleColumns.length; j++) {
+            if (this.visibleColumns[j] === this.columns[i].name) {
+              isVisible = true
+              break
+            }
+          }
+          if (isVisible) {
+            if (this.columns[i].sums) {
+              // need to calculate sum, wonder how
+              retVal.push({ name: this.columns[i].name, text: ' the sum of ' + this.columns[i].name })
+            } else {
+              retVal.push({ name: this.columns[i].name, text: '' })
+            }
+          }
+        }
+        return retVal
+      }
+
+    },
+
     // {
     //   name: "actions",
     //   label: "ACTIONS",
@@ -206,8 +237,13 @@ export default function useMember() {
         : props.pagination;
     try {
       const response = await api.get("/members/paginate", { params });
-      state.items = response.data.data;
+      state.items = response.data.data.data;
       state.loading = false;
+      // state.totalAmounts = response.data.totalAmounts;
+      console.log('response.data.data    ',response.data.total_values);
+      state.totalWalletAmounts = response.data.total_values.total_wallet_amount;
+      state.totalBetAmounts = response.data.total_values.total_bet_amount;
+      state.totalWinAmounts = response.data.total_values.total_win_loss_amount;
       return response;
     } catch (err) {
       state.loading = false;

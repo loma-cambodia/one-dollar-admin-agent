@@ -201,7 +201,38 @@
               </q-btn>
             </q-td>
           </template>
+          <template v-slot:bottom-row>
+          <q-tr>
+            <q-td>
+              Total
+            </q-td>
+            <q-td>
+
+            </q-td>
+            <q-td>
+            {{ totalWalletAmounts }}
+            </q-td>
+            <q-td>
+            {{ totalBetAmounts }}
+            </q-td>
+            <q-td>
+            {{ totalWinAmounts }}
+            </q-td>
+            <q-td>
+
+            </q-td>
+            <q-td>
+
+            </q-td>
+            <q-td>
+
+            </q-td>
+          </q-tr>
+         </template>
+
         </q-table>
+
+
       </q-card-section>
       <q-card-section v-else>
           <show-mlm-tree @onClose="showMlmTreeView = false" :data="selectedShowMlmTree" @onBack="onRefresh" />
@@ -262,7 +293,7 @@ import Loading from "src/components/Shared/Loading.vue";
 import AddUser from "../../components/Members/Add.vue";
 import auth from "src/store/auth";
 
-const { loading, getAllLevel, columns, items, trash, paginate } = useMember();
+const { loading, getAllLevel, columns, items, trash, paginate, totalWalletAmounts, totalBetAmounts, totalWinAmounts } = useMember();
 const {
   showAdd,
   showEdit,
