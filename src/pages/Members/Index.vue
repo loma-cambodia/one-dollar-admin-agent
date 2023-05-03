@@ -11,7 +11,6 @@
           row-key="id"
           :columns="columns"
           v-model:pagination="pagination"
-          :filter="filters"
           @request="onRequest"
           :rows-per-page-options="[10, 15, 20, 50, 100, 150, 200, 500]"
           binary-state-sort
@@ -19,45 +18,38 @@
         >
           <template v-slot:top>
           <q-select
-              v-model="filters.level"
+              v-model="filters.status"
               :options="levelOptions"
               outlined
               style="width: 200px"
               dense
-              :disable="!filters.include_downline"
               emit-value
               map-options
               class="q-mr-sm q-mt-sm"
-              option-value="level"
-              :label="$t('member_level')"
-              :option-label="(item) => $t(Utils.getKey('level')) + ' ' + item.level "
+              :label="$t('member_status')"
               clearable
             />
             <q-input
-            dense
-            outlined
-            debounce="300"
             v-model="filters.member_ID"
-            :placeholder="$t(Utils.getKey('Search member id'))"
-            style="width: 300px"
+            outlined
+            style="width: 200px"
+            dense
+            class="q-mr-sm q-mt-sm"
+            :label="$t('member_ID')"
+            :option-label="(name) => $t(Utils.getKey(name))"
+            clearable
           />
-            <q-input
-              dense
-              outlined
-              debounce="300"
-              v-model="filters.created_at"
-              :placeholder="$t(Utils.getKey('Search register time'))"
-              style="width: 300px"
+            <el-date-picker
+              class="q-mr-sm q-mt-sm"
+              v-model="filters.dates"
+              type="daterange"
+              :range-separator="$t(Utils.getKey('To'))"
+              :start-placeholder="$t(Utils.getKey('Start date'))"
+              :end-placeholder="$t(Utils.getKey('End date'))"
+              value-format="YYYY-MM-DD"
             />
-            <q-input
-              dense
-              outlined
-              debounce="300"
-              v-model="filters.updated_at"
-              :placeholder="$t(Utils.getKey('Search last login time'))"
-              style="width: 300px"
-            />
-            <q-btn
+
+             <q-btn
               class="q-mr-sm q-px-sm q-ml-sm capitalize"
               color="primary"
               @click="onSearch"
@@ -156,7 +148,13 @@
 
           <template v-slot:body-cell-betamount="props">
             <q-td class="text-left">
-              {{ props.row.betamount }}
+              {{ props.row.bet_amount }}
+            </q-td>
+          </template>
+
+          <template v-slot:body-cell-winloss="props">
+            <q-td class="text-left">
+              {{ props.row.win_lose_amount }}
             </q-td>
           </template>
 
@@ -203,7 +201,38 @@
               </q-btn>
             </q-td>
           </template>
+          <template v-slot:bottom-row>
+          <q-tr>
+            <q-td>
+              Total
+            </q-td>
+            <q-td>
+
+            </q-td>
+            <q-td>
+            {{ totalWalletAmounts }}
+            </q-td>
+            <q-td>
+            {{ totalBetAmounts }}
+            </q-td>
+            <q-td>
+            {{ totalWinAmounts }}
+            </q-td>
+            <q-td>
+
+            </q-td>
+            <q-td>
+
+            </q-td>
+            <q-td>
+
+            </q-td>
+          </q-tr>
+         </template>
+
         </q-table>
+
+
       </q-card-section>
       <q-card-section v-else>
           <show-mlm-tree @onClose="showMlmTreeView = false" :data="selectedShowMlmTree" @onBack="onRefresh" />
@@ -249,6 +278,7 @@
 import { onMounted, reactive, ref } from "vue";
 import useTable from "../../composables/useTable";
 import useMember from "../../composables/useMember";
+import moment from "moment";
 import Utils from "../../helpers/Utils";
 
 import Breadcrumbs from "../../components/Menu/BreadCrumbs.vue";
@@ -261,8 +291,9 @@ import Reset from "../../components/Members/Reset.vue";
 import Loading from "src/components/Shared/Loading.vue";
 
 import AddUser from "../../components/Members/Add.vue";
+import Auth from "src/store/auth";
 
-const { loading, columns, items, trash, paginate } = useMember();
+const { loading, getAllLevel, columns, items, trash, paginate, totalWalletAmounts, totalBetAmounts, totalWinAmounts } = useMember();
 const {
   showAdd,
   showEdit,
@@ -279,19 +310,46 @@ const selectedMembers = ref();
 const selectedShowMlmTree = ref();
 const showAddLanguage = ref(false);
 const resetPassword = ref(false);
-const filters = reactive({
-  name: "",
-});
 
+{/* const filters = reactive({
+  level: [],
+  member_ID: "",
+  dates: [],
+}); */}
+
+const filters = ref({
+  member_ID: "",
+  dates: [],
+  agent_referral_code: Auth.state.user.referral_code
+});
+const levelOptions = ref(['all','active', 'inactive']);
+
+const onSearch = () => {
+  onRequest({
+    pagination: {
+      ...pagination.value,
+      sortBy: "member_ID",
+      agent_referral_code: Auth.state.user.referral_code
+    },
+    filter: filters.value,
+  });
+};
 onMounted(() => {
   onRequest({
     pagination: {
       ...pagination.value,
-      sortBy: "id",
+      sortBy: "member_ID",
+      agent_referral_code: Auth.state.user.referral_code
     },
     filter: undefined,
   });
 });
+
+const dates = ref([]);
+const defaultDate = [
+  moment().startOf("day").format("YYYY-MM-DD"),
+  moment().endOf("day").format("YYYY-MM-DD"),
+];
 
 const onEditClick = (row) => {
   showEdit.value = true;
@@ -312,10 +370,15 @@ const onResetClick = async (row) => {
   selectedMembers.value = row;
 };
 const resetFilters = () => {
-  for (const [key, value] of Object.entries(filters)) {
-    filters[key] = "";
+  let f = {
+    member_ID: "",
+    level: 0,
+    dates: []
   }
-
-  range.value = null;
+  filters.value = f
+  filters.value.dates = []
+  console.log('reset             ', filters.value);
+  onSearch();
+  // onRequest();
 };
 </script>
