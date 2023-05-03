@@ -1227,7 +1227,7 @@
     "referal_center": "Referal center",
     "agents": "Agents",
     "agent_consolidated": "Agent consolidated",
-    "new_agent": "New agent",
+    "new_agent": "Add agent",
     "agent_level": "Agent level",
     "agent_status": "Agent status",
     "agent_id": "Agent id",
@@ -1249,6 +1249,8 @@
     "team_agent": "Team agent",
     "profit_sharing_must_be_less_or_equal_to_your_profit": "Profit Sharing Must Be less Or Equal To Your Profit",
     "First Reset Profit Sharing": "First Reset Profit Sharing",
-    "Profit Reseted successfully": "Profit Reseted successfully"
+    "Profit Reseted successfully": "Profit Reseted successfully",
+    "reset_profit":"Reset profit sharing",
+    "profit_sharing_notes": "Note: The proportion of the subordinate agent cannot exceed his superior agent, and the remaining part belongs to the superior"
   }
 
