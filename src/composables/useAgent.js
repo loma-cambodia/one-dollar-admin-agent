@@ -9,6 +9,7 @@ export default function useAgent() {
     saving: false,
     deleting: false,
     items: [],
+    total: 0
   });
 
   const columns = [
@@ -207,6 +208,7 @@ export default function useAgent() {
       const response = await api.get("/agents/paginate", { params });
       state.items = response.data.data;
       state.loading = false;
+      state.total = response.data.total;
       // console.log(response);
       return response;
     } catch (err) {

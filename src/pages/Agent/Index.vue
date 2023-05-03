@@ -24,21 +24,22 @@
           v-model:selected="selected"
           :rows-per-page-label="$t(Utils.getKey('Records per page'))"
         >
+          <!-- :disable="!filters.include_downline" -->
           <template v-slot:top>
             <q-select
+
               v-model="filters.level"
               :options="levelOptions"
               outlined
               style="width: 200px"
               dense
-              :disable="!filters.include_downline"
               emit-value
               map-options
               class="q-mr-sm q-mt-sm"
               option-value="level"
               :label="$t('agent_level')"
               :option-label="
-                (item) => $t(Utils.getKey('level')) + ' ' + item.levelLable
+                (item) => 'L' + item.levelLable
               "
               clearable
             />
@@ -55,6 +56,15 @@
               :option-label="(name) => $t(Utils.getKey(name))"
               clearable
             />
+            <el-date-picker
+              class="q-mr-sm q-mt-sm"
+              v-model="filters.dates"
+              type="daterange"
+              :range-separator="$t(Utils.getKey('To'))"
+              :start-placeholder="$t(Utils.getKey('Start date'))"
+              :end-placeholder="$t(Utils.getKey('End date'))"
+              value-format="YYYY-MM-DD"
+            />
             <q-input
               v-model="filters.agent_id"
               outlined
@@ -65,20 +75,10 @@
               :option-label="(name) => $t(Utils.getKey(name))"
               clearable
             />
-            <el-date-picker
-              class="q-mr-sm q-mt-sm"
-              v-model="filters.dates"
-              type="daterange"
-              :range-separator="$t(Utils.getKey('To'))"
-              :start-placeholder="$t(Utils.getKey('Start date'))"
-              :end-placeholder="$t(Utils.getKey('End date'))"
-              value-format="YYYY-MM-DD"
-            />
             <q-checkbox
               v-model="filters.include_downline"
               :label="$t('include_downline')"
             />
-
             <q-btn
               class="q-mr-sm q-px-sm q-ml-sm capitalize"
               color="primary"
@@ -182,8 +182,7 @@
                   :true-value="'normal'"
                   :false-value="'locked'"
                   size="40px"
-
-                  @update:model-value="onToggleClick(props.row)"
+                  @click="onToggleClickConfirm(props.row)"
                 />
               </div>
               <!-- @update:model-value="onToggleClick(props.row)" -->
@@ -252,7 +251,11 @@
                 padding="5px"
                 color="negative"
                 icon="fas fa-trash"
-                @click="props.row.team_agent == 0 ? onDeleteClickNotDelete(props.row) : onDeleteClick(props.row)"
+                @click="
+                  props.row.team_agent == 0
+                    ? onDeleteClick(props.row)
+                    : onDeleteClickNotDelete(props.row)
+                "
               >
                 <q-tooltip>{{ $t(Utils.getKey("Delete")) }}</q-tooltip>
               </q-btn>
@@ -271,6 +274,11 @@
             </q-td>
           </template>
         </q-table>
+        <div>
+          <p>
+            Total Agent: {{ total }}    Total Member: 100
+          </p>
+        </div>
       </q-card-section>
     </q-card>
 
@@ -308,6 +316,15 @@
         :message="`Are you sure you want to reset profit`"
         @cancel="showConfirmResteProfit = false"
         @confirm="onProfitReset()"
+        :buttonLabel="$t('go')"
+        :deleting="deleting"
+      />
+    </q-dialog>
+    <q-dialog v-model="showToggleClickConfirm" persistent>
+      <Confirm
+        :message="`Are you sure`"
+        @cancel="showToggleClickConfirm = false"
+        @confirm="onToggleClick()"
         :buttonLabel="$t('go')"
         :deleting="deleting"
       />
@@ -354,6 +371,7 @@ import auth from "src/store/auth";
 
 const {
   loading,
+  total,
   deleting,
   columns,
   items,
@@ -370,6 +388,7 @@ const {
   showEdit,
   showConfirm,
   showConfirmResteProfit,
+  showToggleClickConfirm,
   selected,
   pagination,
   onRequest,
@@ -403,7 +422,7 @@ const onProfitReset = async () => {
     $q.notify({
       position: "top-right",
       type: "positive",
-      icon: "positive",
+      icon: "mdi-update",
       message: i18n.global.t(Utils.getKey(res.data.messages[0])),
     });
   } catch (err) {
@@ -502,14 +521,36 @@ const onResetClickGoogle = async (row) => {
   selectedUser.value = row;
 };
 
-const onToggleClick = async (val) => {
-  // showDisbleGauth.value = true;
-  selectedUser.value = val;
+// const onToggleClick = async (val) => {
+//   // showDisbleGauth.value = true;
+//   selectedUser.value = val;
+//   selectedUser.value.status =
+//     selectedUser.value.status == "normal" || selectedUser.value.status == null
+//       ? "locked"
+//       : "normal";
+//   await update(selectedUser.value.id, { ...selectedUser.value });
+// };
+
+const toggleSelect = ref({});
+const onToggleClick = async () => {
+  showToggleClickConfirm.value = false;
+  selectedUser.value = toggleSelect.value;
   selectedUser.value.status =
     selectedUser.value.status == "normal" || selectedUser.value.status == null
       ? "locked"
       : "normal";
   await update(selectedUser.value.id, { ...selectedUser.value });
+  $q.notify({
+    position: "top-right",
+    type: "positive",
+    icon: "mdi-update",
+    message: i18n.global.t(Utils.getKey("updated successfully")),
+  });
+};
+
+const onToggleClickConfirm = async (row) => {
+  showToggleClickConfirm.value = true;
+  toggleSelect.value = row;
 };
 
 const resetFilters = () => {
@@ -535,7 +576,7 @@ const updateUser = async () => {
     $q.notify({
       position: "top-right",
       type: "positive",
-      icon: "positive",
+      icon: "mdi-update",
       message: i18n.global.t(Utils.getKey("updated successfully")),
     });
     showGoogleKeyConfirm.value = false;

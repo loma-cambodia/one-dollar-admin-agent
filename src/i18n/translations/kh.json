@@ -1230,5 +1230,6 @@
   "team_agent": "Team agent",
   "Profit Sharing Must Be less Or Equal To Your Profit": "Profit Sharing Must Be less Or Equal To Your Profit",
   "First Reset Profit Sharing": "First Reset Profit Sharing",
-  "Profit Reseted successfully": "Profit Reseted successfully"
+  "Profit Reseted successfully": "Profit Reseted successfully",
+  "profit_sharing_notes": "Note: The proportion of the subordinate agent cannot exceed his superior agent, and the remaining part belongs to the superior"
 }
