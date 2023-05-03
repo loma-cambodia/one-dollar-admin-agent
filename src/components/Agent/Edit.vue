@@ -40,7 +40,7 @@
             :label="$t(Utils.getKey('profit'))"
             dense
             outlined
-            maxlength="20"
+            minLength="2" maxlength="3"
             lazy-rules
             :rules="[
               (val) => !!val || $t(Utils.getKey('Field is required'))

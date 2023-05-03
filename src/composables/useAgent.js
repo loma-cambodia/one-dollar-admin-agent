@@ -12,14 +12,14 @@ export default function useAgent() {
   });
 
   const columns = [
-    {
-      name: "sl",
-      label: "#",
-      required: true,
-      field: (row) => row.id,
-      align: "left",
-      sortable: false,
-    },
+    // {
+    //   name: "sl",
+    //   label: "#",
+    //   required: true,
+    //   field: (row) => row.id,
+    //   align: "left",
+    //   sortable: false,
+    // },
     {
       name: "agent_ID",
       label: "Agent ID",

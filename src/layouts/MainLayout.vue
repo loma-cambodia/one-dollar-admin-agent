@@ -27,7 +27,7 @@
           }}
         </q-toolbar-title>
         <div class="mr-3 orange"></div>
-        <!-- <div
+        <div
           style="
             border: 1px solid #eb7e4c;
             margin-right: 12px;
@@ -35,19 +35,19 @@
             padding: 0.5px 8px;
           "
         >
-          <span class="gray" style="font-size: 12px">
+          <!-- <span class="gray" style="font-size: 12px">
             {{ $t("otp_balance") }}</span
-          >
+              :class="agentId.data < 50 ? 'red' : 'green'"
+          > -->
           <div class="d-flex">
             <p
               class="text-bold"
-              :class="otpBalance.data < 50 ? 'red' : 'green'"
-              style="line-height: 12px"
+              style="line-height: 35px"
             >
-              {{ otpBalance.data || "0.00" }}
+              {{ agentId.data }}
             </p>
           </div>
-        </div> -->
+        </div>
         <q-select
           v-model="locale"
           :options="localeOptions"
@@ -219,14 +219,13 @@ import useStats from "../composables/useStats";
 import SideMenu from "./side-menu/index";
 import tags from "./tags/Index.vue";
 
-const { checkOTPbalance } = useStats();
 const $q = useQuasar();
 const { all } = useLanguage();
 const { locale } = useI18n({ useScope: "global" });
 const router = useRouter();
 const localeOptions = ref([]);
 const leftDrawerOpen = ref(false);
-const otpBalance = ref({ data: 0 });
+const agentId = ref({ data: auth.state.user.agent_id });
 const hideCollaps = ref([
   "Logs",
   "System Settings",
@@ -286,7 +285,6 @@ onMounted(async () => {
   if (!auth.state.user) {
     router.push({ name: "Page: Login" });
   }
-  // otpBalance.value = await (await checkOTPbalance()).data;
 });
 document.title = i18n.global.t(Utils.getKey("One Shop"));
 </script>
