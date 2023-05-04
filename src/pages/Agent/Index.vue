@@ -276,7 +276,8 @@
         </q-table>
         <div>
           <p>
-            Total Agent: {{ total }}    Total Member: {{ totalMember }}
+            {{ total == 0 ? '' : 'Total Agent : '+ total }}
+            {{ totalMember == 0 ? '' : 'Total Member : '+ totalMember }}
           </p>
         </div>
       </q-card-section>
