@@ -51,7 +51,7 @@ export default function useMember() {
     },
 
     {
-      name: "betamount",
+      name: "bet_amount",
       label: "Bet Amount",
       required: true,
       field: (row) => row,
@@ -61,15 +61,15 @@ export default function useMember() {
 
 
     {
-      name: "winloss",
-      label: "WinnerLoss",
+      name: "win_loss",
+      label: "Win Loss",
       required: true,
       field: (row) => row,
       align: "center",
       sortable: true,
     },
     {
-      name: "created_at",
+      name: "registration_time",
       label: "Registration Time",
       required: true,
       field: (row) => date.formatDate(row.created_at, "YYYY-MM-DD HH:mm:ss"),
@@ -77,7 +77,7 @@ export default function useMember() {
       sortable: true,
     },
     {
-      name: "updated_at",
+      name: "last_login_time",
       label: "Last Login Time",
       required: true,
       field: (row) => date.formatDate(row.updated_at, "YYYY-MM-DD HH:mm:ss"),
