@@ -236,7 +236,7 @@ export default function useMember() {
         ? Object.assign(props.pagination, { ...props.filter })
         : props.pagination;
     try {
-      const response = await api.get("/members/getMemberPaginate", { params });
+      const response = await api.get("/members/paginate", { params });
       state.items = response.data.data.data;
       state.loading = false;
       // state.totalAmounts = response.data.totalAmounts;
