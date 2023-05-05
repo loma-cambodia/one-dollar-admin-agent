@@ -1251,6 +1251,7 @@
     "First Reset Profit Sharing": "First Reset Profit Sharing",
     "Profit Reseted successfully": "Profit Reseted successfully",
     "reset_profit":"Reset profit sharing",
-    "profit_sharing_notes": "Note: The proportion of the subordinate agent cannot exceed his superior agent, and the remaining part belongs to the superior"
+    "profit_sharing_notes": "Note: The proportion of the subordinate agent cannot exceed his superior agent, and the remaining part belongs to the superior",
+    "bit_amount": "Bit Amount"
   }
 
