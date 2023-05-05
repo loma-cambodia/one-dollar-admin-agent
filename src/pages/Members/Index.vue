@@ -27,6 +27,7 @@
               map-options
               class="q-mr-sm q-mt-sm"
               :label="$t('member_status')"
+              :option-label="(name) => $t(Utils.getKey(name))"
               clearable
             />
             <q-input
@@ -94,12 +95,12 @@
             </q-td>
           </template>
           <template v-slot:body-cell-phone_number="props">
-            <q-td class="text-left">
+            <q-td class="text-center">
               {{ props.row.idd }}-{{ props.row.phone_number }}
             </q-td>
           </template>
           <template v-slot:body-cell-member_ID="props">
-            <q-td class="text-left">
+            <q-td class="text-center">
               {{ props.row.member_ID }}
             </q-td>
           </template>
@@ -135,26 +136,34 @@
           </template>
 
           <template v-slot:body-cell-status="props">
-            <q-td class="text-left">
-              {{ props.row.status }}
+            <q-td class="text-center">
+            <q-chip
+                size="sm"
+                :label="
+                  props.row.status == 'active' ? $t('active') : $t('inactive')
+                "
+                :color="getStatusColor(props)"
+                :class="'text-white'"
+              />
             </q-td>
           </template>
 
             <template v-slot:body-cell-amount="props">
-            <q-td class="text-left">
+            <q-td class="text-right">
               {{ props.row.amount?props.row.amount.toFixed(2):'0.00' }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-betamount="props">
-            <q-td class="text-left">
-              {{ props.row.bet_amount }}
+            <q-td class="text-right">
+            {{ props.row.bet_amount?props.row.bet_amount.toFixed(2):'0.00' }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-winloss="props">
-            <q-td class="text-left">
-              {{ props.row.win_lose_amount }}
+            <q-td class="text-right">
+            {{ props.row.win_lose_amount?props.row.win_lose_amount.toFixed(2):'0.00' }}
+
             </q-td>
           </template>
 
@@ -203,20 +212,20 @@
           </template>
           <template v-slot:bottom-row>
           <q-tr>
-            <q-td>
+            <q-td class="text-center">
               Total
             </q-td>
             <q-td>
 
             </q-td>
-            <q-td>
-            {{ totalWalletAmounts }}
+            <q-td class="text-right">
+            {{Utils.formatCurrency(totalWalletAmounts) }}
             </q-td>
-            <q-td>
-            {{ totalBetAmounts }}
+            <q-td class="text-right">
+            {{ Utils.formatCurrency(totalBetAmounts) }}
             </q-td>
-            <q-td>
-            {{ totalWinAmounts }}
+            <q-td class="text-right">
+            {{ Utils.formatCurrency(totalWinAmounts) }}
             </q-td>
             <q-td>
 
@@ -320,6 +329,7 @@ const resetPassword = ref(false);
 const filters = ref({
   member_ID: "",
   dates: [],
+  status: "all",
   agent_referral_code: Auth.state.user.referral_code
 });
 const levelOptions = ref(['all','active', 'inactive']);
@@ -380,5 +390,12 @@ const resetFilters = () => {
   console.log('reset             ', filters.value);
   onSearch();
   // onRequest();
+};
+
+const getStatusColor = (props) => {
+  if (props.row.status === "active") {
+    return "positive";
+  }
+  return "negative";
 };
 </script>
