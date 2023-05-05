@@ -30,7 +30,7 @@ export default function useMember() {
       label: "MEMBER ID",
       required: true,
       field: (row) => row,
-      align: "left",
+      align: "center",
       sortable: true,
     },
     {
@@ -38,7 +38,7 @@ export default function useMember() {
       label: "PHONE NUMBER",
       required: true,
       field: (row) => row,
-      align: "left",
+      align: "center",
       sortable: true,
     },
     {
@@ -46,7 +46,7 @@ export default function useMember() {
       label: "Wallet Amount",
       required: true,
       field: (row) => row,
-      align: "left",
+      align: "center",
       sortable: true,
     },
 
@@ -55,7 +55,7 @@ export default function useMember() {
       label: "Bet Amount",
       required: true,
       field: (row) => row,
-      align: "left",
+      align: "center",
       sortable: true,
     },
 
@@ -65,7 +65,7 @@ export default function useMember() {
       label: "WinnerLoss",
       required: true,
       field: (row) => row,
-      align: "left",
+      align: "center",
       sortable: true,
     },
     {
@@ -146,7 +146,7 @@ export default function useMember() {
       label: "status",
       required: true,
       field: (row) => row,
-      align: "left",
+      align: "center",
     },
 
     {
@@ -236,7 +236,7 @@ export default function useMember() {
         ? Object.assign(props.pagination, { ...props.filter })
         : props.pagination;
     try {
-      const response = await api.get("/members/paginate", { params });
+      const response = await api.get("/members/getMemberPaginate", { params });
       state.items = response.data.data.data;
       state.loading = false;
       // state.totalAmounts = response.data.totalAmounts;
