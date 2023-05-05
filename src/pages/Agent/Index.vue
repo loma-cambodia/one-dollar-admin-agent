@@ -37,7 +37,12 @@
               class="q-mr-sm q-mt-sm"
               option-value="level"
               :label="$t('agent_level')"
-              :option-label="(item) => 'L' + item.levelLable"
+              :option-label="
+                (item) =>
+                  item.levelLable == 'all'
+                    ? $t(item.levelLable)
+                    : 'L' + item.levelLable
+              "
               clearable
             />
             <q-select
@@ -403,6 +408,7 @@ const filters = ref({
   name: "",
   parent_id: auth.state.user.id,
   status: "all",
+  level: "",
   include_downline: false,
 });
 const levelOptions = ref([]);
@@ -410,7 +416,13 @@ const levelOptions = ref([]);
 const allLevelAgen = async () => {
   let res = await getAllLevel();
   console.log("res", res);
+
   levelOptions.value = res.data;
+  let all = {
+    level: "",
+    levelLable: "all",
+  };
+  levelOptions.value.unshift(all);
 };
 
 allLevelAgen();
@@ -559,6 +571,7 @@ const resetFilters = () => {
     name: "",
     parent_id: auth.state.user.id,
     status: "all",
+    level: "",
     include_downline: false,
   };
   filters.value = f;
