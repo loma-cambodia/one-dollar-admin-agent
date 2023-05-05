@@ -27,7 +27,6 @@
           <!-- :disable="!filters.include_downline" -->
           <template v-slot:top>
             <q-select
-
               v-model="filters.level"
               :options="levelOptions"
               outlined
@@ -38,9 +37,7 @@
               class="q-mr-sm q-mt-sm"
               option-value="level"
               :label="$t('agent_level')"
-              :option-label="
-                (item) => 'L' + item.levelLable
-              "
+              :option-label="(item) => 'L' + item.levelLable"
               clearable
             />
             <q-select
@@ -276,8 +273,10 @@
         </q-table>
         <div>
           <p>
-            {{ total == 0 ? '' : 'Total Agent : '+ total }}
-            {{ totalMember == 0 ? '' : 'Total Member : '+ totalMember }}
+            {{ total == 0 ? "" : $t("total_agent") + " : " + total }}
+            {{
+              totalMember == 0 ? "" : $t("total_member") + " : " + totalMember
+            }}
           </p>
         </div>
       </q-card-section>

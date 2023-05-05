@@ -1230,6 +1230,11 @@
     "profit_sharing_must_be_less_or_equal_to_your_profit": "Profit Sharing Must Be less Or Equal To Your Profit",
     "First Reset Profit Sharing": "First Reset Profit Sharing",
     "Profit Reseted successfully": "Profit Reseted successfully",
-    "profit_sharing_notes": "Note: The proportion of the subordinate agent cannot exceed his superior agent, and the remaining part belongs to the superior"
+    "profit_sharing_notes": "注：下级代理的占成比例不能超过他的上级代理，剩余部分占成归上级所有",
+    "profit_sharing_notes_edit": "注：占成比例只能增加，要调低先点击“占成比例清零”再重新设置比例",
+    "reset_profit":"Reset profit sharing",
+    "total_agent": "Total Agent",
+    "account_is_abnormal_please_contact_customer_service": "账号异常，请联系客服！",
+    "are_you_sure": "Are you sure"
 
 }

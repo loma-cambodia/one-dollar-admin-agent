@@ -1250,7 +1250,11 @@
     "profit_sharing_must_be_less_or_equal_to_your_profit": "Profit Sharing Must Be less Or Equal To Your Profit",
     "First Reset Profit Sharing": "First Reset Profit Sharing",
     "Profit Reseted successfully": "Profit Reseted successfully",
+    "profit_sharing_notes": "Note: The proportion of the subordinate agent cannot exceed his superior agent, and the remaining part belongs to the superior",
+    "profit_sharing_notes_edit": "Note: The proportion can only be increased. If you want to decrease it, click 'Clear the proportion' and then reset the proportion",
     "reset_profit":"Reset profit sharing",
-    "profit_sharing_notes": "Note: The proportion of the subordinate agent cannot exceed his superior agent, and the remaining part belongs to the superior"
+    "total_agent": "Total Agent",
+    "account_is_abnormal_please_contact_customer_service": "Account is abnormal please contact customer service!",
+    "are_you_sure": "Are you sure"
   }
 
