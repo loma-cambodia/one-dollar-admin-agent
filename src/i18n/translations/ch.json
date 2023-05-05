@@ -1235,6 +1235,11 @@
     "reset_profit":"占成比例清零",
     "total_agent": "代理总数",
     "account_is_abnormal_please_contact_customer_service": "账号异常，请联系客服！",
-    "are_you_sure": "确定"
+    "are_you_sure": "确定",
+    "bet_amount": "投注金额",
+    "win_loss": "宽/长",
+    "registration_time": "报名时间",
+    "last_login_time": "上次登录时间"
+
 
 }
