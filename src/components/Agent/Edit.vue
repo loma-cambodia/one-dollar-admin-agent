@@ -49,7 +49,7 @@
       <!-- minLength="2" maxlength="3" -->
       <div>
         <p>
-            {{ $t(Utils.getKey('profit_sharing_notes')) }}
+            {{ $t(Utils.getKey('profit_sharing_notes_edit')) }}
         </p>
       </div>
     </q-card-section>

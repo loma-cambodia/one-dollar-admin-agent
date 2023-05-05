@@ -316,7 +316,7 @@
         :message="`Are you sure you want to reset profit`"
         @cancel="showConfirmResteProfit = false"
         @confirm="onProfitReset()"
-        :buttonLabel="$t('go')"
+        :buttonLabel="$t('reset')"
         :deleting="deleting"
       />
     </q-dialog>
@@ -325,7 +325,7 @@
         :message="`Are you sure`"
         @cancel="showToggleClickConfirm = false"
         @confirm="onToggleClick()"
-        :buttonLabel="$t('go')"
+        :buttonLabel="$t('reset')"
         :deleting="deleting"
       />
     </q-dialog>

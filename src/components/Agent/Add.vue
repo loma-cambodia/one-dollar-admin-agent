@@ -69,6 +69,11 @@
           />
         </form>
       </q-form>
+      <div>
+        <p>
+            {{ $t(Utils.getKey('profit_sharing_notes')) }}
+        </p>
+      </div>
     </q-card-section>
 
     <q-card-section class="text-right q-mt-md">
