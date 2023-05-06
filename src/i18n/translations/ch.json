@@ -1239,7 +1239,7 @@
     "bet_amount": "投注金额",
     "win_loss": "宽/长",
     "registration_time": "报名时间",
-    "last_login_time": "上次登录时间"
+    "last_login_time": "上次登录时间",
     "are_you_sure_you_want_to_reset_profit": "确定把占成比例清零？"
 
 }
