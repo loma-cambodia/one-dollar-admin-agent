@@ -92,7 +92,7 @@ export default function useAgent() {
       required: true,
       field: (row) => date.formatDate(row.created_at, "YYYY-MM-DD HH:mm:ss"),
       align: "center",
-      sortable: true,
+      sortable: false,
     },
     // {
     //   name: "enable_ga",

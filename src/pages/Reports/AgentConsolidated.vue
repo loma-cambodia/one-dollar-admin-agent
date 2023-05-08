@@ -169,7 +169,7 @@
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
-                @click="resetFilters"
+                @click="exportTable"
                 >{{ $t("Export") }}</q-btn
               >
             </div>
@@ -236,10 +236,11 @@ import useTable from "../../composables/useTable";
 import moment from "moment";
 import useAgent from "../../composables/useConsolidated";
 import Utils from "../../helpers/Utils";
-import { useQuasar } from "quasar";
+import { useQuasar, exportFile } from "quasar";
 import { i18n } from "src/boot/i18n";
 import auth from "src/store/auth";
 import Loading from "src/components/Shared/Loading.vue";
+
 const { loading, columns, items, totals, paginate, getAllLevel } = useAgent();
 const { showEdit, showToggleClickConfirm, selected, pagination, onRequest } =
   useTable(paginate);
@@ -367,7 +368,56 @@ const onDateSearch = (date) => {
       moment().endOf(date).format("YYYY-MM-DD"),
     ];
   }
+  onSearch();
 };
+
+function wrapCsvValue(val, formatFn, row) {
+  let formatted = formatFn !== void 0 ? formatFn(val, row) : val;
+
+  formatted =
+    formatted === void 0 || formatted === null ? "" : String(formatted);
+
+  formatted = formatted.split('"').join('""');
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`;
+}
+
+function exportTable() {
+  // naive encoding to csv format
+  const content = [columns.map((col) => wrapCsvValue(col.label))]
+    .concat(
+      items.value.map((row) =>
+        columns
+          .map((col) =>
+            wrapCsvValue(
+              typeof col.field === "function"
+                ? col.field(row)
+                : row[col.field === void 0 ? col.name : col.field],
+              col.format,
+              row
+            )
+          )
+          .join(",")
+      )
+    )
+    .join("\r\n");
+
+  const status = exportFile("table-export.csv", content, "text/csv");
+
+  if (status !== true) {
+    $q.notify({
+      message: "Browser denied file download...",
+      color: "negative",
+      icon: "warning",
+    });
+  }
+}
 
 onMounted(() => {
   console.log(auth.state.user.id);
