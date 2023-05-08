@@ -90,7 +90,7 @@ export default {
       {
         label: "Referal Center",
         icon: "mdi-crosshairs",
-        to: { name: "commissions" },
+        to: { name: "referral-center" },
         permissions: ["Order: View Order", "Order: Views Order"],
       },
     ],
