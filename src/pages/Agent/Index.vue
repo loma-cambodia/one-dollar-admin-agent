@@ -285,6 +285,7 @@
           </p>
         </div>
       </q-card-section>
+    <Loading :loading="loading" />
     </q-card>
 
     <q-dialog v-model="showAdd" position="top" persistent>
@@ -373,6 +374,7 @@ import EditUser from "../../components/Agent/Edit.vue";
 import Reset from "../../components/Agent/Reset.vue";
 import Confirm from "../../components/Shared/Confirm.vue";
 import auth from "src/store/auth";
+import Loading from "src/components/Shared/Loading.vue";
 
 const {
   loading,
