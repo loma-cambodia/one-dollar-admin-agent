@@ -154,13 +154,13 @@
             </q-td>
           </template>
 
-          <template v-slot:body-cell-betamount="props">
+          <template v-slot:body-cell-bet_amount="props">
             <q-td class="text-right">
             {{ props.row.bet_amount?props.row.bet_amount.toFixed(2):'0.00' }}
             </q-td>
           </template>
 
-          <template v-slot:body-cell-winloss="props">
+          <template v-slot:body-cell-win_loss="props">
             <q-td class="text-right">
             {{ props.row.win_lose_amount?props.row.win_lose_amount.toFixed(2):'0.00' }}
 
