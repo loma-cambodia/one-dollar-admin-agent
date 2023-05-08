@@ -7,8 +7,10 @@
       Referral Link
       </div>
       <div class="col-8">
-      https://www.google.com/
-      <q-btn color="primary" label="Copy" />
+      
+      <a :href="link_url" class="" target="_blank" rel="noopener noreferrer" ref="mylink">
+      {{ link_name  }}</a>
+      <q-btn color="primary" @click="copyUrl" label="Copy" />
       </div>
     </div>
     <br/>
@@ -31,7 +33,8 @@
 
 <script setup>
 
-
+let a = 'home'
+const link_name = ref("www.google.com")
 const QRCode = require('qrcode')
 import { ref, provide, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -47,6 +50,12 @@ onMounted(async () => {
     qrcode.value = url
   })
 });
+
+const copyUrl = () => {
+  var Url = link_name.value;
+  navigator.clipboard.writeText(Url);
+
+};
 
 </script>
 <style scoped>
