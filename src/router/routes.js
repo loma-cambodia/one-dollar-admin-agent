@@ -245,6 +245,12 @@ const routes = [
         meta: { title: "commissions", subtitle: "commissions" },
       },
       {
+        name: "referral-center",
+        path: "/referral-center",
+        component: () => import("pages/Referral-center/Index.vue"),
+        meta: { title: "referral-center", subtitle: "referral-center" },
+      },
+      {
         name: "daily-report",
         path: "/daily-report",
         component: () => import("pages/Reports/DailyReport.vue"),
