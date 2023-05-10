@@ -43,7 +43,7 @@
                     ? $t(item.levelLable)
                     : 'L' + item.levelLable
               "
-              clearable
+              multiple
             />
             <q-select
               v-model="filters.status"
@@ -56,7 +56,6 @@
               map-options
               :label="$t('agent_status')"
               :option-label="(name) => $t(Utils.getKey(name))"
-              clearable
             />
             <el-date-picker
               class="q-mr-sm q-mt-sm"
@@ -285,7 +284,7 @@
           </p>
         </div>
       </q-card-section>
-    <Loading :loading="loading" />
+      <Loading :loading="loading" />
     </q-card>
 
     <q-dialog v-model="showAdd" position="top" persistent>
@@ -410,7 +409,7 @@ const filters = ref({
   name: "",
   parent_id: auth.state.user.id,
   status: "all",
-  level: "",
+  level: [],
   include_downline: false,
 });
 const levelOptions = ref([]);
@@ -421,7 +420,7 @@ const allLevelAgen = async () => {
 
   levelOptions.value = res.data;
   let all = {
-    level: "",
+    level: [],
     levelLable: "all",
   };
   levelOptions.value.unshift(all);
@@ -573,7 +572,7 @@ const resetFilters = () => {
     name: "",
     parent_id: auth.state.user.id,
     status: "all",
-    level: "",
+    level: [],
     include_downline: false,
   };
   filters.value = f;

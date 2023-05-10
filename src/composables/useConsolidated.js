@@ -67,7 +67,7 @@ export default function useAgent() {
       required: true,
       field: (row) => row.direct_agent,
       align: "center",
-      sortable: false,
+      sortable: true,
     },
     {
       name: "Team Agent",
@@ -75,7 +75,7 @@ export default function useAgent() {
       required: true,
       field: (row) => row.team_agent,
       align: "center",
-      sortable: false,
+      sortable: true,
     },
     {
       name: "Direct Member",
@@ -83,7 +83,7 @@ export default function useAgent() {
       required: true,
       field: (row) => row.directMember,
       align: "center",
-      sortable: false,
+      sortable: true,
     },
     {
       name: "Team Member",
@@ -91,7 +91,7 @@ export default function useAgent() {
       required: true,
       field: (row) => row.teamMember,
       align: "center",
-      sortable: false,
+      sortable: true,
     },
 
 
@@ -102,7 +102,7 @@ export default function useAgent() {
       required: true,
       field: (row) => row.team_bet_amount,
       align: "center",
-      sortable: false,
+      sortable: true,
     },
     {
       name: "Team WL",
@@ -110,7 +110,7 @@ export default function useAgent() {
       required: true,
       field: (row) => row.team_w_l,
       align: "center",
-      sortable: false,
+      sortable: true,
     },
     // {
     //   name: "Personal Comm",
