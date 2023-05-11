@@ -420,7 +420,7 @@ const allLevelAgen = async () => {
 
   levelOptions.value = res.data;
   let all = {
-    level: [],
+    level: 'all',
     levelLable: "all",
   };
   levelOptions.value.unshift(all);

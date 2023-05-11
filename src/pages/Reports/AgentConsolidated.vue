@@ -43,7 +43,7 @@
                     ? $t(item.levelLable)
                     : 'L' + item.levelLable
               "
-              clearable
+              multiple
             />
             <!-- <q-select
               v-model="filters.status"
@@ -257,7 +257,7 @@ const filters = ref({
   name: "",
   parent_id: auth.state.user.id,
   status: "all",
-  level: "",
+  level: [],
   include_downline: false,
   dates: defaultDate,
 });
@@ -269,7 +269,7 @@ const allLevelAgen = async () => {
 
   levelOptions.value = res.data;
   let all = {
-    level: "",
+    level: 'all',
     levelLable: "all",
   };
   levelOptions.value.unshift(all);
@@ -321,7 +321,7 @@ const resetFilters = () => {
     name: "",
     parent_id: auth.state.user.id,
     status: "all",
-    level: "",
+    level: [],
     include_downline: false,
   };
   filters.value = f;
@@ -334,33 +334,38 @@ const onDateSearch = (date) => {
   dateSelect.value = date;
   if (date == "week") {
     filters.value.dates = [
-      moment().subtract(6, "d").format("YYYY-MM-DD"),
-      moment().format("YYYY-MM-DD"),
+      moment().weekday(1).format('YYYY-MM-DD'),
+      moment().weekday(7).format('YYYY-MM-DD'),
     ];
   } else if (date == "yesterday") {
     filters.value.dates = [
       moment().subtract(1, "d").format("YYYY-MM-DD"),
       moment().subtract(1, "d").format("YYYY-MM-DD"),
     ];
-  } else if (date == "week") {
+  }
+  // else if (date == "week") {
+  //   filters.value.dates = [
+  //     moment().weekday(1).format('YYYY-MM-DD'),
+  //     moment().weekday(7).format('YYYY-MM-DD'),
+  //   ];
+  // }
+  else if (date == "lastweek") {
     filters.value.dates = [
-      moment().subtract(6, "d").format("YYYY-MM-DD"),
-      moment().format("YYYY-MM-DD"),
-    ];
-  } else if (date == "lastweek") {
-    filters.value.dates = [
-      moment().subtract(12, "d").format("YYYY-MM-DD"),
-      moment().subtract(6, "d").format("YYYY-MM-DD"),
+      // moment().subtract(12, "d").format("YYYY-MM-DD"),
+      // moment().subtract(6, "d").format("YYYY-MM-DD"),
+      moment().weekday(-6).format('YYYY-MM-DD'),
+      moment().weekday(0).format('YYYY-MM-DD'),
     ];
   } else if (date == "month") {
     filters.value.dates = [
-      moment().subtract(30, "d").format("YYYY-MM-DD"),
-      moment().format("YYYY-MM-DD"),
+      // moment().subtract(30, "d").format("YYYY-MM-DD"),
+      moment().startOf('month').format('YYYY-MM-DD'),
+      moment().endOf('month').format('YYYY-MM-DD'),
     ];
   } else if (date == "lastmonth") {
     filters.value.dates = [
-      moment().subtract(60, "d").format("YYYY-MM-DD"),
-      moment().subtract(30, "d").format("YYYY-MM-DD"),
+      moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
+      moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD'),
     ];
   } else {
     filters.value.dates = [
