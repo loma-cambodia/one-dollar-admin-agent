@@ -343,22 +343,13 @@ const onDateSearch = (date) => {
       moment().subtract(1, "d").format("YYYY-MM-DD"),
     ];
   }
-  // else if (date == "week") {
-  //   filters.value.dates = [
-  //     moment().weekday(1).format('YYYY-MM-DD'),
-  //     moment().weekday(7).format('YYYY-MM-DD'),
-  //   ];
-  // }
   else if (date == "lastweek") {
     filters.value.dates = [
-      // moment().subtract(12, "d").format("YYYY-MM-DD"),
-      // moment().subtract(6, "d").format("YYYY-MM-DD"),
       moment().weekday(-6).format('YYYY-MM-DD'),
       moment().weekday(0).format('YYYY-MM-DD'),
     ];
   } else if (date == "month") {
     filters.value.dates = [
-      // moment().subtract(30, "d").format("YYYY-MM-DD"),
       moment().startOf('month').format('YYYY-MM-DD'),
       moment().endOf('month').format('YYYY-MM-DD'),
     ];
