@@ -1242,6 +1242,18 @@
     "last_login_time": "上次登录时间",
     "are_you_sure_you_want_to_reset_profit": "确定把占成比例清零？",
     "member_ID":"会员ID",
-    "member_status": "会员身份"
+    "member_status": "会员身份",
+
+    "Export":"导出",
+    "commissions":"佣金",
+    "last_month":"上月",
+    "last_week":"上周",
+    "team_bet_amount":"团队投注",
+    "team_wl":"团队输赢",
+    "this_month":"今月",
+    "this_week":"本周",
+    "today":"今日",
+    "yesterday":"昨日"
+
 
 }
