@@ -213,11 +213,11 @@
               <q-td class="text-center">
                 {{ totals?.totalTeamMember }}
               </q-td>
-              <q-td class="text-center">
-                {{ totals?.totalTeamBetAmount }}
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totals?.totalTeamBetAmount) }}
               </q-td>
-              <q-td class="text-center">
-                {{ totals?.totalTeamWL }}
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totals?.totalTeamWL) }}
               </q-td>
               <!-- <q-td class="text-center">
                 {{ totals?.totalPersonalComm }}
