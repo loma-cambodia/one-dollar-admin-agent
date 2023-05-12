@@ -96,7 +96,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'today' ? false : true"
-                style="margin-left: 18px; height: 40px"
+                style="margin-left: 18px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('today')"
               >
                 {{ $t("today") }}
@@ -105,7 +105,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'yesterday' ? false : true"
-                style="margin-left: 18px; height: 40px"
+                style="margin-left: 18px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('yesterday')"
               >
                 {{ $t("yesterday") }}
@@ -114,7 +114,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'week' ? false : true"
-                style="margin-left: 10px; height: 40px"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('week')"
               >
                 {{ $t(Utils.getKey("This Week")) }}
@@ -123,7 +123,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'lastweek' ? false : true"
-                style="margin-left: 10px; height: 40px"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('lastweek')"
               >
                 {{ $t(Utils.getKey("Last Week")) }}
@@ -132,6 +132,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'month' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('month')"
               >
                 {{ $t(Utils.getKey("this month")) }}
@@ -140,6 +141,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'lastmonth' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('lastmonth')"
               >
                 {{ $t(Utils.getKey("last month")) }}
@@ -153,12 +155,14 @@
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onSearch"
                 >{{ $t("search") }}</q-btn
               >
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="warning"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="resetFilters"
                 >{{ $t("reset") }}</q-btn
               >
@@ -169,6 +173,7 @@
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="exportTable"
                 >{{ $t("Export") }}</q-btn
               >

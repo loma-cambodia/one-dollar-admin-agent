@@ -78,17 +78,20 @@
             />
             <q-checkbox
               v-model="filters.include_downline"
+              style="min-width: 145px !important;"
               :label="$t('include_downline')"
             />
             <q-btn
               class="q-mr-sm q-px-sm q-ml-sm capitalize"
               color="primary"
+              style="margin-left: 10px; height: 40px; min-width: 125px !important;"
               @click="onSearch"
               >{{ $t("search") }}</q-btn
             >
             <q-btn
               class="q-mr-sm q-px-sm q-ml-sm capitalize"
               color="warning"
+              style="margin-left: 10px; height: 40px; min-width: 125px !important;"
               @click="resetFilters"
               >{{ $t("reset") }}</q-btn
             >
@@ -106,6 +109,7 @@
 
             <q-btn
               :disable="loading"
+              style="margin-left: 10px; height: 40px; min-width: 116px !important;"
               @click="showAdd = true"
               color="primary"
               :label="$t('new_agent')"
