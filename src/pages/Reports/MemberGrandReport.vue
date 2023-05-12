@@ -1,43 +1,111 @@
 <template>
   <q-page>
-
-    <q-card style="margin-left:0px; box-shadow: none; min-height:85vh;">
-      <q-card-section v-if="!showMlmTreeView">
+    <q-card
+      style="
+        margin-top: 20px;
+        margin-left: 0px;
+        box-shadow: none;
+        min-height: 85vh;
+      "
+    >
+      <q-card-section>
         <q-table
           flat
+          class="q-pt-md"
           color="primary"
           :loading="loading"
           :rows="items"
           row-key="id"
           :columns="columns"
           v-model:pagination="pagination"
-          :filter="filters"
           @request="onRequest"
           :rows-per-page-options="[10, 15, 20, 50, 100, 150, 200, 500]"
           binary-state-sort
+          v-model:selected="selected"
           :rows-per-page-label="$t(Utils.getKey('Records per page'))"
         >
+          <!-- :disable="!filters.include_downline" -->
           <template v-slot:top>
             <q-input
-              dense
+              v-model="filters.member_id"
               outlined
-              debounce="300"
-              v-model="filters.member_ID"
-              :placeholder="$t(Utils.getKey('Search member id'))"
-              style="width: 300px"
-            />
-            <q-btn
-              class="q-mr-sm q-mt-xs"
               dense
-              color="primary"
-              icon="mdi-filter-remove-outline"
-              rounded
-              style="margin-left: 10px"
-              @click="resetFilters"
+              class="q-mr-sm"
+              :label="$t('member_id')"
+              :option-label="(name) => $t(Utils.getKey(name))"
+              clearable
             />
-            <q-space />
-          </template>
+           
+            <!-- <template v-slot:top> -->
+            
+              <el-date-picker
+                class="input_white"
+                v-model="filters.dates"
+                type="daterange"
+                value-format="YYYY-MM-DD"
+                :start-placeholder="$t(Utils.getKey('Start Date'))"
+                :end-placeholder="$t(Utils.getKey('End Date'))"
+              >
+              </el-date-picker>
+              <q-btn
+                class="q-mr-sm"
+                color="primary"
+                :outline="dateSelect == 'today' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
+                @click="onDateSearch('today')"
+              >
+                {{ $t("today") }}
+              </q-btn>
+              <q-btn
+                class="q-mr-sm"
+                color="primary"
+                :outline="dateSelect == 'yesterday' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
+                @click="onDateSearch('yesterday')"
+              >
+                {{ $t("yesterday") }}
+              </q-btn>
+             
+              <q-btn
+                class="q-mr-sm"
+                color="primary"
+                :outline="dateSelect == 'month' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
+                @click="onDateSearch('month')"
+              >
+                {{ $t(Utils.getKey("this month")) }}
+              </q-btn>
+              <q-btn
+                class="q-mr-sm"
+                color="primary"
+                :outline="dateSelect == 'lastmonth' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
+                @click="onDateSearch('lastmonth')"
+              >
+                {{ $t(Utils.getKey("last month")) }}
+              </q-btn>
+            
 
+            <!-- <q-space /> -->
+            <!-- </template> -->
+
+            
+              <q-btn
+                class="q-mr-sm q-px-sm q-ml-sm capitalize"
+                color="primary"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
+                @click="onSearch"
+                >{{ $t("search") }}</q-btn
+              >
+              <q-btn
+                class="q-mr-sm q-px-sm q-ml-sm capitalize"
+                color="warning"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
+                @click="resetFilters"
+                >{{ $t("reset") }}</q-btn
+              >
+            
+          </template>
           <!-- header column -->
           <template v-slot:header-cell="props">
             <q-th :props="props">
@@ -48,7 +116,13 @@
               }}
             </q-th>
           </template>
-          <!-- no data -->
+
+          <template v-slot:body-cell-upline>
+            <q-td>
+              {{ auth.state.user.agent_id }}
+            </q-td>
+          </template>
+          
           <template v-slot:no-data>
             <q-icon
               style="margin-right: 5px"
@@ -56,207 +130,201 @@
             />
             {{ $t(Utils.getKey("No matching records found")) }}
           </template>
-          <template v-slot:body-cell-sl="props">
-            <q-td>
-              {{ props.rowIndex + 1 }}
-            </q-td>
-          </template>
-          <template v-slot:body-cell-phone_number="props">
-            <q-td class="text-left">
-              {{ props.row.idd }}-{{ props.row.phone_number }}
-            </q-td>
-          </template>
-          <template v-slot:body-cell-member_ID="props">
-            <q-td class="text-left">
-              {{ props.row.member_ID }}
-            </q-td>
-          </template>
 
-          <template v-slot:body-cell-first_name="props">
-            <q-td class="text-left">
-              {{ props.row.first_name }} {{ props.row.last_name }}
-            </q-td>
-          </template>
-
-          <template v-slot:body-cell-display_name="props">
-            <q-td class="text-left">
-              {{ props.row.display_name }}
-            </q-td>
-          </template>
-
-          <template v-slot:body-cell-email="props">
-            <q-td class="text-left">
-              {{ props.row.email }}
-            </q-td>
-          </template>
-
-          <template v-slot:body-cell-referral_code="props">
-            <q-td class="text-left">
-              {{ props.row.referral_code }}
-            </q-td>
-          </template>
-
-          <template v-slot:body-cell-parent_referral_code="props">
-            <q-td class="text-left">
-              {{ props.row.parent_referral_code }}
-            </q-td>
-          </template>
-
-            <template v-slot:body-cell-amount="props">
-            <q-td class="text-left">
-              {{ props.row.amount?props.row.amount.toFixed(2):'0.00' }}
-            </q-td>
-          </template>
-
-          <template v-slot:body-cell-actions="props">
-            <q-td class="text-center">
-              <q-btn
-                v-if="Utils.hasPermissions(['Members: Edit/Update Members'])"
-                class="q-mr-sm"
-                size="xs"
-                rounded
-                padding="5px"
-                color="primary"
-                icon="fas fa-pen"
-                @click="onEditClick(props.row)"
-              >
-                <q-tooltip>{{ $t(Utils.getKey("Edit")) }}</q-tooltip>
-              </q-btn>
-
-              <q-btn
-                v-if="Utils.hasPermissions(['User: Edit/Update User'])"
-                class="q-mr-sm"
-                size="xs"
-                rounded
-                padding="5px"
-                color="primary"
-                icon="mdi-filter-remove-outline"
-                @click="onResetClick(props.row)"
-              >
-                <q-tooltip>{{ $t(Utils.getKey("Reset Password")) }}</q-tooltip>
-              </q-btn>
-
-              <q-btn
-                v-if="Utils.hasPermissions(['Members: Edit/Update Members'])"
-                class="q-mr-sm"
-                size="xs"
-                rounded
-                padding="5px"
-                color="primary"
-                icon="fa fa-expand"
-                @click="onShowMlmTreeClick(props.row)"
-              >
-                <q-tooltip>{{ $t(Utils.getKey("view mlm tree")) }}</q-tooltip>
-              </q-btn>
-            </q-td>
+          <template v-slot:bottom-row>
+            <q-tr>
+              <q-td class="text-center"> Total </q-td>
+              <q-td> </q-td>
+              <q-td class="text-center">
+                {{ totalAmounts?.totalDepositedAmount || 0 }}
+              </q-td>
+              <q-td class="text-center">
+                {{ totalAmounts?.totalBetAmounts || 0 }}
+              </q-td>
+              <q-td class="text-center">
+                {{ totalAmounts?.totalWinAmounts || 0 }}
+              </q-td>
+              <q-td class="text-center">
+                {{ totalAmounts?.totalActivityBonus || 0 }}
+              </q-td>
+              <q-td class="text-center">
+                {{ totalAmounts?.totalWinLossAmount || 0 }}
+              </q-td>
+            </q-tr>
           </template>
         </q-table>
       </q-card-section>
-      <q-card-section v-else>
-          <show-mlm-tree @onClose="showMlmTreeView = false" :data="selectedShowMlmTree" @onBack="onRefresh" />
-      </q-card-section>
-      <Loading :loading="saving" />
+      <Loading :loading="loading" />
     </q-card>
-
-    <q-dialog v-model="resetPassword" persistent>
-      <reset
-        :data="selectedMembers"
-        @onClose="resetPassword = false"
-        @onUpdated="resetPassword = false"
-      />
-    </q-dialog>
-
-    <q-dialog v-model="showEdit" position="top" persistent>
-      <edit-member
-      :data="selectedMembers"
-        @onClose="showEdit = false"
-        @onUpdated="onRefresh"
-      />
-    </q-dialog>
-
-    <q-dialog v-model="showConfirm" persistent>
-      <confirm
-        @confirm="onDelete"
-        @cancel="showConfirm = false"
-        message="Are you sure you want to delete this Member?"
-        :button-label="$t(Utils.getKey('Delete'))"
-      />
-    </q-dialog>
-    <!-- <q-dialog v-model="showMlmTreeView" position="top" persistent>
-
-    </q-dialog> -->
   </q-page>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
 import useTable from "../../composables/useTable";
-import useMember from "../../composables/useMember";
+import moment from "moment";
+import useMemberGrandReport from "../../composables/useMenberGrandReport";
 import Utils from "../../helpers/Utils";
-
-import Breadcrumbs from "../../components/Menu/BreadCrumbs.vue";
-import AddButton from "../../components/Buttons/AddButton.vue";
-import AddMember from "../../components/Members/Add.vue";
-import EditMember from "../../components/Members/Edit.vue";
-import showMlmTree from "../../components/Members/ShowMlmTree.vue";
-import Confirm from "../../components/Shared/Confirm.vue";
-import Reset from "../../components/Members/Reset.vue";
+import { useQuasar, exportFile } from "quasar";
+import { i18n } from "src/boot/i18n";
+import auth from "src/store/auth";
 import Loading from "src/components/Shared/Loading.vue";
 
-const { loading, columns, items, trash, paginate } = useMember();
-const {
-  showAdd,
-  showEdit,
-  selected,
-  showConfirm,
-  pagination,
-  onDelete,
-  onRequest,
-  onRefresh,
-} = useTable(paginate, trash);
+const { loading, columns, items, totalAmounts, paginate } = useMemberGrandReport();
+const { showEdit, showToggleClickConfirm, selected, pagination, onRequest } =
+  useTable(paginate);
 
-const showMlmTreeView = ref(false);
-const selectedMembers = ref();
-const selectedShowMlmTree = ref();
-const showAddLanguage = ref(false);
-const resetPassword = ref(false);
-const filters = reactive({
+const $q = useQuasar();
+const selectedUser = ref(null);
+
+const defaultDate = [
+  moment().startOf("day").format("YYYY-MM-DD"),
+  moment().endOf("day").format("YYYY-MM-DD"),
+];
+
+const filters = ref({
   name: "",
+  parent_id: auth.state.user.id,
+  status: "all",
+  level: [],
+  include_downline: false,
+  dates: defaultDate,
 });
 
+const onSearch = () => {
+  onRequest({
+    pagination: {
+      ...pagination.value,
+      sortBy: "id",
+      include_downline: false,
+    },
+    filter: filters.value,
+  });
+};
+
+let filter = {
+  parent_id: auth.state.user.id,
+};
 onMounted(() => {
   onRequest({
     pagination: {
       ...pagination.value,
       sortBy: "id",
+      include_downline: false,
     },
-    filter: undefined,
+    filter: filters.value,
   });
 });
 
+const dates = ref([]);
+
 const onEditClick = (row) => {
   showEdit.value = true;
-  selectedMembers.value = row;
+  selectedUser.value = row;
 };
 
-const onShowMlmTreeClick = (row) => {
-  showMlmTreeView.value = true;
-  selectedShowMlmTree.value = row;
+const toggleSelect = ref({});
+
+const onToggleClickConfirm = async (row) => {
+  showToggleClickConfirm.value = true;
+  toggleSelect.value = row;
 };
 
-const onDeleteClick = (row) => {
-  showConfirm.value = true;
-  selected.value = [row];
-};
-const onResetClick = async (row) => {
-  resetPassword.value = true;
-  selectedMembers.value = row;
-};
 const resetFilters = () => {
-  for (const [key, value] of Object.entries(filters)) {
-    filters[key] = "";
-  }
-
-  range.value = null;
+  let f = {
+    name: "",
+    parent_id: auth.state.user.id,
+    status: "all",
+    level: [],
+    include_downline: false,
+  };
+  filters.value = f;
+  dateSelect.value = "";
+  onSearch();
 };
+
+const dateSelect = ref("today");
+const onDateSearch = (date) => {
+  dateSelect.value = date;
+  if (date == "week") {
+    filters.value.dates = [
+      moment().weekday(1).format('YYYY-MM-DD'),
+      moment().weekday(7).format('YYYY-MM-DD'),
+    ];
+  } else if (date == "yesterday") {
+    filters.value.dates = [
+      moment().subtract(1, "d").format("YYYY-MM-DD"),
+      moment().subtract(1, "d").format("YYYY-MM-DD"),
+    ];
+  }
+   else if (date == "month") {
+    filters.value.dates = [
+      moment().startOf('month').format('YYYY-MM-DD'),
+      moment().endOf('month').format('YYYY-MM-DD'),
+    ];
+  } else if (date == "lastmonth") {
+    filters.value.dates = [
+      moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
+      moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD'),
+    ];
+  } else {
+    filters.value.dates = [
+      moment().startOf(date).format("YYYY-MM-DD"),
+      moment().endOf(date).format("YYYY-MM-DD"),
+    ];
+  }
+  onSearch();
+};
+
+function wrapCsvValue(val, formatFn, row) {
+  let formatted = formatFn !== void 0 ? formatFn(val, row) : val;
+
+  formatted =
+    formatted === void 0 || formatted === null ? "" : String(formatted);
+
+  formatted = formatted.split('"').join('""');
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`;
+}
+
+function exportTable() {
+  // naive encoding to csv format
+  const content = [columns.map((col) => wrapCsvValue(col.label))]
+    .concat(
+      items.value.map((row) =>
+        columns
+          .map((col) =>
+            wrapCsvValue(
+              typeof col.field === "function"
+                ? col.field(row)
+                : row[col.field === void 0 ? col.name : col.field],
+              col.format,
+              row
+            )
+          )
+          .join(",")
+      )
+    )
+    .join("\r\n");
+
+  const status = exportFile("table-export.csv", content, "text/csv");
+
+  if (status !== true) {
+    $q.notify({
+      message: "Browser denied file download...",
+      color: "negative",
+      icon: "warning",
+    });
+  }
+}
+
+onMounted(() => {
+  console.log(auth.state.user.id);
+});
 </script>
