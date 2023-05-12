@@ -8,11 +8,9 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
 
+const ESLintPlugin = require("eslint-webpack-plugin");
 
-const ESLintPlugin = require('eslint-webpack-plugin')
-
-
-const { configure } = require('quasar/wrappers');
+const { configure } = require("quasar/wrappers");
 
 module.exports = configure(function (ctx) {
   return {
@@ -54,6 +52,9 @@ module.exports = configure(function (ctx) {
         API_URL_LOGIN: ctx.dev
           ? "http://localhost:8000/api"
           : "http://agent-api.kk-exchange.com/api",
+        API_REFFERAL_URL: ctx.dev
+          ? "http://localhost:8000/api/agent?agent_referral_code="
+          : "http://agent-api.kk-exchange.com/api/agent",
       },
       // transpile: false, https://the1shops.com:8090/api/admin
       // publicPath: '/', http://one-dollar-mlm-api.kk-lotto.com:8080/api/admin
