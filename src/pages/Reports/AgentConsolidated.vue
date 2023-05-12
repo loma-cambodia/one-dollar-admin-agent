@@ -43,7 +43,7 @@
                     ? $t(item.levelLable)
                     : 'L' + item.levelLable
               "
-              clearable
+              multiple
             />
             <!-- <q-select
               v-model="filters.status"
@@ -96,7 +96,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'today' ? false : true"
-                style="margin-left: 18px; height: 40px"
+                style="margin-left: 18px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('today')"
               >
                 {{ $t("today") }}
@@ -105,7 +105,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'yesterday' ? false : true"
-                style="margin-left: 18px; height: 40px"
+                style="margin-left: 18px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('yesterday')"
               >
                 {{ $t("yesterday") }}
@@ -114,7 +114,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'week' ? false : true"
-                style="margin-left: 10px; height: 40px"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('week')"
               >
                 {{ $t(Utils.getKey("This Week")) }}
@@ -123,7 +123,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'lastweek' ? false : true"
-                style="margin-left: 10px; height: 40px"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('lastweek')"
               >
                 {{ $t(Utils.getKey("Last Week")) }}
@@ -132,6 +132,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'month' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('month')"
               >
                 {{ $t(Utils.getKey("this month")) }}
@@ -140,6 +141,7 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'lastmonth' ? false : true"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onDateSearch('lastmonth')"
               >
                 {{ $t(Utils.getKey("last month")) }}
@@ -153,12 +155,14 @@
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="onSearch"
                 >{{ $t("search") }}</q-btn
               >
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="warning"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="resetFilters"
                 >{{ $t("reset") }}</q-btn
               >
@@ -169,6 +173,7 @@
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="exportTable"
                 >{{ $t("Export") }}</q-btn
               >
@@ -257,7 +262,7 @@ const filters = ref({
   name: "",
   parent_id: auth.state.user.id,
   status: "all",
-  level: "",
+  level: [],
   include_downline: false,
   dates: defaultDate,
 });
@@ -269,7 +274,7 @@ const allLevelAgen = async () => {
 
   levelOptions.value = res.data;
   let all = {
-    level: "",
+    level: 'all',
     levelLable: "all",
   };
   levelOptions.value.unshift(all);
@@ -321,7 +326,7 @@ const resetFilters = () => {
     name: "",
     parent_id: auth.state.user.id,
     status: "all",
-    level: "",
+    level: [],
     include_downline: false,
   };
   filters.value = f;
@@ -334,33 +339,29 @@ const onDateSearch = (date) => {
   dateSelect.value = date;
   if (date == "week") {
     filters.value.dates = [
-      moment().subtract(6, "d").format("YYYY-MM-DD"),
-      moment().format("YYYY-MM-DD"),
+      moment().weekday(1).format('YYYY-MM-DD'),
+      moment().weekday(7).format('YYYY-MM-DD'),
     ];
   } else if (date == "yesterday") {
     filters.value.dates = [
       moment().subtract(1, "d").format("YYYY-MM-DD"),
       moment().subtract(1, "d").format("YYYY-MM-DD"),
     ];
-  } else if (date == "week") {
+  }
+  else if (date == "lastweek") {
     filters.value.dates = [
-      moment().subtract(6, "d").format("YYYY-MM-DD"),
-      moment().format("YYYY-MM-DD"),
-    ];
-  } else if (date == "lastweek") {
-    filters.value.dates = [
-      moment().subtract(12, "d").format("YYYY-MM-DD"),
-      moment().subtract(6, "d").format("YYYY-MM-DD"),
+      moment().weekday(-6).format('YYYY-MM-DD'),
+      moment().weekday(0).format('YYYY-MM-DD'),
     ];
   } else if (date == "month") {
     filters.value.dates = [
-      moment().subtract(30, "d").format("YYYY-MM-DD"),
-      moment().format("YYYY-MM-DD"),
+      moment().startOf('month').format('YYYY-MM-DD'),
+      moment().endOf('month').format('YYYY-MM-DD'),
     ];
   } else if (date == "lastmonth") {
     filters.value.dates = [
-      moment().subtract(60, "d").format("YYYY-MM-DD"),
-      moment().subtract(30, "d").format("YYYY-MM-DD"),
+      moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
+      moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD'),
     ];
   } else {
     filters.value.dates = [

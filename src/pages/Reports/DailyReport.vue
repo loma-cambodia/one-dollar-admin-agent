@@ -1,7 +1,6 @@
 <template>
   <q-page>
-
-    <q-card style="margin-left:0px; box-shadow: none; min-height:85vh;">
+    <q-card style="margin-left: 0px; box-shadow: none; min-height: 85vh">
       <q-card-section v-if="!showMlmTreeView">
         <q-table
           flat
@@ -17,7 +16,7 @@
           :rows-per-page-label="$t(Utils.getKey('Records per page'))"
         >
           <template v-slot:top>
-          <div class="mt-3">
+            <div class="mt-3">
               <el-date-picker
                 class="input_white"
                 v-model="filters.dates"
@@ -31,7 +30,11 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'month' ? false : true"
-                style="margin-left: 18px; height: 40px"
+                style="
+                  margin-left: 10px;
+                  height: 40px;
+                  min-width: 125px !important;
+                "
                 @click="onDateSearch('month')"
               >
                 {{ $t(Utils.getKey("this month")) }}
@@ -40,23 +43,37 @@
                 class="q-mr-sm"
                 color="primary"
                 :outline="dateSelect == 'lastmonth' ? false : true"
-                style="margin-left: 18px; height: 40px"
+                style="
+                  margin-left: 10px;
+                  height: 40px;
+                  min-width: 125px !important;
+                "
                 @click="onDateSearch('lastmonth')"
               >
                 {{ $t(Utils.getKey("last month")) }}
               </q-btn>
-          </div>
+            </div>
 
-          <div class="mt-3">
+            <div class="mt-3">
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
+                style="
+                  margin-left: 10px;
+                  height: 40px;
+                  min-width: 125px !important;
+                "
                 @click="onSearch"
                 >{{ $t("search") }}</q-btn
               >
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="warning"
+                style="
+                  margin-left: 10px;
+                  height: 40px;
+                  min-width: 125px !important;
+                "
                 @click="resetFilters"
                 >{{ $t("reset") }}</q-btn
               >
@@ -67,6 +84,11 @@
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
+                style="
+                  margin-left: 10px;
+                  height: 40px;
+                  min-width: 125px !important;
+                "
                 @click="exportTable"
                 >{{ $t("Export") }}</q-btn
               >
@@ -91,7 +113,7 @@
             />
             {{ $t(Utils.getKey("No matching records found")) }}
           </template>
-      
+
           <template v-slot:body-cell-phone_number="props">
             <q-td class="text-left">
               {{ props.row.idd }}-{{ props.row.phone_number }}
@@ -133,7 +155,7 @@
             </q-td>
           </template>
 
-            <template v-slot:body-cell-team_member_waiting_list="props">
+          <template v-slot:body-cell-team_member_waiting_list="props">
             <q-td class="text-center">
               {{ Utils.formatCurrency(props.row.team_wl_amount) }}
             </q-td>
@@ -188,37 +210,39 @@
             </q-td>
           </template>
           <template v-slot:bottom-row>
-          <q-tr>
-            <q-td class="text-center">
-              Total
-            </q-td>
-            <q-td class="text-right">
-            {{ totalDirectMembers }}
-            </q-td>
-            <q-td class="text-right">
-            {{ totalTeamMembers }}
-            </q-td>
-            <q-td class="text-right">
-            {{ totalBetAmounts }}
-            </q-td>
-            <q-td class="text-right">
-             {{ Utils.formatCurrency(totalTeamBetAmt) }}
-            </q-td>
-            <q-td class="text-right">
-            {{ Utils.formatCurrency(totalWinAmounts) }}
-            </q-td>
-            <q-td class="text-right">
-            {{ Utils.formatCurrency(totalTeamWlAmt) }}
-            </q-td>
-            <q-td class="text-right">
-              {{ Utils.formatCurrency(totalActivityBns) }}
-            </q-td>
-          </q-tr>
-         </template>
+            <q-tr>
+              <q-td class="text-center"> Total </q-td>
+              <q-td class="text-right">
+                {{ totalDirectMembers }}
+              </q-td>
+              <q-td class="text-right">
+                {{ totalTeamMembers }}
+              </q-td>
+              <q-td class="text-right">
+                {{ totalBetAmounts }}
+              </q-td>
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalTeamBetAmt) }}
+              </q-td>
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalWinAmounts) }}
+              </q-td>
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalTeamWlAmt) }}
+              </q-td>
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalActivityBns) }}
+              </q-td>
+            </q-tr>
+          </template>
         </q-table>
       </q-card-section>
       <q-card-section v-else>
-          <show-mlm-tree @onClose="showMlmTreeView = false" :data="selectedShowMlmTree" @onBack="onRefresh" />
+        <show-mlm-tree
+          @onClose="showMlmTreeView = false"
+          :data="selectedShowMlmTree"
+          @onBack="onRefresh"
+        />
       </q-card-section>
       <Loading :loading="saving" />
     </q-card>
@@ -233,7 +257,7 @@
 
     <q-dialog v-model="showEdit" position="top" persistent>
       <edit-member
-      :data="selectedMembers"
+        :data="selectedMembers"
         @onClose="showEdit = false"
         @onUpdated="onRefresh"
       />
@@ -264,7 +288,22 @@ import { i18n } from "src/boot/i18n";
 import auth from "src/store/auth";
 import Loading from "src/components/Shared/Loading.vue";
 
-const { loading, columns, items, totals, paginate, getAllLevel, totalWalletAmounts, totalBetAmounts, totalWinAmounts, totalDirectMembers, totalTeamMembers, totalTeamBetAmt, totalTeamWlAmt, totalActivityBns } = useDaily();
+const {
+  loading,
+  columns,
+  items,
+  totals,
+  paginate,
+  getAllLevel,
+  totalWalletAmounts,
+  totalBetAmounts,
+  totalWinAmounts,
+  totalDirectMembers,
+  totalTeamMembers,
+  totalTeamBetAmt,
+  totalTeamWlAmt,
+  totalActivityBns,
+} = useDaily();
 const { showEdit, showToggleClickConfirm, selected, pagination, onRequest } =
   useTable(paginate);
 
@@ -282,7 +321,7 @@ const filters = ref({
   direct_member: "",
   status: "all",
   agent_referral_code: auth.state.user.referral_code,
-  data: [auth.state.user.referral_code]
+  data: [auth.state.user.referral_code],
 });
 
 const onSearch = () => {
@@ -291,7 +330,7 @@ const onSearch = () => {
       ...pagination.value,
       sortBy: "member_ID",
       agent_referral_code: auth.state.user.referral_code,
-      data: [auth.state.user.referral_code]
+      data: [auth.state.user.referral_code],
     },
     filter: filters.value,
   });
@@ -303,14 +342,13 @@ onMounted(() => {
       ...pagination.value,
       sortBy: "member_ID",
       agent_referral_code: auth.state.user.referral_code,
-      data: [auth.state.user.referral_code]
+      data: [auth.state.user.referral_code],
     },
     filter: undefined,
   });
 });
 
 const dates = ref([]);
-
 
 const onEditClick = (row) => {
   showEdit.value = true;
@@ -340,7 +378,7 @@ const resetFilters = () => {
 const dateSelect = ref("today");
 const onDateSearch = (date) => {
   dateSelect.value = date;
-   if (date == "month") {
+  if (date == "month") {
     filters.value.dates = [
       moment().subtract(30, "d").format("YYYY-MM-DD"),
       moment().format("YYYY-MM-DD"),
@@ -411,4 +449,3 @@ onMounted(() => {
   console.log(auth.state.user.id);
 });
 </script>
-
