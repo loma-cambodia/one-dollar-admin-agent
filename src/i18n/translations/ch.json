@@ -1251,5 +1251,10 @@
   "direct_member_bet_amount": "直属会员投注额",
   "direct_member_waiting_list": "直属会员输赢",
   "team_member_bet_amount": "团队会员投注额",
-  "team_member_waiting_list": "团队会员输赢"
+  "team_member_waiting_list": "团队会员输赢",
+
+  "copy_url": "Copy url",
+  "download_qr_code": "Download qr code",
+  "qr_code": "Qr code",
+  "referral_link": "Referral link"
 }

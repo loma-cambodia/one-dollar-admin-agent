@@ -138,31 +138,31 @@
           </template>
 
           <template v-slot:body-cell-direct_member_bet_amount="props">
-            <q-td class="text-center">
+            <q-td class="text-right">
               {{ props.row.bet_amount }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-team_member_bet_amount="props">
-            <q-td class="text-center">
+            <q-td class="text-right">
               {{ Utils.formatCurrency(props.row.team_bet_amount) }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-direct_member_waiting_list="props">
-            <q-td class="text-center">
+            <q-td class="text-right">
               {{ Utils.formatCurrency(props.row.win_lose_amount) }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-team_member_waiting_list="props">
-            <q-td class="text-center">
+            <q-td class="text-right">
               {{ Utils.formatCurrency(props.row.team_wl_amount) }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-activity_bonus="props">
-            <q-td class="text-center">
+            <q-td class="text-right">
               {{ Utils.formatCurrency(props.row.activity_bonus) }}
             </q-td>
           </template>
@@ -212,10 +212,10 @@
           <template v-slot:bottom-row>
             <q-tr>
               <q-td class="text-center"> Total </q-td>
-              <q-td class="text-right">
+              <q-td class="text-center">
                 {{ totalDirectMembers }}
               </q-td>
-              <q-td class="text-right">
+              <q-td class="text-center">
                 {{ totalTeamMembers }}
               </q-td>
               <q-td class="text-right">

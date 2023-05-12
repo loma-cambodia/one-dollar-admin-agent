@@ -81,12 +81,12 @@ export default {
       "Deal: Edit/Update Deal",
     ],
     children: [
-      {
-        label: "commissions",
-        icon: "mdi-seal",
-        to: { name: "commissions" },
-        permissions: ["Deal: View Deal", "Deal: Edit/Update Deal"],
-      },
+      // {
+      //   label: "commissions",
+      //   icon: "mdi-seal",
+      //   to: { name: "commissions" },
+      //   permissions: ["Deal: View Deal", "Deal: Edit/Update Deal"],
+      // },
       {
         label: "Referal Center",
         icon: "mdi-crosshairs",

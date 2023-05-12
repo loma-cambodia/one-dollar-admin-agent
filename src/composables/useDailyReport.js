@@ -66,7 +66,7 @@ export default function useDaily() {
       label: "Direct Member Bet Amount",
       required: true,
       field: (row) => row.bet_amount,
-      align: "center",
+      align: "right",
       sortable: false,
     },
     {
@@ -74,7 +74,7 @@ export default function useDaily() {
       label: "Team Member Bet Amount",
       required: true,
       field: (row) => row.team_bet_amount,
-      align: "center",
+      align: "right",
       sortable: false,
     },
     {
@@ -82,7 +82,7 @@ export default function useDaily() {
       label: "Direct Member Waiting List",
       required: true,
       field: (row) => row.win_lose_amount,
-      align: "center",
+      align: "right",
       sortable: false,
     },
     {
@@ -90,7 +90,7 @@ export default function useDaily() {
       label: "Team Member Waiting List",
       required: true,
       field: (row) => row.team_wl_amount,
-      align: "center",
+      align: "right",
       sortable: false,
     },
 
@@ -101,10 +101,10 @@ export default function useDaily() {
       label: "Activity Bonus",
       required: true,
       field: (row) => row.activity_bonus,
-      align: "center",
+      align: "right",
       sortable: false,
     },
-    
+
     // {
     //   name: "Personal Comm",
     //   label: "Personal Comm",
