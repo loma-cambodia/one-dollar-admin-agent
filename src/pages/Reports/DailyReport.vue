@@ -311,17 +311,18 @@ const $q = useQuasar();
 const selectedUser = ref(null);
 
 const defaultDate = [
-  moment().startOf("day").format("YYYY-MM-DD"),
-  moment().endOf("day").format("YYYY-MM-DD"),
+  moment().startOf("month").format("YYYY-MM-DD"),
+  moment().endOf("month").format("YYYY-MM-DD"),
 ];
 
 const filters = ref({
   member_ID: "",
   dates: [],
-  direct_member: "",
+  // direct_member: "",
   status: "all",
   agent_referral_code: auth.state.user.referral_code,
-  data: [auth.state.user.referral_code],
+  dates: defaultDate,
+  // data: [auth.state.user.referral_code],
 });
 
 const onSearch = () => {
@@ -330,7 +331,8 @@ const onSearch = () => {
       ...pagination.value,
       sortBy: "member_ID",
       agent_referral_code: auth.state.user.referral_code,
-      data: [auth.state.user.referral_code],
+      dates: defaultDate,
+      // data: [auth.state.user.referral_code],
     },
     filter: filters.value,
   });
@@ -342,7 +344,8 @@ onMounted(() => {
       ...pagination.value,
       sortBy: "member_ID",
       agent_referral_code: auth.state.user.referral_code,
-      data: [auth.state.user.referral_code],
+      dates: defaultDate,
+      // data: [auth.state.user.referral_code],
     },
     filter: undefined,
   });
@@ -365,28 +368,30 @@ const onToggleClickConfirm = async (row) => {
 const resetFilters = () => {
   let f = {
     name: "",
-    parent_id: auth.state.user.id,
+    // parent_id: auth.state.user.id,
     status: "all",
-    level: "",
-    include_downline: false,
+    dates: defaultDate,
+    // level: "",
+    // include_downline: false,
   };
   filters.value = f;
-  dateSelect.value = "";
-  onSearch();
+  dateSelect.value = defaultDate;
+  // onSearch();
+  onDateSearch("month");
 };
 
-const dateSelect = ref("today");
+const dateSelect = ref("month");
 const onDateSearch = (date) => {
   dateSelect.value = date;
   if (date == "month") {
     filters.value.dates = [
-      moment().subtract(30, "d").format("YYYY-MM-DD"),
-      moment().format("YYYY-MM-DD"),
+      moment().startOf("month").format("YYYY-MM-DD"),
+      moment().endOf("month").format("YYYY-MM-DD"),
     ];
   } else if (date == "lastmonth") {
     filters.value.dates = [
-      moment().subtract(60, "d").format("YYYY-MM-DD"),
-      moment().subtract(30, "d").format("YYYY-MM-DD"),
+      moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD"),
+      moment().subtract(1, "months").endOf("month").format("YYYY-MM-DD"),
     ];
   } else {
     filters.value.dates = [
