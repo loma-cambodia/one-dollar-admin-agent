@@ -164,10 +164,10 @@ export default function useDaily() {
         : props.pagination;
     try {
       const response = await api.get("/members/getDailyReport", { params });
-      state.items = response.data.data.data;
+      state.items = response.data.data;
       state.loading = false;
-      // state.totalAmounts = response.data.totalAmounts;
-      console.log('response.data.data    ',response.data.total_values);
+      // console.log('Sushil', response.data);
+      state.totalAmounts = response.data.totalAmounts;
       state.totalWalletAmounts = response.data.total_values.total_wallet_amount;
       state.totalBetAmounts = response.data.total_values.total_bet_amount;
       state.totalWinAmounts = response.data.total_values.total_win_loss_amount;
@@ -184,9 +184,9 @@ export default function useDaily() {
     }
   };
 
-  const getAllLevel = async () => {
+  const getAllLevelReferral = async () => {
     try {
-      const response = await api.get("/agents/level-all");
+      const response = await api.get("/agents/level-all-referral");
       return response;
     } catch (err) {
       //throw Error(Utils.getErrorMessage(err));
@@ -198,6 +198,6 @@ export default function useDaily() {
     ...toRefs(state),
     columns,
     paginate,
-    getAllLevel,
+    getAllLevelReferral,
   };
 }

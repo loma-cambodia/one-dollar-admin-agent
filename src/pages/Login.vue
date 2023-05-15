@@ -1,3 +1,14 @@
+<style scoped>
+label {
+  color: #dcdcdc !important;
+}
+.text-negative {
+    color: #fc6576 !important;
+}
+.q-field__messages.col {
+    color: #fc6576 !important;
+}
+</style>
 <template>
   <q-layout>
     <q-page-container class="bg-part-login">
@@ -111,6 +122,7 @@
                   v-model="code"
                   :maxlength="6"
                   :oninput="(evt) => Utils.onlyPostiveInteger(evt, true)"
+                  color="white"
                   :label="$t(Utils.getKey('Six Digits Code'))"
                   :rules="[
                     (val) =>
@@ -124,7 +136,7 @@
                   type="button"
                   dense
                   :label="$t(Utils.getKey('Google Authenticator'))"
-                  class="g-auth-btn full-width"
+                  class="g-auth-btn full-width text-white"
                   @click="onVerify2FA"
                   :disable="loading"
                 />

@@ -244,7 +244,7 @@
           @onBack="onRefresh"
         />
       </q-card-section>
-      <Loading :loading="saving" />
+      <Loading :loading="loading" />
     </q-card>
 
     <q-dialog v-model="resetPassword" persistent>
@@ -294,7 +294,7 @@ const {
   items,
   totals,
   paginate,
-  getAllLevel,
+  getAllLevelReferral,
   totalWalletAmounts,
   totalBetAmounts,
   totalWinAmounts,
@@ -309,6 +309,15 @@ const { showEdit, showToggleClickConfirm, selected, pagination, onRequest } =
 
 const $q = useQuasar();
 const selectedUser = ref(null);
+
+const levelOptionsReferral = ref([]);
+const allLevelAgenReferral = async () => {
+  let res = await getAllLevelReferral();
+  console.log("resLevelData", res.data);
+
+  levelOptionsReferral.value = res.data;
+};
+
 
 const defaultDate = [
   moment().startOf("month").format("YYYY-MM-DD"),
@@ -331,19 +340,24 @@ const onSearch = () => {
       ...pagination.value,
       sortBy: "member_ID",
       agent_referral_code: auth.state.user.referral_code,
+      all_agent_referral_code: levelOptionsReferral.value,
       dates: defaultDate,
       // data: [auth.state.user.referral_code],
     },
     filter: filters.value,
   });
+  console.log('levelOptionsReferral', levelOptionsReferral.value);
 };
 
-onMounted(() => {
+onMounted(async () => {
+
+  await  allLevelAgenReferral();
   onRequest({
     pagination: {
       ...pagination.value,
       sortBy: "member_ID",
       agent_referral_code: auth.state.user.referral_code,
+      all_agent_referral_code: levelOptionsReferral.value,
       dates: defaultDate,
       // data: [auth.state.user.referral_code],
     },

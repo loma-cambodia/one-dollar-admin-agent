@@ -1265,7 +1265,9 @@
   "copy_url": "Copy url",
   "download_qr_code": "Download qr code",
   "qr_code": "Qr code",
-  "referral_link": "Referral link"
+  "referral_link": "Referral link",
 
-
+  "deposit_amount": "Deposit amount",
+  "member_w_l": "Member w l",
+  "winning_amount": "Winning amount"
 }
