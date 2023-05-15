@@ -1263,11 +1263,11 @@
   "team_member_waiting_list": "Team Member W/L",
 
   "copy_url": "Copy url",
-  "download_qr_code": "Download qr code",
+  "download_qr_code": "Download",
   "qr_code": "Qr code",
   "referral_link": "Referral link",
 
   "deposit_amount": "Deposit amount",
-  "member_w_l": "Member w l",
+  "member_w_l": "Member W/L",
   "winning_amount": "Winning amount"
 }

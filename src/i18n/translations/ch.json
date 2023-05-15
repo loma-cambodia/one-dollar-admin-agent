@@ -1253,12 +1253,12 @@
   "team_member_bet_amount": "团队会员投注额",
   "team_member_waiting_list": "团队会员输赢",
 
-  "copy_url": "Copy url",
-  "download_qr_code": "Download qr code",
-  "qr_code": "Qr code",
-  "referral_link": "Referral link",
+  "copy_url": "复制链接",
+  "download_qr_code": "下载",
+  "qr_code": "二维码",
+  "referral_link": "推荐链接",
 
-  "deposit_amount": "Deposit amount",
-  "member_w_l": "Member w l",
-  "winning_amount": "Winning amount"
+  "deposit_amount": "充值金额",
+  "member_w_l": "会员输赢",
+  "winning_amount": "中奖金额"
 }

@@ -199,7 +199,7 @@
 
           <template v-slot:bottom-row>
             <q-tr>
-              <q-td class="text-center"> Total </q-td>
+              <q-td class="text-center">{{ $t(Utils.getKey("Total")) }} </q-td>
               <q-td> </q-td>
               <q-td class="text-center">
                 {{ totals?.totalDirectAgent }}

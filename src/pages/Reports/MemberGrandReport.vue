@@ -35,9 +35,9 @@
               :option-label="(name) => $t(Utils.getKey(name))"
               clearable
             />
-           
+
             <!-- <template v-slot:top> -->
-            
+
               <el-date-picker
                 class="input_white"
                 v-model="filters.dates"
@@ -65,7 +65,7 @@
               >
                 {{ $t("yesterday") }}
               </q-btn>
-             
+
               <q-btn
                 class="q-mr-sm"
                 color="primary"
@@ -84,12 +84,12 @@
               >
                 {{ $t(Utils.getKey("last month")) }}
               </q-btn>
-            
+
 
             <!-- <q-space /> -->
             <!-- </template> -->
 
-            
+
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
                 color="primary"
@@ -104,7 +104,7 @@
                 @click="resetFilters"
                 >{{ $t("reset") }}</q-btn
               >
-            
+
           </template>
           <!-- header column -->
           <template v-slot:header-cell="props">
@@ -122,7 +122,7 @@
               {{ auth.state.user.agent_id }}
             </q-td>
           </template>
-          
+
           <template v-slot:no-data>
             <q-icon
               style="margin-right: 5px"
@@ -133,7 +133,7 @@
 
           <template v-slot:bottom-row>
             <q-tr>
-              <q-td class="text-center"> Total </q-td>
+              <q-td class="text-center">{{ $t(Utils.getKey("Total")) }} </q-td>
               <q-td> </q-td>
               <q-td class="text-center">
                 {{ totalAmounts?.totalDepositedAmount || 0 }}
