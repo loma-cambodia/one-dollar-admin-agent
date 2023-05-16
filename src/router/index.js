@@ -38,10 +38,13 @@ export default route(function (/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     if (store.tages.filter((it) => it.name == to.name).length == 0) {
-      store.tages.push({
-        name: to.name,
-        path: to.path,
-      });
+      if(to.name != 'Page: Login') {
+        store.tages.push({
+          name: to.name,
+          path: to.path,
+        });
+      }
+
     }
 
     // console.log(to, "=to");

@@ -210,7 +210,9 @@
               </q-btn>
             </q-td>
           </template>
-          <template v-slot:bottom-row>
+          <template v-slot:bottom-row
+          v-if="items.length > 0"
+          >
           <q-tr>
             <q-td class="text-center">
               Total

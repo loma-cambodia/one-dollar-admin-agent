@@ -131,7 +131,7 @@
             {{ $t(Utils.getKey("No matching records found")) }}
           </template>
 
-          <template v-slot:bottom-row>
+          <template v-slot:bottom-row v-if="items.length > 0">
             <q-tr>
               <q-td class="text-center">{{ $t(Utils.getKey("Total")) }} </q-td>
               <q-td> </q-td>
