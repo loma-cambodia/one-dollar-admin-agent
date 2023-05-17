@@ -318,10 +318,9 @@ const allLevelAgenReferral = async () => {
   levelOptionsReferral.value = res.data;
 };
 
-
 const defaultDate = [
-  moment().startOf("month").format("YYYY-MM-DD"),
-  moment().endOf("month").format("YYYY-MM-DD"),
+  moment().subtract(1, "month").format("YYYY-MM-DD"),
+  moment().format("YYYY-MM-DD"),
 ];
 
 const filters = ref({
@@ -346,12 +345,11 @@ const onSearch = () => {
     },
     filter: filters.value,
   });
-  console.log('levelOptionsReferral', levelOptionsReferral.value);
+  console.log("levelOptionsReferral", levelOptionsReferral.value);
 };
 
 onMounted(async () => {
-
-  await  allLevelAgenReferral();
+  await allLevelAgenReferral();
   onRequest({
     pagination: {
       ...pagination.value,
@@ -391,10 +389,10 @@ const resetFilters = () => {
   filters.value = f;
   dateSelect.value = defaultDate;
   // onSearch();
-  onDateSearch("month");
+  onDateSearch("");
 };
 
-const dateSelect = ref("month");
+const dateSelect = ref("");
 const onDateSearch = (date) => {
   dateSelect.value = date;
   if (date == "month") {
@@ -409,8 +407,8 @@ const onDateSearch = (date) => {
     ];
   } else {
     filters.value.dates = [
-      moment().startOf(date).format("YYYY-MM-DD"),
-      moment().endOf(date).format("YYYY-MM-DD"),
+      moment().subtract(1, "month").format("YYYY-MM-DD"),
+      moment().format("YYYY-MM-DD"),
     ];
   }
   onSearch();
