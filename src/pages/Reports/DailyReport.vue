@@ -62,6 +62,7 @@
                   margin-left: 10px;
                   height: 40px;
                   min-width: 125px !important;
+                  background-color:#28a745 !important
                 "
                 @click="onSearch"
                 >{{ $t("search") }}</q-btn
@@ -83,7 +84,7 @@
             <div class="mt-3 clearfix">
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
-                color="primary"
+                color="info"
                 style="
                   margin-left: 10px;
                   height: 40px;

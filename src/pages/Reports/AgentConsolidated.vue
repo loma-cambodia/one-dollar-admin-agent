@@ -154,8 +154,8 @@
             <div class="mt-3">
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
-                color="primary"
-                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
+                color="success"
+                style="margin-left: 10px; height: 40px; min-width: 116px !important; background-color:#28a745 !important"
                 @click="onSearch"
                 >{{ $t("search") }}</q-btn
               >
@@ -172,7 +172,7 @@
             <div class="mt-3 clearfix">
               <q-btn
                 class="q-mr-sm q-px-sm q-ml-sm capitalize"
-                color="primary"
+                color="info"
                 style="margin-left: 10px; height: 40px; min-width: 116px !important;"
                 @click="exportTable"
                 >{{ $t("Export") }}</q-btn

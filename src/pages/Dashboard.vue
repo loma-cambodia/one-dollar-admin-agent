@@ -8,18 +8,119 @@
       <div>
         <q-card-section class="q-col-gutter-md">
           <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 stat-card q-mb-lg">
-              <q-bar dark class="chart-qbar q-py-lg">
-                <span class="text-body1">{{
-                  $t(Utils.getKey("Statistic"))
-                }}</span>
-                <!-- <div class="text-center">{{
-                  $t(Utils.getKey("Statistic"))
-                }}</div> -->
+            <div class="col-md-12 col-sm-12 col-xs-12 stat-card bg-dark text-white">
+              <q-bar dark class="chart-qbar q-py-lg row">
+                <div class="col-md-2">
+                  <span class="">{{ $t(Utils.getKey("Statistic")) }}</span>
+                </div>
+                <div class="col-md-6">
+                  (
+                  {{ $t(Utils.getKey("Last updated")) }}
+                  {{ lastUpdate }}
+                  )
+                </div>
+                <div class="col-md-4 text-right">
+                  <q-btn
+                    style="font-size: 17px"
+                    class="q-mr-sm q-mt-xs"
+                    dense
+                    color="primary"
+                    icon="mdi-lock-reset"
+                    @click="resetFilters"
+                  />
+                </div>
               </q-bar>
             </div>
+          </div>
 
-            <div class="col-md-3 col-sm-6 col-xs-12 stat-card">
+          <div class="row q-d-grid q-gap-3">
+
+            <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
+              <q-card flat bordered style="width: 95% !important;">
+                <q-card-section class="row pb-0 info-head">
+                  <div class="text-body1 text-break-space">
+                    {{ $t(Utils.getKey("Today new direct member")) }}
+                  </div>
+                </q-card-section>
+                <q-card-section class="pb-0 row">
+                  <div class="text-h5 py-0 text-bold">
+                    {{ getTotalCount?.team_member || "0" }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
+              <q-card flat bordered style="width: 95% !important;">
+                <q-card-section class="row pb-0 info-head">
+                  <div class="text-body1 text-break-space">
+                    {{ $t(Utils.getKey("Today new team member")) }}
+                  </div>
+                </q-card-section>
+                <q-card-section class="pb-0 row">
+                  <div class="text-h5 py-0 text-bold">
+                    {{ getTotalCount?.team_member || "0" }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
+              <q-card flat bordered style="width: 95% !important;">
+                <q-card-section class="row pb-0 info-head">
+                  <div class="text-body1 text-break-space">
+                    {{ $t(Utils.getKey("Today direct member bet amount")) }}
+                  </div>
+                </q-card-section>
+                <q-card-section class="pb-0 row">
+                  <div class="text-h5 py-0 text-bold">
+                    {{ getTotalCount?.direct_member_bet_amount || "0" }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
+              <q-card flat bordered style="width: 95% !important;">
+                <q-card-section class="row pb-0 info-head">
+                  <div class="text-body1 text-break-space">
+                    {{ $t(Utils.getKey("Today team member bet amount")) }}
+                  </div>
+                </q-card-section>
+                <q-card-section class="pb-0 row">
+                  <div class="text-h5 py-0 text-bold">
+                    {{ getTotalCount?.total_member_bet_amount || "0" }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
+              <q-card flat bordered style="width: 95% !important;">
+                <q-card-section class="row pb-0 info-head">
+                  <div class="text-body1 text-break-space">
+                    {{ $t(Utils.getKey("Today direct member W/L")) }}
+                  </div>
+                </q-card-section>
+                <q-card-section class="pb-0 row">
+                  <div class="text-h5 py-0 text-bold">
+                    {{ getTotalCount?.get_direct_memberWL || "0" }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
+              <q-card flat bordered style="width: 95% !important;">
+                <q-card-section class="row pb-0 info-head">
+                  <div class="text-body1 text-break-space">
+                    {{ $t(Utils.getKey("Today team member W/L")) }}
+                  </div>
+                </q-card-section>
+                <q-card-section class="pb-0 row">
+                  <div class="text-h5 py-0 text-bold">
+                    {{ getTotalCount?.get_team_memberWL || "0" }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+
+            <!-- <div class="col-md-3 col-sm-6 col-xs-12 stat-card">
               <q-card flat bordered class="amount_card">
                 <p class="text-body1 font_20 py-3 text-center">
                   {{ $t(Utils.getKey("Today new direct member")) }}
@@ -131,12 +232,12 @@
                   </div>
                 </q-card-section>
               </q-card>
-            </div>
+            </div> -->
           </div>
         </q-card-section>
-        <!-- <q-card-section class="row q-col-gutter-md q-pt-none q-px-md">
-          <recent-transaction />
-        </q-card-section> -->
+        <q-card-section class="row q-col-gutter-md q-pt-none q-px-md">
+          <member-online-chart />
+        </q-card-section>
       </div>
     </q-card>
   </q-page>
@@ -150,13 +251,17 @@ import useStats from "../composables/useStats";
 import Loading from "src/components/Shared/Loading.vue";
 import { useI18n } from "vue-i18n";
 import useDeals from "../composables/useDeals";
+import moment from "moment";
+import MemberOnlineChart from "src/components/Dashboard/MemberOnlineChart";
 
 const { getCount } = useDeals();
 const { t, locale } = useI18n();
 const stats = useStats();
 const getTotalCount = ref([]);
 
-const isLoading = ref(false);
+const lastUpdate = ref(moment().format("YYYY-MM-DD hh:mm:ss"));
+
+const isLoading = ref(true);
 
 getTodatCount();
 
@@ -164,9 +269,15 @@ async function getTodatCount() {
   try {
     const response = await stats.getTodatCount();
     getTotalCount.value = response.data;
+    // lastUpdate.value = moment().format("YYYY-MM-DD hh:mm:ss");
+    // console.log(lastUpdate);
+    isLoading.value = false;
   } catch (e) {}
 }
-
+const resetFilters = () => {
+  isLoading.value = true;
+  getTodatCount();
+};
 // provide(THEME_KEY, "light");
 </script>
 <style scoped>

@@ -1277,5 +1277,7 @@
   "today_new_direct_member": "Today new direct member",
   "today_new_team_member": "Today new team member",
   "today_team_member_bet_amount": "Today team member bet amount",
-  "today_team_member_w_l": "Today team member W/L"
+  "today_team_member_w_l": "Today team member W/L",
+  "last_updated": "Last Updated",
+  "statistic_graph": "Statistic Graph"
 }

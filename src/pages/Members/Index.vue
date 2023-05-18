@@ -52,6 +52,7 @@
 
              <q-btn
               class="q-mr-sm q-px-sm q-ml-sm capitalize"
+              style=" background-color:#28a745 !important"
               color="primary"
               @click="onSearch"
               >{{ $t("search") }}</q-btn
