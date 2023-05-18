@@ -114,6 +114,16 @@ export default function useStats() {
     }
   };
 
+  const getTodatCount = async () => {
+    try {
+      const response = await api.get(`agents/getTodatCount`);
+      return response;
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    }
+  };
+
   const getOnlineStats = async (filters) => {
     try {
       const response = await api.get(`/stats/graph-members-online`, {
@@ -230,6 +240,8 @@ export default function useStats() {
     slotPurchase,
     tranferAmount,
     revenueChart,
-    checkOTPbalance
+    checkOTPbalance,
+
+    getTodatCount,
   };
 }

@@ -133,7 +133,7 @@ const onSubmit = async () => {
       return
     }
 
-    if(user.value.password.length < 6 || !Utils.containsNumbersAndCaracterAt(user.value.password) ||  Utils.containsOnlyNumbers(user.value.password) || Utils.containsOnlyCharacter(user.value.password) ){
+    if(user.value.password.length < 6 ){
       $q.notify({
         position: "top",
         type: "negative",

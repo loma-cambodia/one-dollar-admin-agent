@@ -1269,5 +1269,13 @@
 
   "deposit_amount": "Deposit amount",
   "member_w_l": "Member W/L",
-  "winning_amount": "Winning amount"
+  "winning_amount": "Winning amount",
+
+  "statistic": "Statistic",
+  "today_direct_member_bet_amount": "Today direct member bet amount",
+  "today_direct_member_w_l": "Today direct member W/L",
+  "today_new_direct_member": "Today new direct member",
+  "today_new_team_member": "Today new team member",
+  "today_team_member_bet_amount": "Today team member bet amount",
+  "today_team_member_w_l": "Today team member W/L"
 }

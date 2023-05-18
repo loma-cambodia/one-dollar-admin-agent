@@ -13,7 +13,7 @@ const routes = [
       {
         name: "home",
         path: "/",
-        component: () => import("src/pages/AgentDashbaord.vue"),
+        component: () => import("src/pages/Dashboard.vue"),
         meta: { title: "Home", subtitle: "Dashboard" },
       },
 

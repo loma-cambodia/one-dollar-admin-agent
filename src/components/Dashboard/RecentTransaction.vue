@@ -1,44 +1,15 @@
 <template>
-  <div class="col-md-6 col-sm-12 col-xs-12">
+  <div class="col-md-12 col-sm-12 col-xs-12">
     <q-bar dark class="chart-qbar q-py-lg">
       <span class="text-body1">{{
-        $t(Utils.getKey("Last 10 Transactions"))
+        $t(Utils.getKey("cdxfgcxdvdfgvdf"))
       }}</span>
     </q-bar>
     <q-card-section
       class="q-pa-md bordered"
       style="border: 1px solid #ebeef5 !important"
     >
-      <q-table
-        flat
-        class="q-pa-none"
-        color="primary"
-        :loading="transactionLoading"
-        :rows="transactionItems"
-        row-key="id"
-        :columns="transactionColumns"
-        @request="onRequest"
-        hide-no-data
-        :hide-pagination="true"
-        bordered
-        :pagination="{ rowsPerPage: 10 }"
-      >
-        <!-- header column -->
-        <template v-slot:header-cell="props">
-          <q-th :props="props">
-            {{
-              props.col.label === "#"
-                ? props.col.label
-                : $t(Utils.getKey(props.col.label))
-            }}
-          </q-th>
-        </template>
-        <template v-slot:body-cell-amount="props">
-          <q-td class="text-right">
-            <span :class="props.row.transaction_type === 'transfer_in' ? 'green' : 'red' ">{{Utils.formatCurrency(props.row.amount)}}</span>
-          </q-td>
-        </template>
-      </q-table>
+
     </q-card-section>
   </div>
 </template>

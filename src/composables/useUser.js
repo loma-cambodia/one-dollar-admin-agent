@@ -108,7 +108,7 @@ export default function useUser() {
   const resetPassword = async (data) => {
     try {
       state.saving = true;
-      await api.post(`/users/reset-password`, data);
+      await api.post(`agents/reset-password`, data);
     } catch (err) {
       //throw Error(Utils.getErrorMessage(err));
       throw Utils.getErrorMessage(err);
@@ -120,7 +120,7 @@ export default function useUser() {
   const updatePassword = async (id, data) => {
     try {
       state.saving = true;
-      return await api.post(`/users-password/${id}`, data);
+      return await api.post(`agents/reset-password/${id}`, data);
     } catch (err) {
       //throw Error(Utils.getErrorMessage(err));
       throw Utils.getErrorMessage(err);
