@@ -72,7 +72,7 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ getTotalCount?.direct_member_bet_amount || "0" }}
+                    {{ Utils.formatCurrency(getTotalCount?.direct_member_bet_amount || "0") }}
                   </div>
                 </q-card-section>
               </q-card>
@@ -86,7 +86,7 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ getTotalCount?.total_member_bet_amount || "0" }}
+                    {{ Utils.formatCurrency(getTotalCount?.total_member_bet_amount || "0") }}
                   </div>
                 </q-card-section>
               </q-card>
@@ -100,7 +100,7 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ getTotalCount?.get_direct_memberWL || "0" }}
+                    {{ Utils.formatCurrency(getTotalCount?.get_direct_memberWL || "0") }}
                   </div>
                 </q-card-section>
               </q-card>
@@ -114,7 +114,7 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ getTotalCount?.get_team_memberWL || "0" }}
+                    {{ Utils.formatCurrency(getTotalCount?.get_team_memberWL || "0") }}
                   </div>
                 </q-card-section>
               </q-card>
