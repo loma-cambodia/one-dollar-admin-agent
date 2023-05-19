@@ -3,6 +3,7 @@
     class="col-md-12 col-sm-12 col-xs-12 q-mt-md chart-container"
     :style="{ height: '400px' }"
   >
+  <Loading :loading="isLoading" />
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12 stat-card bg-dark text-white">
         <q-bar dark class="chart-qbar q-py-lg row">
@@ -11,26 +12,20 @@
           </div>
 
           <q-select
-            v-model="filters.status"
-            :options="[
-              'New direct member',
-              'New team member',
-              'Direct member bet amount',
-              'Direct Member W/L',
-              'Team Member W/L',
-            ]"
+            v-model="typeOfFilter"
+            :options="optionsValue"
             outlined
             style="width: 300px"
             dense
-            emit-value
-            class="q-mr-sm q-mt-sm"
             map-options
-            :label="$t('agent_status')"
-            :option-label="(name) => $t(Utils.getKey(name))"
+            emit-value
+            option-value="id"
+            class="q-mr-sm q-mt-sm bg-dark-sushil"
+            :option-label="(item) => $t(Utils.getKey(item.name))"
           />
           <!-- <div class="col-md-4"> -->
           <el-date-picker
-            class="q-mt-xs q-mr-sm input_whiteF"
+            class="q-mt-xs q-mr-sm bg-dark-sushil"
             color="white"
             v-model="onlineStats.range"
             type="daterange"
@@ -38,6 +33,7 @@
             :start-placeholder="$t(Utils.getKey('Start date'))"
             :end-placeholder="$t(Utils.getKey('End date'))"
             value-format="YYYY-MM-DD"
+            style="color : #ffffff !important;"
           />
 
           <q-btn
@@ -79,6 +75,7 @@ import useStats from "../../composables/useStats";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { LineChart, PieChart } from "echarts/charts";
+import auth from "src/store/auth";
 import {
   TitleComponent,
   TooltipComponent,
@@ -90,9 +87,34 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const { locale } = useI18n({ useScope: "global" });
-const filters = ref({
-  status: "New direct member",
-});
+
+const optionsValue = ref([
+  {
+    id: "NewDirectMember",
+    name: "New direct member",
+  },
+  {
+    id: "NewTeamMember",
+    name: "New team member",
+  },
+  {
+    id: "DirectMemberBetAmount",
+    name: "Direct member bet amount",
+  },
+  {
+    id: "TeamMemberBetAmount",
+    name: "Team member bet amount",
+  },
+  {
+    id: "DirectMemberWL",
+    name: "Direct Member W/L",
+  },
+  {
+    id: "TeamMemberWL",
+    name: "Team Member W/L",
+  },
+]);
+
 use([
   CanvasRenderer,
   PieChart,
@@ -103,21 +125,23 @@ use([
   GridComponent,
 ]);
 const stats = useStats();
-const statsLoading = ref(true);
+const isLoading = ref(true);
+const typeOfFilter = ref("NewDirectMember");
 const defaultDate = [
-  moment().startOf("month").format("YYYY-MM-DD"),
-  moment().endOf("month").format("YYYY-MM-DD"),
+  moment().subtract(1, "month").format("YYYY-MM-DD"),
+  moment().format("YYYY-MM-DD"),
 ];
 
 const onSearch = () => {
-  onRequest({
-    pagination: {
-      ...pagination.value,
-    },
-    filter: filters.value,
-  });
+  getChartDataFun();
 };
 
+const getChartData = ref([]);
+const resetFilters = () => {
+  onlineStats.value.range = defaultDate;
+  typeOfFilter.value = "NewDirectMember";
+  onSearch();
+};
 const onlineStats = ref({
   range: defaultDate,
   option: {
@@ -135,7 +159,7 @@ const onlineStats = ref({
     },
     series: [
       {
-        data: [10, 1, 8, 40, 6, 8, 8, 3],
+        data: getChartData,
         type: "line",
         areaStyle: {},
         color: ["#03507e"],
@@ -150,29 +174,30 @@ const onlineStats = ref({
     ],
   },
 });
+const levelOptionsReferral = ref([]);
+const allLevelAgenReferral = async () => {
+  let res = await stats.getAllLevelReferral();
+  console.log("resLevelData", res.data);
 
-getOnlineStats();
+  levelOptionsReferral.value = res.data;
+};
 
-watch(
-  () => onlineStats.value.range,
-  async (newValue, oldValue) => {
-    getOnlineStats();
-  },
-  { deep: true }
-);
+const getChartDataFun = async () => {
+  isLoading.value = true;
+  await allLevelAgenReferral();
+  let filters = {
+    date: onlineStats.value.range,
+    typeOfFilter: typeOfFilter.value,
+    agent_referral_code: auth.state.user.referral_code,
+    all_agent_referral_code: levelOptionsReferral.value,
+  };
+  let res = await stats.getAllChartData(filters);
+  console.log("res", res);
 
-async function getOnlineStats() {
-  try {
-    // const response = await stats.getOnlineStats({
-    //   dates: (onlineStats.value.range = onlineStats.value.range || defaultDate),
-    // });
-    // onlineStats.value.option.xAxis.data = response.data.map(
-    //   (item) => item.date
-    // );
-    // onlineStats.value.option.series[0].data = response.data.map(
-    //   (item) => item.total
-    // );
-    // statsLoading.value = false;
-  } catch (e) {}
-}
+  getChartData.value = res.data.chart_data;
+  isLoading.value = false;
+};
+
+getChartDataFun();
 </script>
+

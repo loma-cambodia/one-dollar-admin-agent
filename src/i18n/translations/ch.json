@@ -1268,5 +1268,12 @@
   "today_new_direct_member": "今日新增直属会员人数",
   "today_new_team_member": "今日新增团队会员人数",
   "today_team_member_bet_amount": "今日团队会员投注金额",
-  "today_team_member_w_l": "今日团队会员输赢"
+  "today_team_member_w_l": "今日团队会员输赢",
+
+  "direct_member_w_l": "直属会员输赢",
+  "last_updated": "最后更新",
+  "new_direct_member": "新增直属会员人数",
+  "new_team_member": "新增团队会员人数",
+  "statistic_graph": "统计图表",
+  "team_member_w_l": "团队会员输赢"
 }

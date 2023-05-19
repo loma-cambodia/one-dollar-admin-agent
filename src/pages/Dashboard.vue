@@ -4,7 +4,6 @@
       class="card_container pa-3"
       :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'"
     >
-      <Loading :loading="isLoading" />
       <div>
         <q-card-section class="q-col-gutter-md">
           <div class="row">
@@ -35,6 +34,7 @@
 
           <div class="row q-d-grid q-gap-3">
 
+            <Loading :loading="isLoading" />
             <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
               <q-card flat bordered style="width: 95% !important;">
                 <q-card-section class="row pb-0 info-head">
@@ -269,8 +269,6 @@ async function getTodatCount() {
   try {
     const response = await stats.getTodatCount();
     getTotalCount.value = response.data;
-    // lastUpdate.value = moment().format("YYYY-MM-DD hh:mm:ss");
-    // console.log(lastUpdate);
     isLoading.value = false;
   } catch (e) {}
 }

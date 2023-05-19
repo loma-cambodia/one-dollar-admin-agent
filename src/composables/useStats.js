@@ -136,6 +136,18 @@ export default function useStats() {
     }
   };
 
+  const getAllChartData = async (filters) => {
+    try {
+      const response = await api.get(`/agents/getDashboardChartData`, {
+        params: filters,
+      });
+      return response;
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    }
+  };
+
 
   const getRecentMemberOnline = async () => {
     state.memberLoading = true;
@@ -224,7 +236,15 @@ export default function useStats() {
       throw Utils.getErrorMessage(err);
     }
   };
-
+  const getAllLevelReferral = async () => {
+    try {
+      const response = await api.get("/agents/level-all-referral");
+      return response;
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    }
+  };
 
   return {
     ...toRefs(state),
@@ -243,5 +263,7 @@ export default function useStats() {
     checkOTPbalance,
 
     getTodatCount,
+    getAllChartData,
+    getAllLevelReferral,
   };
 }
