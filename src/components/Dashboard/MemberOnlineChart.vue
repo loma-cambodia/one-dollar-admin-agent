@@ -3,9 +3,9 @@
     class="col-md-12 col-sm-12 col-xs-12 q-mt-md chart-container"
     :style="{ height: '400px' }"
   >
-  <Loading :loading="isLoading" />
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12 stat-card bg-dark text-white">
+        <Loading :loading="isLoading" />
         <q-bar dark class="chart-qbar q-py-lg row">
           <div class="col-md-2">
             <span class="">{{ $t(Utils.getKey("Statistic Graph")) }}</span>
@@ -33,7 +33,7 @@
             :start-placeholder="$t(Utils.getKey('Start date'))"
             :end-placeholder="$t(Utils.getKey('End date'))"
             value-format="YYYY-MM-DD"
-            style="color : #ffffff !important;"
+            style="color: #ffffff !important"
           />
 
           <q-btn
@@ -76,6 +76,7 @@ import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { LineChart, PieChart } from "echarts/charts";
 import auth from "src/store/auth";
+import Loading from "src/components/Shared/Loading.vue";
 import {
   TitleComponent,
   TooltipComponent,
@@ -145,6 +146,12 @@ const resetFilters = () => {
 const onlineStats = ref({
   range: defaultDate,
   option: {
+    grid: {
+    top:    60,
+    bottom: 60,
+    left:   '0%',
+    right:  '0%',
+  },
     tooltip: {
       trigger: "item",
       formatter: `{b} <br/>${t(Utils.getKey("Statistic Graph"))} : {c}`,
@@ -200,4 +207,3 @@ const getChartDataFun = async () => {
 
 getChartDataFun();
 </script>
-
