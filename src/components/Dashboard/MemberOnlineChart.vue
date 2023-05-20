@@ -149,7 +149,7 @@ const onlineStats = ref({
     grid: {
     top:    60,
     bottom: 60,
-    left:   '7%',
+    left:   '5%',
     right:  '0%',
   },
     tooltip: {
