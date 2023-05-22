@@ -117,11 +117,11 @@
             </q-th>
           </template>
 
-          <template v-slot:body-cell-upline>
+          <!-- <template v-slot:body-cell-upline>
             <q-td>
               {{ auth.state.user.agent_id }}
             </q-td>
-          </template>
+          </template> -->
 
           <template v-slot:no-data>
             <q-icon
@@ -135,20 +135,20 @@
             <q-tr>
               <q-td class="text-center">{{ $t(Utils.getKey("Total")) }} </q-td>
               <q-td> </q-td>
-              <q-td class="text-center">
-                {{ totalAmounts?.totalDepositedAmount || 0 }}
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalAmounts?.totalDepositedAmount || 0) }}
               </q-td>
-              <q-td class="text-center">
-                {{ totalAmounts?.totalBetAmounts || 0 }}
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalAmounts?.totalBetAmounts || 0) }}
               </q-td>
-              <q-td class="text-center">
-                {{ totalAmounts?.totalWinAmounts || 0 }}
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalAmounts?.totalWinAmounts || 0) }}
               </q-td>
-              <q-td class="text-center">
-                {{ totalAmounts?.totalActivityBonus || 0 }}
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalAmounts?.totalActivityBonus || 0) }}
               </q-td>
-              <q-td class="text-center">
-                {{ totalAmounts?.totalWinLossAmount || 0 }}
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalAmounts?.totalWinLossAmount || 0) }}
               </q-td>
             </q-tr>
           </template>
@@ -170,7 +170,7 @@ import { i18n } from "src/boot/i18n";
 import auth from "src/store/auth";
 import Loading from "src/components/Shared/Loading.vue";
 
-const { loading, columns, items, totalAmounts, paginate } = useMemberGrandReport();
+const { loading, columns, items, totalAmounts, paginate, getAllLevelReferral } = useMemberGrandReport();
 const { showEdit, showToggleClickConfirm, selected, pagination, onRequest } =
   useTable(paginate);
 
@@ -181,6 +181,14 @@ const defaultDate = [
   moment().startOf("day").format("YYYY-MM-DD"),
   moment().endOf("day").format("YYYY-MM-DD"),
 ];
+
+const levelOptionsReferral = ref([]);
+const allLevelAgenReferral = async () => {
+  let res = await getAllLevelReferral();
+  console.log("resLevelData", res.data);
+
+  levelOptionsReferral.value = res.data;
+};
 
 const filters = ref({
   name: "",
@@ -197,6 +205,7 @@ const onSearch = () => {
       ...pagination.value,
       sortBy: "id",
       include_downline: false,
+      all_agent_referral_code: levelOptionsReferral.value,
     },
     filter: filters.value,
   });
@@ -205,12 +214,14 @@ const onSearch = () => {
 let filter = {
   parent_id: auth.state.user.id,
 };
-onMounted(() => {
+onMounted(async () => {
+  await allLevelAgenReferral();
   onRequest({
     pagination: {
       ...pagination.value,
       sortBy: "id",
       include_downline: false,
+      all_agent_referral_code: levelOptionsReferral.value,
     },
     filter: filters.value,
   });
