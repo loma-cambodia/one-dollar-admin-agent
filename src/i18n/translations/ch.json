@@ -1275,5 +1275,6 @@
   "new_direct_member": "新增直属会员人数",
   "new_team_member": "新增团队会员人数",
   "statistic_graph": "统计图表",
-  "team_member_w_l": "团队会员输赢"
+  "team_member_w_l": "团队会员输赢",
+  "the_agent_id_has_already_been_taken_": "agent id has already been taken"
 }

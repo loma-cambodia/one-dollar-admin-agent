@@ -1284,5 +1284,6 @@
   "new_direct_member": "New direct member",
   "new_team_member": "New team member",
   "statistic_graph": "Statistic graph",
-  "team_member_w_l": "Team member W/L"
+  "team_member_w_l": "Team member W/L",
+  "the_agent_id_has_already_been_taken_": "agent id has already been taken"
 }

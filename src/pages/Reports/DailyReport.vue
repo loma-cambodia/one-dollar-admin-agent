@@ -140,7 +140,7 @@
 
           <template v-slot:body-cell-direct_member_bet_amount="props">
             <q-td class="text-right">
-              {{ props.row.bet_amount }}
+              {{ Utils.formatCurrency(props.row.bet_amount) }}
             </q-td>
           </template>
 
@@ -220,7 +220,7 @@
                 {{ totalTeamMembers }}
               </q-td>
               <q-td class="text-right">
-                {{ totalBetAmounts }}
+                {{ Utils.formatCurrency(totalBetAmounts) }}
               </q-td>
               <q-td class="text-right">
                 {{ Utils.formatCurrency(totalTeamBetAmt) }}
