@@ -44,7 +44,7 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ getTotalCount?.team_member || "0" }}
+                    {{ getTotalCount?.direct_member || "0" }}
                   </div>
                 </q-card-section>
               </q-card>
