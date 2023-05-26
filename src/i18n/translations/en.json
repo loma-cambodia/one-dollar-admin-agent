@@ -1193,7 +1193,6 @@
   "member_center": "Member center",
   "deposit_history": "Deposit history",
   "withdrawal_history": "Withdrawal history",
-  "manage_report": "Manage report",
   "member_history": "Member history",
   "party_bets": "Party bets",
   "member_report": "Member report",
@@ -1285,5 +1284,7 @@
   "new_team_member": "New team member",
   "statistic_graph": "Statistic graph",
   "team_member_w_l": "Team member W/L",
-  "the_agent_id_has_already_been_taken_": "agent id has already been taken"
+  "the_agent_id_has_already_been_taken_": "agent id has already been taken",
+
+  "manage_report": "Report Management"
 }
