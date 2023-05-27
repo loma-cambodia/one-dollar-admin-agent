@@ -393,7 +393,7 @@ const resetFilters = () => {
   onDateSearch("");
 };
 
-const dateSelect = ref("month");
+const dateSelect = ref("");
 const onDateSearch = (date) => {
   dateSelect.value = date;
   if (date == "month") {

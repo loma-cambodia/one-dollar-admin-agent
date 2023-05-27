@@ -7,7 +7,9 @@
       <div>
         <q-card-section class="q-col-gutter-md">
           <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 stat-card bg-dark text-white">
+            <div
+              class="col-md-12 col-sm-12 col-xs-12 stat-card bg-dark text-white"
+            >
               <q-bar dark class="chart-qbar q-py-lg row">
                 <div class="col-md-2">
                   <span class="">{{ $t(Utils.getKey("Statistic")) }}</span>
@@ -20,11 +22,14 @@
                 </div>
                 <div class="col-md-4 text-right">
                   <q-btn
-                    style="font-size: 17px"
                     class="q-mr-sm q-mt-xs"
                     dense
                     color="primary"
-                    icon="mdi-lock-reset"
+                    style="
+                      font-size: 18px;
+                      background-color: #28a745 !important;
+                    "
+                    icon="mdi-refresh-circle"
                     @click="resetFilters"
                   />
                 </div>
@@ -33,10 +38,9 @@
           </div>
 
           <div class="row q-d-grid q-gap-3">
-
             <Loading :loading="isLoading" />
             <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
-              <q-card flat bordered style="width: 95% !important;">
+              <q-card flat bordered style="width: 95% !important">
                 <q-card-section class="row pb-0 info-head">
                   <div class="text-body1 text-break-space">
                     {{ $t(Utils.getKey("Today new direct member")) }}
@@ -50,7 +54,7 @@
               </q-card>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
-              <q-card flat bordered style="width: 95% !important;">
+              <q-card flat bordered style="width: 95% !important">
                 <q-card-section class="row pb-0 info-head">
                   <div class="text-body1 text-break-space">
                     {{ $t(Utils.getKey("Today new team member")) }}
@@ -64,7 +68,7 @@
               </q-card>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
-              <q-card flat bordered style="width: 95% !important;">
+              <q-card flat bordered style="width: 95% !important">
                 <q-card-section class="row pb-0 info-head">
                   <div class="text-body1 text-break-space">
                     {{ $t(Utils.getKey("Today direct member bet amount")) }}
@@ -72,13 +76,17 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ Utils.formatCurrency(getTotalCount?.direct_member_bet_amount || "0") }}
+                    {{
+                      Utils.formatCurrency(
+                        getTotalCount?.direct_member_bet_amount || "0"
+                      )
+                    }}
                   </div>
                 </q-card-section>
               </q-card>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
-              <q-card flat bordered style="width: 95% !important;">
+              <q-card flat bordered style="width: 95% !important">
                 <q-card-section class="row pb-0 info-head">
                   <div class="text-body1 text-break-space">
                     {{ $t(Utils.getKey("Today team member bet amount")) }}
@@ -86,13 +94,17 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ Utils.formatCurrency(getTotalCount?.total_member_bet_amount || "0") }}
+                    {{
+                      Utils.formatCurrency(
+                        getTotalCount?.total_member_bet_amount || "0"
+                      )
+                    }}
                   </div>
                 </q-card-section>
               </q-card>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
-              <q-card flat bordered style="width: 95% !important;">
+              <q-card flat bordered style="width: 95% !important">
                 <q-card-section class="row pb-0 info-head">
                   <div class="text-body1 text-break-space">
                     {{ $t(Utils.getKey("Today direct member W/L")) }}
@@ -100,13 +112,17 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ Utils.formatCurrency(getTotalCount?.get_direct_memberWL || "0") }}
+                    {{
+                      Utils.formatCurrency(
+                        getTotalCount?.get_direct_memberWL || "0"
+                      )
+                    }}
                   </div>
                 </q-card-section>
               </q-card>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12 stat-card mt-4">
-              <q-card flat bordered style="width: 95% !important;">
+              <q-card flat bordered style="width: 95% !important">
                 <q-card-section class="row pb-0 info-head">
                   <div class="text-body1 text-break-space">
                     {{ $t(Utils.getKey("Today team member W/L")) }}
@@ -114,7 +130,11 @@
                 </q-card-section>
                 <q-card-section class="pb-0 row">
                   <div class="text-h5 py-0 text-bold">
-                    {{ Utils.formatCurrency(getTotalCount?.get_team_memberWL || "0") }}
+                    {{
+                      Utils.formatCurrency(
+                        getTotalCount?.get_team_memberWL || "0"
+                      )
+                    }}
                   </div>
                 </q-card-section>
               </q-card>
