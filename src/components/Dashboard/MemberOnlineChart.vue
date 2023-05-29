@@ -20,12 +20,12 @@
             map-options
             emit-value
             option-value="id"
-            class="q-mr-sm q-mt-sm bg-dark-sushil"
+            class="q-mr-sm bg-dark-sushil"
             :option-label="(item) => $t(Utils.getKey(item.name))"
           />
           <!-- <div class="col-md-4"> -->
           <el-date-picker
-            class="q-mt-xs q-mr-sm bg-dark-sushil"
+            class="q-mr-sm bg-dark-sushil"
             color="white"
             v-model="onlineStats.range"
             type="daterange"
