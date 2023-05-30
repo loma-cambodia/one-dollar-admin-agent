@@ -148,7 +148,7 @@
                 {{ Utils.formatCurrency(totalAmounts?.totalActivityBonus || 0) }}
               </q-td>
               <q-td class="text-right">
-                {{ Utils.formatCurrency(totalAmounts?.totalWinLossAmount || 0) }}
+                {{ Utils.formatCurrency(totalAmounts?.totalWinLoseAmount || 0) }}
               </q-td>
             </q-tr>
           </template>
