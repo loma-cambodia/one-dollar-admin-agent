@@ -20,7 +20,6 @@
     </q-bar>
     <q-card-section class="q-pt-lg">
       <q-form ref="refForm">
-
         <q-input
           :autofocus="true"
           type="email"
@@ -34,22 +33,32 @@
           @keydown.space="(event) => event.preventDefault()"
           lazy-rules
         />
-          <q-input
-            type="profit"
-            v-model="user.own_commision"
-            :label="$t(Utils.getKey('profit'))"
-            dense
-            outlined
-            lazy-rules
-            :rules="[
-              (val) => !!val || $t(Utils.getKey('Field is required'))
-            ]"
-          />
+        <!-- <q-input
+          type="profit"
+          v-model="user.own_commision"
+          :label="$t(Utils.getKey('profit'))"
+          dense
+          outlined
+          lazy-rules
+          :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
+        /> -->
+        <q-input
+          :autofocus="true"
+          v-model="user.own_commision"
+          :label="$t(Utils.getKey('profit')) + ' ' + '0-10 %'"
+          dense
+          outlined
+          maxlength="5"
+          @change="onChange(1)"
+          lazy-rules
+          :oninput="(evt) => Utils.validationOnlyNumberDecimalEvent(evt, 4)"
+          :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
+        />
       </q-form>
       <!-- minLength="2" maxlength="3" -->
       <div>
         <p>
-            {{ $t(Utils.getKey('profit_sharing_notes_edit')) }}
+          {{ $t(Utils.getKey("profit_sharing_notes_edit")) }}
         </p>
       </div>
     </q-card-section>
@@ -93,7 +102,6 @@ const roleOptions = ref([]);
 const user = ref({
   ...props.data,
   // role_id: props.data?.roles[0]?.id,
-
 });
 const refForm = ref(null);
 
@@ -152,4 +160,13 @@ async function onSubmit() {
     });
   }
 }
+const onChange = (val) => {
+  switch (val) {
+    case 1:
+      if (user.value.own_commision[0] == ".") {
+        user.value.own_commision = 0 + user.value.own_commision;
+      }
+      break;
+  }
+};
 </script>

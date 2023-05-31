@@ -51,7 +51,7 @@
             ]"
           />
         </form>
-        <form autocomplete="off">
+        <!-- <form autocomplete="off">
           <q-input
             type="number"
             v-model="user.own_commision"
@@ -67,11 +67,23 @@
               (val) => !!val || $t(Utils.getKey('Field is required'))
             ]"
           />
-        </form>
+        </form> -->
+        <q-input
+          :autofocus="true"
+          v-model="user.own_commision"
+          :label="$t(Utils.getKey('profit')) + ' ' + '0-10 %'"
+          dense
+          outlined
+          maxlength="5"
+          @change="onChange(1)"
+          lazy-rules
+          :oninput="(evt) => Utils.validationOnlyNumberDecimalEvent(evt, 4)"
+          :rules="[(val) => !!val || $t(Utils.getKey('Field is required'))]"
+        />
       </q-form>
       <div>
         <p>
-            {{ $t(Utils.getKey('profit_sharing_notes')) }}
+          {{ $t(Utils.getKey("profit_sharing_notes")) }}
         </p>
       </div>
     </q-card-section>
@@ -115,7 +127,7 @@ const user = ref({
   agent_id: "",
   password: "",
   parent_id: auth.state.user.id,
-  own_commision: ''
+  own_commision: "",
 });
 const agentItems = ref([]);
 
@@ -153,4 +165,13 @@ async function onSubmit() {
     });
   }
 }
+const onChange = (val) => {
+  switch (val) {
+    case 1:
+      if (user.value.own_commision[0] == ".") {
+        user.value.own_commision = 0 + user.value.own_commision;
+      }
+      break;
+  }
+};
 </script>
