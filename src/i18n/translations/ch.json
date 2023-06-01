@@ -1219,7 +1219,7 @@
   "Your acount is Locked": "账号已封锁",
   "team_agent": "团队代理",
   "profit_sharing_must_be_less_or_equal_to_your_profit": "Profit Sharing Must Be less Or Equal To Your Profit",
-  "First Reset Profit Sharing": "First Reset Profit Sharing",
+  "first_reset_profit_sharing": "请先重置“占成比例",
   "Profit Reseted successfully": "Profit Reseted successfully",
   "profit_sharing_notes": "注：下级代理的占成比例不能超过他的上级代理，剩余部分占成归上级所有",
   "profit_sharing_notes_edit": "注：占成比例只能增加，要调低先点击“占成比例清零”再重新设置比例",

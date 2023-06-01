@@ -161,6 +161,7 @@ async function onSubmit() {
   }
 }
 const onChange = (val) => {
+  user.value.own_commision = user.value.own_commision.replace('-', '')
   switch (val) {
     case 1:
       if (user.value.own_commision[0] == ".") {
