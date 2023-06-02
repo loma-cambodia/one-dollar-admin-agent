@@ -53,8 +53,8 @@ module.exports = configure(function (ctx) {
           ? "http://localhost:8000/api"
           : "http://agent-api.kk-exchange.com/api",
         API_REFFERAL_URL: ctx.dev
-          ? "http://localhost:8000/api/agent?agent_referral_code="
-          : "http://agent-api.kk-exchange.com/api/agent",
+          ? "http://demo-the1shops.kk-lotto.com:4002/register?agent_referral_code="
+          : "http://demo-the1shops.kk-lotto.com:4002/register?agent_referral_code=",
       },
       // transpile: false, https://the1shops.com:8090/api/admin
       // publicPath: '/', http://one-dollar-mlm-api.kk-lotto.com:8080/api/admin
