@@ -35,15 +35,15 @@
             value-format="YYYY-MM-DD"
             style="color: #ffffff !important"
           />
-
           <q-btn
             class="q-mr-sm q-px-sm q-ml-sm capitalize"
-            color="primary"
+            color="success"
             style="
               margin-left: 10px;
               height: 40px;
-              min-width: 125px !important;
+              min-width: 116px !important;
               background-color: #28a745 !important;
+              font-size: 14px;
             "
             @click="onSearch"
             >{{ $t("search") }}</q-btn
@@ -51,7 +51,7 @@
           <q-btn
             class="q-mr-sm q-px-sm q-ml-sm capitalize"
             color="warning"
-            style="margin-left: 10px; height: 40px; min-width: 125px !important"
+            style="margin-left: 10px; height: 40px; min-width: 116px !important; font-size: 14px;"
             @click="resetFilters"
             >{{ $t("reset") }}</q-btn
           >
@@ -143,15 +143,25 @@ const resetFilters = () => {
   typeOfFilter.value = "NewDirectMember";
   onSearch();
 };
+watch(
+  () => locale.value,
+  () => {
+    onlineStats.value.option.tooltip = {
+      trigger: "item",
+      formatter: `{b} <br/>${t(Utils.getKey("Statistic Graph"))} : {c}`,
+    };
+  }
+);
+
 const onlineStats = ref({
   range: defaultDate,
   option: {
     grid: {
-    top:    60,
-    bottom: 60,
-    left:   '5%',
-    right:  '0%',
-  },
+      top: 60,
+      bottom: 60,
+      left: "5%",
+      right: "0%",
+    },
     tooltip: {
       trigger: "item",
       formatter: `{b} <br/>${t(Utils.getKey("Statistic Graph"))} : {c}`,

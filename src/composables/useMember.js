@@ -149,30 +149,30 @@ export default function useMember() {
       align: "center",
     },
 
-    {
-      bottomColumns: function () {
-        var retVal = []
-        for (let i = 0; i < this.columns.length; i++) {
-          var isVisible = false
-          for (let j = 0; j < this.visibleColumns.length; j++) {
-            if (this.visibleColumns[j] === this.columns[i].name) {
-              isVisible = true
-              break
-            }
-          }
-          if (isVisible) {
-            if (this.columns[i].sums) {
-              // need to calculate sum, wonder how
-              retVal.push({ name: this.columns[i].name, text: ' the sum of ' + this.columns[i].name })
-            } else {
-              retVal.push({ name: this.columns[i].name, text: '' })
-            }
-          }
-        }
-        return retVal
-      }
+    // {
+    //   bottomColumns: function () {
+    //     var retVal = []
+    //     for (let i = 0; i < this.columns.length; i++) {
+    //       var isVisible = false
+    //       for (let j = 0; j < this.visibleColumns.length; j++) {
+    //         if (this.visibleColumns[j] === this.columns[i].name) {
+    //           isVisible = true
+    //           break
+    //         }
+    //       }
+    //       if (isVisible) {
+    //         if (this.columns[i].sums) {
+    //           // need to calculate sum, wonder how
+    //           retVal.push({ name: this.columns[i].name, text: ' the sum of ' + this.columns[i].name })
+    //         } else {
+    //           retVal.push({ name: this.columns[i].name, text: '' })
+    //         }
+    //       }
+    //     }
+    //     return retVal
+    //   }
 
-    },
+    // },
 
     // {
     //   name: "actions",

@@ -1,7 +1,6 @@
 <template>
   <q-page>
-
-    <q-card style="margin-left:0px; box-shadow: none; min-height:85vh;">
+    <q-card style="margin-left: 0px; box-shadow: none; min-height: 85vh">
       <q-card-section v-if="!showMlmTreeView">
         <q-table
           flat
@@ -17,7 +16,7 @@
           :rows-per-page-label="$t(Utils.getKey('Records per page'))"
         >
           <template v-slot:top>
-          <q-select
+            <q-select
               v-model="filters.status"
               :options="levelOptions"
               outlined
@@ -31,15 +30,15 @@
               clearable
             />
             <q-input
-            v-model="filters.member_ID"
-            outlined
-            style="width: 200px"
-            dense
-            class="q-mr-sm q-mt-sm"
-            :label="$t('member_ID')"
-            :option-label="(name) => $t(Utils.getKey(name))"
-            clearable
-          />
+              v-model="filters.member_ID"
+              outlined
+              style="width: 200px"
+              dense
+              class="q-mr-sm q-mt-sm"
+              :label="$t('member_ID')"
+              :option-label="(name) => $t(Utils.getKey(name))"
+              clearable
+            />
             <el-date-picker
               class="q-mr-sm q-mt-sm"
               v-model="filters.dates"
@@ -50,10 +49,15 @@
               value-format="YYYY-MM-DD"
             />
 
-             <q-btn
+            <q-btn
               class="q-mr-sm q-px-sm q-ml-sm capitalize"
-              style=" background-color:#28a745 !important"
-              color="primary"
+              color="success"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+                background-color: #28a745 !important;
+              "
               @click="onSearch"
               >{{ $t("search") }}</q-btn
             >
@@ -61,6 +65,11 @@
             <q-btn
               class="q-mr-sm q-px-sm q-ml-sm capitalize"
               color="warning"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+              "
               @click="resetFilters"
               >{{ $t("reset") }}</q-btn
             >
@@ -106,7 +115,7 @@
             </q-td>
           </template>
 
-          <template v-slot:body-cell-first_name="props">
+          <!-- <template v-slot:body-cell-first_name="props">
             <q-td class="text-left">
               {{ props.row.first_name }} {{ props.row.last_name }}
             </q-td>
@@ -116,9 +125,9 @@
             <q-td class="text-left">
               {{ props.row.display_name }}
             </q-td>
-          </template>
+          </template> -->
 
-          <template v-slot:body-cell-email="props">
+          <!-- <template v-slot:body-cell-email="props">
             <q-td class="text-left">
               {{ props.row.email }}
             </q-td>
@@ -128,17 +137,17 @@
             <q-td class="text-left">
               {{ props.row.referral_code }}
             </q-td>
-          </template>
+          </template> -->
 
-          <template v-slot:body-cell-parent_referral_code="props">
+          <!-- <template v-slot:body-cell-parent_referral_code="props">
             <q-td class="text-left">
               {{ props.row.parent_referral_code }}
             </q-td>
-          </template>
+          </template> -->
 
           <template v-slot:body-cell-status="props">
             <q-td class="text-center">
-            <q-chip
+              <q-chip
                 size="sm"
                 :label="
                   props.row.status == 'active' ? $t('active') : $t('inactive')
@@ -149,27 +158,31 @@
             </q-td>
           </template>
 
-            <template v-slot:body-cell-amount="props">
+          <template v-slot:body-cell-amount="props">
             <q-td class="text-right">
-              {{ props.row.amount?props.row.amount.toFixed(2):'0.00' }}
+              {{ props.row.amount ? props.row.amount.toFixed(2) : "0.00" }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-bet_amount="props">
             <q-td class="text-right">
-            {{ props.row.bet_amount?props.row.bet_amount.toFixed(2):'0.00' }}
+              {{
+                props.row.bet_amount ? props.row.bet_amount.toFixed(2) : "0.00"
+              }}
             </q-td>
           </template>
 
           <template v-slot:body-cell-win_loss="props">
             <q-td class="text-right">
-            {{ props.row.win_lose_amount?props.row.win_lose_amount.toFixed(2):'0.00' }}
-
+              {{
+                props.row.win_lose_amount
+                  ? props.row.win_lose_amount.toFixed(2)
+                  : "0.00"
+              }}
             </q-td>
           </template>
 
-
-          <template v-slot:body-cell-actions="props">
+          <!-- <template v-slot:body-cell-actions="props">
             <q-td class="text-center">
               <q-btn
                 v-if="Utils.hasPermissions(['Members: Edit/Update Members'])"
@@ -210,48 +223,37 @@
                 <q-tooltip>{{ $t(Utils.getKey("view mlm tree")) }}</q-tooltip>
               </q-btn>
             </q-td>
+          </template> -->
+          <template v-slot:bottom-row v-if="items.length > 0">
+            <q-tr>
+              <q-td class="text-center"> Total </q-td>
+              <q-td> </q-td>
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalWalletAmounts) }}
+              </q-td>
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalBetAmounts) }}
+              </q-td>
+              <q-td class="text-right">
+                {{ Utils.formatCurrency(totalWinAmounts) }}
+              </q-td>
+              <q-td> </q-td>
+              <q-td> </q-td>
+              <q-td> </q-td>
+            </q-tr>
           </template>
-          <template v-slot:bottom-row
-          v-if="items.length > 0"
-          >
-          <q-tr>
-            <q-td class="text-center">
-              Total
-            </q-td>
-            <q-td>
-
-            </q-td>
-            <q-td class="text-right">
-            {{Utils.formatCurrency(totalWalletAmounts) }}
-            </q-td>
-            <q-td class="text-right">
-            {{ Utils.formatCurrency(totalBetAmounts) }}
-            </q-td>
-            <q-td class="text-right">
-            {{ Utils.formatCurrency(totalWinAmounts) }}
-            </q-td>
-            <q-td>
-
-            </q-td>
-            <q-td>
-
-            </q-td>
-            <q-td>
-
-            </q-td>
-          </q-tr>
-         </template>
-
         </q-table>
-
-
       </q-card-section>
-      <q-card-section v-else>
-          <show-mlm-tree @onClose="showMlmTreeView = false" :data="selectedShowMlmTree" @onBack="onRefresh" />
-      </q-card-section>
+      <!-- <q-card-section v-else>
+        <show-mlm-tree
+          @onClose="showMlmTreeView = false"
+          :data="selectedShowMlmTree"
+          @onBack="onRefresh"
+        />
+      </q-card-section> -->
       <Loading :loading="saving" />
     </q-card>
-
+<!--
     <q-dialog v-model="resetPassword" persistent>
       <reset
         :data="selectedMembers"
@@ -266,7 +268,7 @@
 
     <q-dialog v-model="showEdit" position="top" persistent>
       <edit-member
-      :data="selectedMembers"
+        :data="selectedMembers"
         @onClose="showEdit = false"
         @onUpdated="onRefresh"
       />
@@ -279,7 +281,7 @@
         message="Are you sure you want to delete this Member?"
         :button-label="$t(Utils.getKey('Delete'))"
       />
-    </q-dialog>
+    </q-dialog> -->
     <!-- <q-dialog v-model="showMlmTreeView" position="top" persistent>
 
     </q-dialog> -->
@@ -305,7 +307,17 @@ import Loading from "src/components/Shared/Loading.vue";
 import AddUser from "../../components/Members/Add.vue";
 import Auth from "src/store/auth";
 
-const { loading, getAllLevel, columns, items, trash, paginate, totalWalletAmounts, totalBetAmounts, totalWinAmounts } = useMember();
+const {
+  loading,
+  getAllLevel,
+  columns,
+  items,
+  trash,
+  paginate,
+  totalWalletAmounts,
+  totalBetAmounts,
+  totalWinAmounts,
+} = useMember();
 const {
   showAdd,
   showEdit,
@@ -323,26 +335,28 @@ const selectedShowMlmTree = ref();
 const showAddLanguage = ref(false);
 const resetPassword = ref(false);
 
-{/* const filters = reactive({
+{
+  /* const filters = reactive({
   level: [],
   member_ID: "",
   dates: [],
-}); */}
+}); */
+}
 
 const filters = ref({
   member_ID: "",
   dates: [],
   status: "all",
-  agent_referral_code: Auth.state.user.referral_code
+  agent_referral_code: Auth.state.user.referral_code,
 });
-const levelOptions = ref(['all','active', 'inactive']);
+const levelOptions = ref(["all", "active", "inactive"]);
 
 const onSearch = () => {
   onRequest({
     pagination: {
       ...pagination.value,
       sortBy: "member_ID",
-      agent_referral_code: Auth.state.user.referral_code
+      agent_referral_code: Auth.state.user.referral_code,
     },
     filter: filters.value,
   });
@@ -352,7 +366,7 @@ onMounted(() => {
     pagination: {
       ...pagination.value,
       sortBy: "member_ID",
-      agent_referral_code: Auth.state.user.referral_code
+      agent_referral_code: Auth.state.user.referral_code,
     },
     filter: undefined,
   });
@@ -386,11 +400,11 @@ const resetFilters = () => {
   let f = {
     member_ID: "",
     level: 0,
-    dates: []
-  }
-  filters.value = f
-  filters.value.dates = []
-  console.log('reset             ', filters.value);
+    dates: [],
+  };
+  filters.value = f;
+  filters.value.dates = [];
+  console.log("reset             ", filters.value);
   onSearch();
   // onRequest();
 };

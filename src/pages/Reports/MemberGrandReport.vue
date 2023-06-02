@@ -38,73 +38,95 @@
 
             <!-- <template v-slot:top> -->
 
-              <el-date-picker
-                class="input_white"
-                v-model="filters.dates"
-                type="daterange"
-                value-format="YYYY-MM-DD"
-                :start-placeholder="$t(Utils.getKey('Start Date'))"
-                :end-placeholder="$t(Utils.getKey('End Date'))"
-              >
-              </el-date-picker>
-              <q-btn
-                class="q-mr-sm"
-                color="primary"
-                :outline="dateSelect == 'today' ? false : true"
-                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
-                @click="onDateSearch('today')"
-              >
-                {{ $t("today") }}
-              </q-btn>
-              <q-btn
-                class="q-mr-sm"
-                color="primary"
-                :outline="dateSelect == 'yesterday' ? false : true"
-                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
-                @click="onDateSearch('yesterday')"
-              >
-                {{ $t("yesterday") }}
-              </q-btn>
+            <el-date-picker
+              class="input_white"
+              v-model="filters.dates"
+              type="daterange"
+              value-format="YYYY-MM-DD"
+              :start-placeholder="$t(Utils.getKey('Start Date'))"
+              :end-placeholder="$t(Utils.getKey('End Date'))"
+            >
+            </el-date-picker>
+            <q-btn
+              class="q-mr-sm"
+              color="primary"
+              :outline="dateSelect == 'today' ? false : true"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+              "
+              @click="onDateSearch('today')"
+            >
+              {{ $t("today") }}
+            </q-btn>
+            <q-btn
+              class="q-mr-sm"
+              color="primary"
+              :outline="dateSelect == 'yesterday' ? false : true"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+              "
+              @click="onDateSearch('yesterday')"
+            >
+              {{ $t("yesterday") }}
+            </q-btn>
 
-              <q-btn
-                class="q-mr-sm"
-                color="primary"
-                :outline="dateSelect == 'month' ? false : true"
-                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
-                @click="onDateSearch('month')"
-              >
-                {{ $t(Utils.getKey("this month")) }}
-              </q-btn>
-              <q-btn
-                class="q-mr-sm"
-                color="primary"
-                :outline="dateSelect == 'lastmonth' ? false : true"
-                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
-                @click="onDateSearch('lastmonth')"
-              >
-                {{ $t(Utils.getKey("last month")) }}
-              </q-btn>
-
+            <q-btn
+              class="q-mr-sm"
+              color="primary"
+              :outline="dateSelect == 'month' ? false : true"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+              "
+              @click="onDateSearch('month')"
+            >
+              {{ $t(Utils.getKey("this month")) }}
+            </q-btn>
+            <q-btn
+              class="q-mr-sm"
+              color="primary"
+              :outline="dateSelect == 'lastmonth' ? false : true"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+              "
+              @click="onDateSearch('lastmonth')"
+            >
+              {{ $t(Utils.getKey("last month")) }}
+            </q-btn>
 
             <!-- <q-space /> -->
             <!-- </template> -->
 
-
-              <q-btn
-                class="q-mr-sm q-px-sm q-ml-sm capitalize"
-                color="primary"
-                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
-                @click="onSearch"
-                >{{ $t("search") }}</q-btn
-              >
-              <q-btn
-                class="q-mr-sm q-px-sm q-ml-sm capitalize"
-                color="warning"
-                style="margin-left: 10px; height: 40px; min-width: 116px !important;"
-                @click="resetFilters"
-                >{{ $t("reset") }}</q-btn
-              >
-
+            <q-btn
+              class="q-mr-sm q-px-sm q-ml-sm capitalize"
+              color="success"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+                background-color: #28a745 !important;
+              "
+              @click="onSearch"
+              >{{ $t("search") }}</q-btn
+            >
+            <q-btn
+              class="q-mr-sm q-px-sm q-ml-sm capitalize"
+              color="warning"
+              style="
+                margin-left: 10px;
+                height: 40px;
+                min-width: 116px !important;
+              "
+              @click="resetFilters"
+              >{{ $t("reset") }}</q-btn
+            >
           </template>
           <!-- header column -->
           <template v-slot:header-cell="props">
@@ -136,7 +158,9 @@
               <q-td class="text-center">{{ $t(Utils.getKey("Total")) }} </q-td>
               <q-td> </q-td>
               <q-td class="text-right">
-                {{ Utils.formatCurrency(totalAmounts?.totalDepositedAmount || 0) }}
+                {{
+                  Utils.formatCurrency(totalAmounts?.totalDepositedAmount || 0)
+                }}
               </q-td>
               <q-td class="text-right">
                 {{ Utils.formatCurrency(totalAmounts?.totalBetAmounts || 0) }}
@@ -145,10 +169,14 @@
                 {{ Utils.formatCurrency(totalAmounts?.totalWinAmounts || 0) }}
               </q-td>
               <q-td class="text-right">
-                {{ Utils.formatCurrency(totalAmounts?.totalActivityBonus || 0) }}
+                {{
+                  Utils.formatCurrency(totalAmounts?.totalActivityBonus || 0)
+                }}
               </q-td>
               <q-td class="text-right">
-                {{ Utils.formatCurrency(totalAmounts?.totalWinLoseAmount || 0) }}
+                {{
+                  Utils.formatCurrency(totalAmounts?.totalWinLoseAmount || 0)
+                }}
               </q-td>
             </q-tr>
           </template>
@@ -170,7 +198,8 @@ import { i18n } from "src/boot/i18n";
 import auth from "src/store/auth";
 import Loading from "src/components/Shared/Loading.vue";
 
-const { loading, columns, items, totalAmounts, paginate, getAllLevelReferral } = useMemberGrandReport();
+const { loading, columns, items, totalAmounts, paginate, getAllLevelReferral } =
+  useMemberGrandReport();
 const { showEdit, showToggleClickConfirm, selected, pagination, onRequest } =
   useTable(paginate);
 
@@ -259,24 +288,23 @@ const onDateSearch = (date) => {
   dateSelect.value = date;
   if (date == "week") {
     filters.value.dates = [
-      moment().weekday(1).format('YYYY-MM-DD'),
-      moment().weekday(7).format('YYYY-MM-DD'),
+      moment().weekday(1).format("YYYY-MM-DD"),
+      moment().weekday(7).format("YYYY-MM-DD"),
     ];
   } else if (date == "yesterday") {
     filters.value.dates = [
       moment().subtract(1, "d").format("YYYY-MM-DD"),
       moment().subtract(1, "d").format("YYYY-MM-DD"),
     ];
-  }
-   else if (date == "month") {
+  } else if (date == "month") {
     filters.value.dates = [
-      moment().startOf('month').format('YYYY-MM-DD'),
-      moment().endOf('month').format('YYYY-MM-DD'),
+      moment().startOf("month").format("YYYY-MM-DD"),
+      moment().endOf("month").format("YYYY-MM-DD"),
     ];
   } else if (date == "lastmonth") {
     filters.value.dates = [
-      moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD'),
-      moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD'),
+      moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD"),
+      moment().subtract(1, "months").endOf("month").format("YYYY-MM-DD"),
     ];
   } else {
     filters.value.dates = [
