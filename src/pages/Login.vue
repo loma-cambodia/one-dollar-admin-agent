@@ -3,10 +3,10 @@ label {
   color: #dcdcdc !important;
 }
 .text-negative {
-    color: #fc6576 !important;
+  color: #fc6576 !important;
 }
 .q-field__messages.col {
-    color: #fc6576 !important;
+  color: #fc6576 !important;
 }
 </style>
 <template>
@@ -39,10 +39,21 @@ label {
             class="p-3"
             outlined="0"
             flat
-            style="width: 100%"
+            :style="
+              $q.dark.isActive
+                ? 'width: 100%;'
+                : 'width: 100%; background: white;'
+            "
           >
             <q-card-section>
-              <label>{{ $t(Utils.getKey("Language")) }}</label>
+              <label
+                :style="
+                  $q.dark.isActive
+                    ? 'width: 100%;'
+                    : 'color: black !important;'
+                "
+                >{{ $t(Utils.getKey("Language")) }}</label
+              >
               <q-select
                 v-model="locale"
                 :options="localeOptions"
@@ -65,7 +76,12 @@ label {
               </q-select>
             </q-card-section>
             <q-card-section class="q-pt-none">
-              <label>{{ $t(Utils.getKey("Agent Id")) }}</label>
+              <label
+                :style="
+                  $q.dark.isActive
+                    ? 'width: 100%;'
+                    : 'color: black !important;'
+                ">{{ $t(Utils.getKey("Agent Id")) }}</label>
               <q-input
                 autofocus
                 :disable="loading"
@@ -86,7 +102,12 @@ label {
               </q-input>
             </q-card-section>
             <q-card-section class="q-pt-none">
-              <label>{{ $t(Utils.getKey("Password")) }}</label>
+              <label
+                :style="
+                  $q.dark.isActive
+                    ? 'width: 100%;'
+                    : 'color: black !important;'
+                ">{{ $t(Utils.getKey("Password")) }}</label>
               <q-input
                 :disable="loading"
                 outlined
@@ -122,7 +143,12 @@ label {
                   v-model="code"
                   :maxlength="6"
                   :oninput="(evt) => Utils.onlyPostiveInteger(evt, true)"
-                  color="white"
+
+                  :style="
+                    $q.dark.isActive
+                      ? 'color: white !important;'
+                      : 'color: black !important;'
+                  "
                   :label="$t(Utils.getKey('Six Digits Code'))"
                   :rules="[
                     (val) =>
@@ -136,7 +162,12 @@ label {
                   type="button"
                   dense
                   :label="$t(Utils.getKey('Google Authenticator'))"
-                  class="g-auth-btn full-width text-white"
+                  class="g-auth-btn full-width"
+                  :style="
+                    $q.dark.isActive
+                      ? 'color: white !important;'
+                      : 'color: black !important;'
+                  "
                   @click="onVerify2FA"
                   :disable="loading"
                 />
