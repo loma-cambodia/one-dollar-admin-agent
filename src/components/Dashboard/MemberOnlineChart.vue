@@ -51,7 +51,12 @@
           <q-btn
             class="q-mr-sm q-px-sm q-ml-sm capitalize"
             color="warning"
-            style="margin-left: 10px; height: 40px; min-width: 116px !important; font-size: 14px;"
+            style="
+              margin-left: 10px;
+              height: 40px;
+              min-width: 116px !important;
+              font-size: 14px;
+            "
             @click="resetFilters"
             >{{ $t("reset") }}</q-btn
           >
@@ -128,19 +133,29 @@ use([
 const stats = useStats();
 const isLoading = ref(true);
 const typeOfFilter = ref("NewDirectMember");
+const typeOfFilterName = ref("New direct member");
 const defaultDate = [
   moment().subtract(1, "month").format("YYYY-MM-DD"),
   moment().format("YYYY-MM-DD"),
 ];
 
 const onSearch = () => {
+  typeOfFilterName.value = optionsValue.value.filter(
+    (i) => i.id == typeOfFilter.value
+  )[0].name;
   getChartDataFun();
+  onlineStats.value.option.tooltip = {
+    trigger: "item",
+    formatter: `{b} <br/>${t(Utils.getKey(typeOfFilterName.value))} : {c}`,
+  };
 };
 
 const getChartData = ref([]);
+const getChartDate = ref([]);
 const resetFilters = () => {
   onlineStats.value.range = defaultDate;
   typeOfFilter.value = "NewDirectMember";
+  typeOfFilterName.value = "New direct member";
   onSearch();
 };
 watch(
@@ -148,7 +163,7 @@ watch(
   () => {
     onlineStats.value.option.tooltip = {
       trigger: "item",
-      formatter: `{b} <br/>${t(Utils.getKey("Statistic Graph"))} : {c}`,
+      formatter: `{b} <br/>${t(Utils.getKey(typeOfFilterName.value))} : {c}`,
     };
   }
 );
@@ -164,12 +179,12 @@ const onlineStats = ref({
     },
     tooltip: {
       trigger: "item",
-      formatter: `{b} <br/>${t(Utils.getKey("Statistic Graph"))} : {c}`,
+      formatter: `{b} </br>${t(Utils.getKey(typeOfFilterName.value))} : {c}`,
     },
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: [],
+      data: getChartDate,
     },
     yAxis: {
       type: "value",
@@ -212,6 +227,7 @@ const getChartDataFun = async () => {
   console.log("res", res);
 
   getChartData.value = res.data.chart_data;
+  getChartDate.value = res.data.chart_date;
   isLoading.value = false;
 };
 
